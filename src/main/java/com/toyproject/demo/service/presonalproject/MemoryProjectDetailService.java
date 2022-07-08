@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MemoryProjectDetailService implements projectDetailService{
+public class MemoryProjectDetailService implements ProjectDetailService{
 
     private final ProjectDetailRepository projectDetailRepository;
 

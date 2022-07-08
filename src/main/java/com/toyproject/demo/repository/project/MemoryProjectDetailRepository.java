@@ -2,12 +2,14 @@ package com.toyproject.demo.repository.project;
 
 import com.toyproject.demo.domain.Sprint;
 import com.toyproject.demo.domain.member.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class MemoryProjectDetailRepository implements ProjectDetailRepository{
 
     private static Long seq = 0L;
