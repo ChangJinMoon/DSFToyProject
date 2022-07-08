@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 
-const server="";
+const server="/find-password";
 function FindPage() {
   const { register, watch, formState:{errors},handleSubmit}=useForm();
   const [errorFromSubmit, setErrorFromSubmit]=useState("");

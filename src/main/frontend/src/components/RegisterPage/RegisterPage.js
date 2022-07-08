@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 
-const server="http://localhost:8080/join";
+const server="/join";
 
 function RegisterPage() {
   const { register, watch, formState: {errors}, handleSubmit } = useForm();

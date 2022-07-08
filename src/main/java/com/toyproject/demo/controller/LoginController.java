@@ -23,20 +23,12 @@ public class LoginController {
 
     private final MemberService memberService;
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(){
-        //임시 데이터 생성
-        Member member = new Member();
-        member.setEmail("ybs1121@naver.com");
-        member.setPassword("123");
-        member.setName("spring");
-        member.setFindPasswordAnswer("qwe");
-        memberService.save(member);
-
         return "home";
     }
 
-    @PostMapping("/")
+    @PostMapping("/home")
     public ResponseEntity<Message> login(MemberDto memberDto){
         Long id = memberService.login(memberDto);
         Message<Long> message = new Message();

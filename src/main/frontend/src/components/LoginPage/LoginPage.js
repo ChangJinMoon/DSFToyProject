@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 
-const server="http://localhost:8080/";
+const server="/home";
 function LoginPage() {
   const { register, watch, formState:{errors},handleSubmit}=useForm();
   const [errorFromSubmit, setErrorFromSubmit]=useState("");
