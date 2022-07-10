@@ -8,4 +8,6 @@ public interface ProjectDetailService {
 
     List<Sprint> find(Long projectNum);
     Long save(Long projectNum, Sprint sprint);
+    Long delete(Long sprintId);
+    List<Sprint> findById(Long sprintId);
 }

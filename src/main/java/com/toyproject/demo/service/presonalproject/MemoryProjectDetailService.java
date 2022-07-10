@@ -14,7 +14,6 @@ public class MemoryProjectDetailService implements ProjectDetailService{
     private final ProjectDetailRepository projectDetailRepository;
 
 
-
     @Override
     public List<Sprint> find(Long projectNum) {
         return projectDetailRepository.find(projectNum);
@@ -23,5 +22,17 @@ public class MemoryProjectDetailService implements ProjectDetailService{
     @Override
     public Long save(Long projectNum, Sprint sprint) {
         return projectDetailRepository.save(projectNum,sprint);
+    }
+
+    @Override
+    public Long delete(Long sprintId) {
+        Long deleteId = projectDetailRepository.deleteSprint(sprintId);
+        return deleteId;
+    }
+
+    @Override
+    public List<Sprint> findById(Long sprintId) {
+        List<Sprint> sprint = projectDetailRepository.findSprint(sprintId);
+        return sprint;
     }
 }
