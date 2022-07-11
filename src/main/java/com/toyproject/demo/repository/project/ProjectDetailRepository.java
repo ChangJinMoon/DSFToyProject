@@ -12,6 +12,5 @@ public interface ProjectDetailRepository {
     Long save(Long projectNum,Sprint sprint);
     Long deleteSprint(Long sprintId);
     List<Sprint> findSprint(Long sprintId);
-
-
+    List<Sprint> findAll();
 }

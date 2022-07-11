@@ -10,4 +10,5 @@ public interface ProjectDetailService {
     Long save(Long projectNum, Sprint sprint);
     Long delete(Long sprintId);
     List<Sprint> findById(Long sprintId);
+    List<Sprint> findByName(String name);
 }

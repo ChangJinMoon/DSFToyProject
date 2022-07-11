@@ -5,6 +5,7 @@ import com.toyproject.demo.repository.project.ProjectDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,5 +35,20 @@ public class MemoryProjectDetailService implements ProjectDetailService{
     public List<Sprint> findById(Long sprintId) {
         List<Sprint> sprint = projectDetailRepository.findSprint(sprintId);
         return sprint;
+    }
+
+    public List<Sprint> findByName(String name){
+        List<Sprint> sprints = new ArrayList<>();
+
+        List<Sprint> store = projectDetailRepository.findAll();
+
+        for (Sprint sprint : store) {
+            if(sprint.getName().contains(name)){
+                sprints.add(sprint);
+            }
+        }
+
+        return sprints;
+
     }
 }

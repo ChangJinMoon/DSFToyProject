@@ -82,6 +82,9 @@ public class ProjectDetailController {
 
     //sprint 검색
 
-
-
+//    @GetMapping("/{memberId}/{projectNum}/{name}")
+//    public ResponseEntity<Message> findSprintsByName(String name
+//            ,@PathVariable("memberId") Long MemberId, @PathVariable("projectNum") Long projectNum){
+//        return projectDetailService.findByName(name);
+//    }
 }

@@ -62,6 +62,10 @@ public class MemoryProjectDetailRepository implements ProjectDetailRepository{
         }
     }
 
+    @Override
+    public List<Sprint> findAll() {
+        return new ArrayList<>(store.values());
+    }
 
 
     public Sprint findOne(Long sprintId){
