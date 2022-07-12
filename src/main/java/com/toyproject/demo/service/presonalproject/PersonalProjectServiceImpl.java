@@ -8,6 +8,7 @@ import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.repository.project.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class PersonalProjectServiceImpl implements PersonalProjectService{
     private final ProjectRepository projectRepository;
     private final MakeHashKey makeHashKey;

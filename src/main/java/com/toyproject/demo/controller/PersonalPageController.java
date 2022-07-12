@@ -7,10 +7,7 @@ import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.service.presonalproject.PersonalProjectService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +20,7 @@ public class PersonalPageController {
     private final PersonalProjectService personalProjectService;
 
     @GetMapping("/personalPage/{id}")
-    public ResponseEntity<Message> init(@PathVariable int id){
+    public ResponseEntity<Message> init(@RequestParam int id){
         Message<List<Project>> init = personalProjectService.init(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
@@ -32,8 +29,8 @@ public class PersonalPageController {
     }
 
     @PostMapping("/personalPage/{id}")
-    public ResponseEntity<Message> addProject(@PathVariable int id,
-                                              PersonalPageAddRequestDto dto){
+    public ResponseEntity<Message> addProject(@RequestParam int id,
+                                              @RequestBody PersonalPageAddRequestDto dto){
         Message<List<Project>> response = personalProjectService.addProject(id,dto.getProject());
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -41,8 +38,9 @@ public class PersonalPageController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
     @DeleteMapping("/personalPage/{id}/{projectId}")
-    public ResponseEntity<Message> deleteProject(@PathVariable int id, @PathVariable String projectId){
+    public ResponseEntity<Message> deleteProject(@RequestParam int id, @RequestParam String projectId){
         Message<List<Project>> response = personalProjectService.deleteProject(projectId);
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -50,9 +48,9 @@ public class PersonalPageController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/personalPage/update/{id}/{projectId}")
-    public ResponseEntity<Message> updateProject(@PathVariable int id, @PathVariable String projectId,
-                                                     PersonalPageUpdateRequestDto dto){
+    @PutMapping("/personalPage/{id}/update/{projectId}")
+    public ResponseEntity<Message> updateProject(@RequestParam int id, @PathVariable String projectId,
+                                                     @RequestBody PersonalPageUpdateRequestDto dto){
         Message<List<Project>> message = personalProjectService.updateProject(projectId, dto);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));

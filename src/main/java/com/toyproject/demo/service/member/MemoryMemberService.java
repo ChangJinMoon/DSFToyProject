@@ -16,7 +16,6 @@ public class MemoryMemberService implements MemberService{
 
     private final MemberRepository memberRepository;
 
-
     public Long login(MemberDto memberDto){
         List<Member> memberList = memberRepository.findAll();
         Optional<Long> memberId;
