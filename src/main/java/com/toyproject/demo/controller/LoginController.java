@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,21 +30,8 @@ public class LoginController {
     }
 
     @PostMapping("/home")
-    public ResponseEntity<Message> login(MemberDto memberDto){
-        Long id = memberService.login(memberDto);
-        Message<Long> message = new Message();
-
-        if(id == -1L){
-            message.setMessage("로그인 실패");
-            log.info("login -> 로그인 실패");
-        }
-        else{
-            message.setData(id);
-            message.setMessage("로그인 성공");
-            message.setStatusEum(StatusEnum.OK);
-            log.info("login -> id: {} 로그인",id);
-
-        }
+    public ResponseEntity<Message> login(@RequestBody MemberDto memberDto){
+        Message message = memberService.login(memberDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }
@@ -58,7 +42,7 @@ public class LoginController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Message> save(Member member){
+    public ResponseEntity<Message> save(@RequestBody Member member){
         System.out.println("member = " + member.toString());
         memberService.save(member);
         Long id = member.getId();
@@ -79,20 +63,8 @@ public class LoginController {
     }
 
     @PostMapping("/find-password")
-    public ResponseEntity<Message> checkAnswerFindPassword(MemberFindDto memberFindDto){
-        String password = memberService.checkAnswerFindPassword(memberFindDto);
-        Message<String> message = new Message<>();
-        if(password == null){
-            message.setMessage("답변이 틀림");
-            log.info("checkAnswerFindPassword -> 실패 ");
-        }
-        else{
-            message.setStatusEum(StatusEnum.OK);
-            message.setMessage("답변이 맞음, 비밀번호를 보여줌");
-            message.setData(password);
-            log.info("checkAnswerFindPassword -> 성공 email : {}",memberFindDto.getEmail());
-        }
-
+    public ResponseEntity<Message> checkAnswerFindPassword(@RequestBody MemberFindDto memberFindDto){
+        Message message = memberService.checkAnswerFindPassword(memberFindDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

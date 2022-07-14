@@ -1,5 +1,7 @@
 package com.toyproject.demo.service.member;
 
+import com.toyproject.demo.Message;
+import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
@@ -16,34 +18,49 @@ public class MemoryMemberService implements MemberService{
 
     private final MemberRepository memberRepository;
 
-    public Long login(MemberDto memberDto){
-        List<Member> memberList = memberRepository.findAll();
-        Optional<Long> memberId;
-        for (Member member : memberList) {
-            if (member.getEmail().equals(memberDto.getEmail())){
-                if(member.getPassword().equals(memberDto.getPassword())){
-                    return member.getId();
-                    //memberId = Optional.ofNullable(member.getId());
+    public Message<Long> login(MemberDto memberDto){
+        List<Member> memberList = memberRepository.findAll().orElse(null);
+        Message<Long> message = new Message<>();
+        if(memberList != null){
+            for (Member member : memberList) {
+                if (member.getEmail()!= null && member.getEmail().equals(memberDto.getEmail())){
+                    if(member.getPassword() != null && member.getPassword().equals(memberDto.getPassword())){
+                        message.setMessage("로그인 성공");
+                        message.setData(member.getId());
+                        message.setStatusEum(StatusEnum.OK);
+                        return message;
+                    }
                 }
             }
         }
-        return -1L;
+        message.setMessage("로그인 실패");
+        return message;
     }
 
-    public Long save(Member member){
-        Long memberId = memberRepository.save(member);
-        return memberId;
+    public Message<Long> save(Member member){
+        Long memberId = memberRepository.save(member).get();
+        Message<Long> message = new Message<>(StatusEnum.OK);
+        message.setMessage("회원가입 성공");
+        message.setData(memberId);
+        return message;
     }
 
-    public String checkAnswerFindPassword(MemberFindDto memberFindDto){
-        List<Member> memberList = memberRepository.findAll();
-        for (Member member : memberList) {
-            if(member.getEmail().equals(memberFindDto.getEmail())){
-                if(member.getFindPasswordAnswer().equals(memberFindDto.getFindPasswordAnswer())){
-                    return member.getPassword();
+    public Message<String> checkAnswerFindPassword(MemberFindDto memberFindDto){
+        List<Member> memberList = memberRepository.findAll().orElse(null);
+        Message<String> message = new Message<>();
+        if(memberList != null) {
+            for (Member member : memberList) {
+                if (member.getEmail().equals(memberFindDto.getEmail())) {
+                    if (member.getFindPasswordAnswer().equals(memberFindDto.getFindPasswordAnswer())) {
+                        message.setData(member.getPassword());
+                        message.setStatusEum(StatusEnum.OK);
+                        message.setMessage("비밀번호 찾기 성공");
+                        return message;
+                    }
                 }
             }
         }
-        return null;
+        message.setMessage("비밀번호 찾기 실패");
+        return message;
     }
 }
