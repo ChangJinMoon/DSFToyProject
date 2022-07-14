@@ -15,6 +15,14 @@ public class MemoryMemberRepository implements MemberRepository{
 
     @Override
     public Optional<Long> save(Member member) {
+        List<Member> members = new ArrayList<>(store.values());
+
+        for (Member value : store.values()) {
+            if(value.getEmail().equals(member.getEmail())){
+                return Optional.of(-1L);
+            }
+        }
+
         member.setId(++seq);
         store.put(seq, member);
         //member 예외 처리 해야됨

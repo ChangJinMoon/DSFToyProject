@@ -44,16 +44,8 @@ public class LoginController {
     @PostMapping("/join")
     public ResponseEntity<Message> save(@RequestBody Member member){
         System.out.println("member = " + member.toString());
-        memberService.save(member);
-        Long id = member.getId();
-        Message<Long> message = new Message<>();
-
-        if(id > 0){
-            message.setMessage("회원가입 성공");
-            message.setData(id);
-            message.setStatusEum(StatusEnum.OK);
-            log.info("Member join -> id {} name: {}, email: {} ",id, member.getName(), member.getEmail());
-        }
+        Message<Long> message = memberService.save(member);
+        log.info("Member join");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

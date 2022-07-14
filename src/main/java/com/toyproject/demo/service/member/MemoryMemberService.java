@@ -39,6 +39,12 @@ public class MemoryMemberService implements MemberService{
 
     public Message<Long> save(Member member){
         Long memberId = memberRepository.save(member).get();
+        if(memberId == -1L){
+            Message<Long> message = new Message<>(StatusEnum.BAD_REQUEST_AUTHORIZATION);
+            message.setMessage("중복아이디 존재");
+            return message;
+        }
+
         Message<Long> message = new Message<>(StatusEnum.OK);
         message.setMessage("회원가입 성공");
         message.setData(memberId);
