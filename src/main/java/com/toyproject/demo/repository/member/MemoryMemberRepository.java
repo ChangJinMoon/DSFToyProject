@@ -3,10 +3,8 @@ package com.toyproject.demo.repository.member;
 import com.toyproject.demo.domain.member.Member;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 @Repository
 public class MemoryMemberRepository implements MemberRepository{
@@ -16,23 +14,24 @@ public class MemoryMemberRepository implements MemberRepository{
 
 
     @Override
-    public Long save(Member member) {
+    public Optional<Long> save(Member member) {
         member.setId(++seq);
         store.put(seq, member);
-        return seq;
+        //member 예외 처리 해야됨
+        return Optional.of(seq);
 
     }
 
     @Override
-    public Member findMember(Long id) {
+    public Optional<Member> findMember(Long id) {
         Member findMember = store.get(id);
-        return findMember;
+        return Optional.ofNullable(findMember);
     }
 
     @Override
-    public List<Member> findAll() {
+    public Optional<List<Member>> findAll() {
         List<Member> members = new ArrayList<>(store.values());
-        return members;
+        return Optional.ofNullable(members);
     }
 
     public Member findPassword(String id, String answer) {
