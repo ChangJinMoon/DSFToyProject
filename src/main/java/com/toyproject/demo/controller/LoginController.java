@@ -46,6 +46,13 @@ public class LoginController {
         System.out.println("member = " + member.toString());
         Message<Long> message = memberService.save(member);
         log.info("Member join");
+        log.trace("Trace Level 테스트");
+        log.debug("DEBUG Level 테스트");
+        log.info("INFO Level 테스트");
+        log.warn("Warn Level 테스트");
+        log.error("ERROR Level 테스트");
+
+        출처: https://goddaehee.tistory.com/206 [갓대희의 작은공간:티스토리]
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
@@ -57,6 +64,7 @@ public class LoginController {
     @PostMapping("/find-password")
     public ResponseEntity<Message> checkAnswerFindPassword(@RequestBody MemberFindDto memberFindDto){
         Message message = memberService.checkAnswerFindPassword(memberFindDto);
+        log.info("checkAnswerFindPassword execute");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }
