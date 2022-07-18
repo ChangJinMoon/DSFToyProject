@@ -32,6 +32,7 @@ public class LoginController {
     @PostMapping("/home")
     public ResponseEntity<Message> login(@RequestBody MemberDto memberDto){
         Message message = memberService.login(memberDto);
+        log.info("ID: {}가 로그인",memberDto.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }
@@ -43,16 +44,8 @@ public class LoginController {
 
     @PostMapping("/join")
     public ResponseEntity<Message> save(@RequestBody Member member){
-        System.out.println("member = " + member.toString());
         Message<Long> message = memberService.save(member);
-        log.info("Member join");
-        log.trace("Trace Level 테스트");
-        log.debug("DEBUG Level 테스트");
-        log.info("INFO Level 테스트");
-        log.warn("Warn Level 테스트");
-        log.error("ERROR Level 테스트");
-
-        출처: https://goddaehee.tistory.com/206 [갓대희의 작은공간:티스토리]
+        log.info("Member join 실행 회원가입이 정상적으로 이뤄짐.");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

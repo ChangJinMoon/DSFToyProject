@@ -9,8 +9,8 @@ import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +19,10 @@ public class MemoryMemberService implements MemberService{
     private final MemberRepository memberRepository;
 
     public Message<Long> login(MemberDto memberDto){
-        List<Member> memberList = memberRepository.findAll().orElse(null);
+        List<Member> memberList = memberRepository.findAll().orElseGet(() -> Collections.EMPTY_LIST);
+        // orElseGet과 orElse의 차이점: orElse는 무조건 값을 생성한 다음 null체크 orElseget은 null체크 후 값 생성
         Message<Long> message = new Message<>();
-        if(memberList != null){
+        if(!memberList.isEmpty()){
             for (Member member : memberList) {
                 if (member.getEmail()!= null && member.getEmail().equals(memberDto.getEmail())){
                     if(member.getPassword() != null && member.getPassword().equals(memberDto.getPassword())){
