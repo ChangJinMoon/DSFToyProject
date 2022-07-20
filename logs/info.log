@@ -1,0 +1,107 @@
+[2022-07-15 18:00:38:199][restartedMain] INFO  com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 31523 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 18:00:38:200][restartedMain] INFO  com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 18:00:39:217][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 18:00:39:217][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 18:00:39:525][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 18:00:39:528][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 18:00:39:528][restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 18:00:39:528][restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 18:00:39:546][restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 18:00:39:546][restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 329 ms
+[2022-07-15 18:00:39:661][restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 18:00:39:668][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 18:00:39:674][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 18:00:39:679][restartedMain] INFO  com.toyproject.demo.DemoApplication - Started DemoApplication in 0.605 seconds (JVM running for 0.818)
+[2022-07-15 18:02:22:200][restartedMain] INFO  com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 31540 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 18:02:22:200][restartedMain] INFO  com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 18:02:22:217][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 18:02:22:217][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 18:02:23:518][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 18:02:23:521][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 18:02:23:521][restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 18:02:23:521][restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 18:02:23:538][restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 18:02:23:538][restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 321 ms
+[2022-07-15 18:02:23:651][restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 18:02:23:659][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 18:02:23:664][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 18:02:23:669][restartedMain] INFO  com.toyproject.demo.DemoApplication - Started DemoApplication in 0.602 seconds (JVM running for 0.816)
+[2022-07-15 21:11:08:247][restartedMain] INFO  com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 1579 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 21:11:08:248][restartedMain] INFO  com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 21:11:08:266][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 21:11:08:266][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 21:11:08:610][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 21:11:08:613][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:11:08:613][restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 21:11:08:613][restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 21:11:08:631][restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 21:11:08:632][restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 366 ms
+[2022-07-15 21:11:08:758][restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 21:11:09:765][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:11:09:771][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 21:11:09:777][restartedMain] INFO  com.toyproject.demo.DemoApplication - Started DemoApplication in 0.686 seconds (JVM running for 0.924)
+[2022-07-15 21:11:32:23984][http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2022-07-15 21:11:32:23985][http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[2022-07-15 21:11:32:23985][http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+[2022-07-15 21:13:54:227][restartedMain] INFO  com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 1616 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 21:13:54:227][restartedMain] INFO  com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 21:13:54:245][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 21:13:54:245][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 21:13:54:588][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 21:13:54:591][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:13:54:591][restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 21:13:54:591][restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 21:13:54:609][restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 21:13:54:609][restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 363 ms
+[2022-07-15 21:13:55:733][restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 21:13:55:740][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:13:55:760][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 21:13:55:766][restartedMain] INFO  com.toyproject.demo.DemoApplication - Started DemoApplication in 0.688 seconds (JVM running for 0.914)
+[2022-07-15 21:14:04:10586][http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2022-07-15 21:14:04:10586][http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[2022-07-15 21:14:04:10587][http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+[2022-07-15 21:14:04:10622][http-nio-8080-exec-1] INFO  c.t.demo.controller.LoginController - ID: root@root.com가 로그인
+[2022-07-15 21:14:12:18648][http-nio-8080-exec-3] INFO  c.t.demo.controller.LoginController - Member join 실행 회원가입이 정상적으로 이뤄짐.
+[2022-07-15 21:14:35:41498][http-nio-8080-exec-4] INFO  c.t.demo.controller.LoginController - checkAnswerFindPassword execute
+[2022-07-15 21:21:19:215][restartedMain] [32mINFO [0;39m com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 1702 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 21:21:19:216][restartedMain] [32mINFO [0;39m com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 21:21:19:233][restartedMain] [32mINFO [0;39m o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 21:21:19:233][restartedMain] [32mINFO [0;39m o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 21:21:20:568][restartedMain] [32mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 21:21:20:571][restartedMain] [32mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:21:20:571][restartedMain] [32mINFO [0;39m o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 21:21:20:572][restartedMain] [32mINFO [0;39m o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 21:21:20:589][restartedMain] [32mINFO [0;39m o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 21:21:20:590][restartedMain] [32mINFO [0;39m o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 357 ms
+[2022-07-15 21:21:20:707][restartedMain] [32mINFO [0;39m o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 21:21:20:713][restartedMain] [32mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:21:20:719][restartedMain] [32mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 21:21:20:724][restartedMain] [32mINFO [0;39m com.toyproject.demo.DemoApplication - Started DemoApplication in 0.642 seconds (JVM running for 0.867)
+[2022-07-15 21:21:28:209][restartedMain] [34mINFO [0;39m com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 1709 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 21:21:28:209][restartedMain] [34mINFO [0;39m com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 21:21:28:227][restartedMain] [34mINFO [0;39m o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 21:21:28:227][restartedMain] [34mINFO [0;39m o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 21:21:28:533][restartedMain] [34mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 21:21:28:536][restartedMain] [34mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:21:28:537][restartedMain] [34mINFO [0;39m o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 21:21:28:537][restartedMain] [34mINFO [0;39m o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 21:21:29:562][restartedMain] [34mINFO [0;39m o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 21:21:29:562][restartedMain] [34mINFO [0;39m o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 335 ms
+[2022-07-15 21:21:29:696][restartedMain] [34mINFO [0;39m o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 21:21:29:703][restartedMain] [34mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:21:29:709][restartedMain] [34mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 21:21:29:715][restartedMain] [34mINFO [0;39m com.toyproject.demo.DemoApplication - Started DemoApplication in 0.642 seconds (JVM running for 0.85)
+[2022-07-15 21:21:57:214][restartedMain] INFO  com.toyproject.demo.DemoApplication - Starting DemoApplication using Java 18.0.1.1 on yangbyoungseok-ui-MacBookPro.local with PID 1715 (/Users/yangbyoungseok/IdeaProjects/DSFToyProject/build/classes/java/main started by yangbyoungseok in /Users/yangbyoungseok/IdeaProjects/DSFToyProject)
+[2022-07-15 21:21:57:214][restartedMain] INFO  com.toyproject.demo.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+[2022-07-15 21:21:57:231][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2022-07-15 21:21:57:231][restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2022-07-15 21:21:57:538][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[2022-07-15 21:21:57:541][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:21:57:542][restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2022-07-15 21:21:57:542][restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-07-15 21:21:57:561][restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2022-07-15 21:21:57:561][restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 330 ms
+[2022-07-15 21:21:57:690][restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+[2022-07-15 21:21:57:697][restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2022-07-15 21:21:57:703][restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[2022-07-15 21:21:57:708][restartedMain] INFO  com.toyproject.demo.DemoApplication - Started DemoApplication in 0.637 seconds (JVM running for 0.844)
