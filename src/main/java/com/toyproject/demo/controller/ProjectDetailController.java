@@ -2,7 +2,7 @@ package com.toyproject.demo.controller;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
-import com.toyproject.demo.domain.Sprint;
+import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.service.presonalproject.ProjectDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

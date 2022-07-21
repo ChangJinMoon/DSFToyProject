@@ -1,8 +1,7 @@
 package com.toyproject.demo.controller;
 
 import com.toyproject.demo.Message;
-import com.toyproject.demo.StatusEnum;
-import com.toyproject.demo.domain.Sprint;
+import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.service.sprint.SprintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +35,9 @@ public class SprintController {
 
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
+
+
 
 
 }

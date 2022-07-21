@@ -1,7 +1,6 @@
 package com.toyproject.demo.repository.project;
 
-import com.toyproject.demo.domain.Sprint;
-import com.toyproject.demo.domain.member.Member;
+import com.toyproject.demo.domain.sprint.Sprint;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;

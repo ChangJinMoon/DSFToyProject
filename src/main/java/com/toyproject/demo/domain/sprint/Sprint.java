@@ -1,4 +1,4 @@
-package com.toyproject.demo.domain;
+package com.toyproject.demo.domain.sprint;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.toyproject.demo.service.sprint;
 
 import com.toyproject.demo.Message;
-import com.toyproject.demo.domain.Sprint;
+import com.toyproject.demo.domain.sprint.Sprint;
 
 import java.util.List;
 

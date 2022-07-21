@@ -1,6 +1,6 @@
 package com.toyproject.demo.service.presonalproject;
 
-import com.toyproject.demo.domain.Sprint;
+import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.repository.project.ProjectDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,6 @@
 package com.toyproject.demo.repository.project;
 
-import com.toyproject.demo.domain.Sprint;
-import org.springframework.stereotype.Repository;
+import com.toyproject.demo.domain.sprint.Sprint;
 
 import java.util.List;
 
