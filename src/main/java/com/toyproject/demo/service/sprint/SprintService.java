@@ -9,4 +9,5 @@ public interface SprintService {
 
     Message<Long> save(Long projectNum, Sprint sprint);
     Message<List<Sprint>> getSprintByProject(Long projectNum);
+
 }
