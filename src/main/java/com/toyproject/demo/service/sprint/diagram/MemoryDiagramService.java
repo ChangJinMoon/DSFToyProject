@@ -62,7 +62,7 @@ public class MemoryDiagramService implements DiagramService{
 
         message.setData(graphs);
         message.setStatusEum(StatusEnum.OK);
-        message.setMessage("그래프 생성");
+        message.setMessage("그래프 생현");
 
 
         return message;
