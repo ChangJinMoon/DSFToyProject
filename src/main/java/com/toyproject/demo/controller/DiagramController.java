@@ -29,7 +29,7 @@ public class DiagramController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @PostMapping("/{id}/{projectNum}/diagram/{sprintNum}")
+    @GetMapping("/{id}/{projectNum}/diagram/{sprintNum}")
     public ResponseEntity<Message> makeDiagram(@PathVariable Long id
             , @PathVariable Long projectNum, @PathVariable Long sprintNum){
         Message<List<MultiValueMap>> message = diagramService.makeDiagrams(diagramRepository.findBySprintNum(sprintNum),sprintNum);
