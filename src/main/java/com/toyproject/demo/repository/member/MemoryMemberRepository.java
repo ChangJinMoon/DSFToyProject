@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.swing.text.html.Option;
 import java.util.*;
 
-@Repository
+//@Repository
 public class MemoryMemberRepository implements MemberRepository{
 
     private static Long seq = 0L;

@@ -9,11 +9,13 @@ import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemoryMemberService implements MemberService{
 
     private final MemberRepository memberRepository;
@@ -38,6 +40,7 @@ public class MemoryMemberService implements MemberService{
         return message;
     }
 
+    @Transactional
     public Message<Long> save(Member member){
         Long memberId = memberRepository.save(member).get();
         if(memberId == -1L){
