@@ -24,4 +24,6 @@ public class Member {
 
     @Column(nullable = false)
     private String findPasswordAnswer;
+
+    // Test를 위한 수정
 }
