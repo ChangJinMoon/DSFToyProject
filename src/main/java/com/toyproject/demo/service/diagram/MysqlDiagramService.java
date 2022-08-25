@@ -1,57 +1,65 @@
-package com.toyproject.demo.service.sprint.diagram;
+package com.toyproject.demo.service.diagram;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.sprint.Diagram;
-import com.toyproject.demo.repository.sprint.diagram.DiagramRepository;
+import com.toyproject.demo.repository.diagram.DiagramRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class MemoryDiagramService implements DiagramService{
+@Transactional(readOnly = true)
+public class MysqlDiagramService implements DiagramService{
 
     private final DiagramRepository diagramRepository;
 
+
     @Override
-    public Message<Long> save(Long sprintNum, Diagram diagram) {
+    @Transactional
+    public Message<Long> save(Long projectNum, Diagram diagram) {
         Message<Long> message = new Message<>();
-        Long save = diagramRepository.save(sprintNum,diagram);
+
+        Long saveId = diagramRepository.save(projectNum, diagram);
         message.setMessage("Diagram 저장");
         message.setStatusEum(StatusEnum.OK);
-        message.setData(save);
-
+        message.setData(saveId);
 
         return message;
-
     }
 
     @Override
     public Message<Diagram> findById(Long diagramNum) {
         Message<Diagram> message = new Message<>();
 
-        Diagram find = diagramRepository.findByNum(diagramNum);
+        Diagram findDiagram = diagramRepository.findByNum(diagramNum).get();
 
-        if(find != null){
-            message.setMessage("Diagram 찾기 성공");
-            message.setData(find);
+        if(findDiagram.getId() == -1L){
+            message.setMessage("유효하지 않은 아이디");
             message.setStatusEum(StatusEnum.OK);
+        }
+        else {
+            message.setMessage("Diagram -> findById 성공");
+            message.setStatusEum(StatusEnum.OK);
+            message.setData(findDiagram);
         }
 
         return message;
+
+
     }
 
     @Override
-    public Message<List<MultiValueMap>> makeDiagrams(List<Diagram> diagramListBySprintNum,Long sprintNum) {
+    public Message<List<MultiValueMap>> makeDiagrams(List<Diagram> diagramListByProjectNum, Long projectNum) {
         Message<List<MultiValueMap>> message = new Message<>();
-        List<Diagram> diagramList = diagramRepository.findBySprintNum(sprintNum);
+        List<Diagram> diagramList = diagramRepository.findByProjectNum(projectNum);
         List<MultiValueMap> graphs = new ArrayList<>();
         for (Diagram diagram : diagramList) {
             if(diagram.getSuperClassName() == null){
@@ -66,10 +74,9 @@ public class MemoryDiagramService implements DiagramService{
 
 
         return message;
-
     }
 
-    private MultiValueMap<Long,String> makeGraph(String superClassName) {
+        private MultiValueMap<Long,String> makeGraph(String superClassName) {
         Queue<Graph> q = new LinkedList<>();
         MultiValueMap<Long,String> mtMap = new LinkedMultiValueMap<>();
         mtMap.add(0L,superClassName);

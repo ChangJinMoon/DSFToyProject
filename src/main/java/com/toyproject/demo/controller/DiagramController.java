@@ -3,13 +3,12 @@ package com.toyproject.demo.controller;
 import com.toyproject.demo.Message;
 import com.toyproject.demo.domain.sprint.Diagram;
 import com.toyproject.demo.domain.sprint.Sprint;
-import com.toyproject.demo.repository.sprint.diagram.DiagramRepository;
+import com.toyproject.demo.repository.diagram.DiagramRepository;
 import com.toyproject.demo.service.sprint.SprintService;
-import com.toyproject.demo.service.sprint.diagram.DiagramService;
+import com.toyproject.demo.service.diagram.DiagramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,15 +23,15 @@ public class DiagramController {
     private final SprintService sprintService;
 
     @PostMapping("/{id}/{projectNum}/{sprintNum}/save")
-    public ResponseEntity<Message> save (@PathVariable Long sprintNum, @RequestBody Diagram diagram){
-        Message<Long> message = diagramService.save(sprintNum, diagram);
+    public ResponseEntity<Message> save (@PathVariable Long projectNum, @RequestBody Diagram diagram){
+        Message<Long> message = diagramService.save(projectNum, diagram);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @GetMapping("/{id}/{projectNum}/diagram/{sprintNum}")
+    @GetMapping("/{id}/{projectNum}/diagram")
     public ResponseEntity<Message> makeDiagram(@PathVariable Long id
-            , @PathVariable Long projectNum, @PathVariable Long sprintNum){
-        Message<List<MultiValueMap>> message = diagramService.makeDiagrams(diagramRepository.findBySprintNum(sprintNum),sprintNum);
+            , @PathVariable Long projectNum){
+        Message<List<MultiValueMap>> message = diagramService.makeDiagrams(diagramRepository.findByProjectNum(projectNum),projectNum);
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }

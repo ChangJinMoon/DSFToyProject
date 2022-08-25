@@ -1,4 +1,4 @@
-package com.toyproject.demo.service.sprint.diagram;
+package com.toyproject.demo.service.diagram;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
