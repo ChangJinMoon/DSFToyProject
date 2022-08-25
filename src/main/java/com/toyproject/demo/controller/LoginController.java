@@ -45,7 +45,7 @@ public class LoginController {
     @PostMapping("/join")
     public ResponseEntity<Message> save(@RequestBody Member member){
         Message<Long> message = memberService.save(member);
-        log.info("Member join 실행 회원가입이 정상적으로 이뤄짐.");
+        log.info("Member join 실행 정상적으로 이뤄짐.");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

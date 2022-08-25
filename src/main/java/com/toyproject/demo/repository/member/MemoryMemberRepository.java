@@ -37,9 +37,9 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<List<Member>> findAll() {
+    public List<Member> findAll() {
         List<Member> members = new ArrayList<>(store.values());
-        return Optional.ofNullable(members);
+        return members;
     }
 
     public Member findPassword(String id, String answer) {

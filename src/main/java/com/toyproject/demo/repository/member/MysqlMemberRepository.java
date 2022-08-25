@@ -17,8 +17,18 @@ public class MysqlMemberRepository implements MemberRepository{
     @PersistenceContext
     private final EntityManager em;
 
+    // Optional을 사용하는게 맞는지 고민
     @Override
     public Optional<Long> save(Member member) {
+
+        List<Member> memberList = findAll();
+        for (Member m : memberList) {
+            if(m.getEmail().equals(member.getEmail())){
+                return Optional.of(-1L);
+            }
+
+        }
+
         em.persist(member);
         Optional<Long> newID = Optional.of(member.getId());
         return newID;
@@ -26,11 +36,14 @@ public class MysqlMemberRepository implements MemberRepository{
 
     @Override
     public Optional<Member> findMember(Long id) {
-        return Optional.empty();
+        Member member = em.find(Member.class, id);
+        Optional<Member> findMember = Optional.of(member);
+        return findMember;
     }
 
     @Override
-    public Optional<List<Member>> findAll() {
-        return Optional.empty();
+    public List<Member> findAll() {
+        List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+        return members;
     }
 }
