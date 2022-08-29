@@ -61,9 +61,10 @@ public class MysqlDiagramService implements DiagramService{
         Message<List<MultiValueMap>> message = new Message<>();
         List<Diagram> diagramList = diagramRepository.findByProjectNum(projectNum);
         List<MultiValueMap> graphs = new ArrayList<>();
+
         for (Diagram diagram : diagramList) {
             if(diagram.getSuperClassName() == null){
-                MultiValueMap<Long,String> mtMap = makeGraph(diagram.getClassName());
+                MultiValueMap<Long,List> mtMap = makeGraph(diagram.getClassName());
                 graphs.add(mtMap);
             }
         }
@@ -76,24 +77,43 @@ public class MysqlDiagramService implements DiagramService{
         return message;
     }
 
-        private MultiValueMap<Long,String> makeGraph(String superClassName) {
+        private MultiValueMap<Long,List> makeGraph(String superClassName) {
         Queue<Graph> q = new LinkedList<>();
-        MultiValueMap<Long,String> mtMap = new LinkedMultiValueMap<>();
-        mtMap.add(0L,superClassName);
+        MultiValueMap<Long,List> mtMap = new LinkedMultiValueMap<>();
+        List<String> firstPair = new ArrayList<>();
+
+        firstPair.add("None");
+        firstPair.add(superClassName);
+
+        mtMap.add(0L,firstPair);
+        System.out.println(mtMap);
+        System.out.println("----");
 
         q.add(new Graph(0L,superClassName));
         List<Diagram> all = diagramRepository.findAll();
+
+
         while (!q.isEmpty()){
             Graph graph = q.poll();
 
             for (Diagram diagram : all) {
-                System.out.println(diagram.toString());
-                System.out.println(graph.toString());
-                System.out.println("---------");
+//                System.out.println(diagram.toString());
+//                System.out.println(graph.toString());
+//                System.out.println("---------");
+
                 if(diagram.getSuperClassName() != null && diagram.getSuperClassName().equals(graph.getName())){
+                    List<String> pair = new ArrayList<>();
+
                     q.add(new Graph(graph.getLevel() + 1L, diagram.getClassName()));
                     System.out.println(graph.getLevel() + 1L);
-                    mtMap.add(graph.getLevel() + 1L, diagram.getClassName());
+                    System.out.println("---------");
+                    pair.add(diagram.getSuperClassName());
+                    pair.add(diagram.getClassName());
+                    System.out.println(pair);
+                    System.out.println(mtMap);
+                    mtMap.add(graph.getLevel() + 1L, pair);
+                    System.out.println(mtMap);
+
                 }
             }
         }
