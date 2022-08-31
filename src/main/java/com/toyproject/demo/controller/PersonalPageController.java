@@ -20,7 +20,7 @@ public class PersonalPageController {
     private final PersonalProjectService personalProjectService;
 
     @GetMapping("/personalPage/{id}")
-    public ResponseEntity<Message> init(@RequestParam int id){
+    public ResponseEntity<Message> init(@PathVariable int id){
         Message<List<Project>> init = personalProjectService.init(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));

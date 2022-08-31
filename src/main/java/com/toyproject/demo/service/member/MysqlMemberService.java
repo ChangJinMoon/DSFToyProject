@@ -40,6 +40,7 @@ public class MysqlMemberService implements MemberService{
             }
         }
         message.setMessage("로그인 실패");
+        message.setStatusEum(StatusEnum.NOT_FOUND);
         return message;
     }
 

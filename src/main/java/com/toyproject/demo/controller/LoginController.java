@@ -9,12 +9,15 @@ import com.toyproject.demo.dto.member.MemberFindDto;
 import com.toyproject.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @RestController
@@ -24,19 +27,28 @@ public class LoginController {
 
     private final MemberService memberService;
 
+    // 필요 없음
     @GetMapping("/home")
     public String home(){
         return "home";
     }
 
-    @PostMapping("/home")
-    public ResponseEntity<Message> login(@RequestBody MemberDto memberDto){
+    @PostMapping("/login")
+    public ResponseEntity<Message> login(@RequestBody MemberDto memberDto) throws URISyntaxException {
         Message message = memberService.login(memberDto);
-        log.info("ID: {}가 로그인",memberDto.getEmail());
+        log.info("ID: {}가 로그인 시도",memberDto.getEmail());
+
+        if(message.getStatusEum() == StatusEnum.OK){
+            URI redirectUri = new URI("http://localhost:8080/personalPage/" + message.getData());
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(redirectUri);
+            return new ResponseEntity<Message>(message,httpHeaders,HttpStatus.FOUND);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }
 
+    // 필요 없음
     @GetMapping("/join")
     public String join(){
         return "join";
