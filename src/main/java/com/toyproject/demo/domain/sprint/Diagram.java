@@ -1,5 +1,6 @@
 package com.toyproject.demo.domain.sprint;
 
+import com.toyproject.demo.domain.Project;
 import lombok.Data;
 import lombok.Getter;
 
@@ -20,8 +21,10 @@ public class Diagram {
     @Column(nullable = false)
     private LocalDateTime localDateTime;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id")
     @Column(nullable = false)
-    private Long projectId;
+    private Project project;
 
     //다이어그램을 만들기 위한 이름
     @Column(nullable = true)

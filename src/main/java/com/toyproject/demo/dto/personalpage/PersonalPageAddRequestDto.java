@@ -1,6 +1,7 @@
 package com.toyproject.demo.dto.personalpage;
 
 import com.toyproject.demo.domain.Project;
+import com.toyproject.demo.domain.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 
