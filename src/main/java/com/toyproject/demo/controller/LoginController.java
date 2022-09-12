@@ -39,7 +39,7 @@ public class LoginController {
         log.info("ID: {}가 로그인 시도",memberDto.getEmail());
 
         if(message.getStatusEum() == StatusEnum.OK){
-            URI redirectUri = new URI("http://localhost:8080/personalPage/" + message.getData());
+            URI redirectUri = new URI("http://localhost:3000/personalPage/" + message.getData());
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setLocation(redirectUri);
             return new ResponseEntity<Message>(message,httpHeaders,HttpStatus.FOUND);
