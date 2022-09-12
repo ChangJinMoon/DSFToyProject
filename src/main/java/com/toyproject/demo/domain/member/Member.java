@@ -31,8 +31,8 @@ public class Member {
 
 
     // 다대다 관계
-    @OneToMany(mappedBy = "member_id")
-    @JoinColumn(name = "project_id")
+    @OneToMany(mappedBy = "member")
+    //@JoinColumn(name = "project_id")
     private List<MemberProject> projects;
 
 

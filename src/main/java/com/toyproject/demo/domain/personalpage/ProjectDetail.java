@@ -2,6 +2,7 @@ package com.toyproject.demo.domain.personalpage;
 
 import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.member.Member;
+import com.toyproject.demo.domain.sprint.Diagram;
 import com.toyproject.demo.domain.sprint.Sprint;
 import lombok.Getter;
 import org.springframework.lang.Nullable;
@@ -31,6 +32,10 @@ public class ProjectDetail {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Sprint> sprintList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Diagram> diagrams = new ArrayList<>();
+
 
     public ProjectDetail(){
 

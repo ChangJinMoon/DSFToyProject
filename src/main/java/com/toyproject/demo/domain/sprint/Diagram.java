@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class Diagram {
 
     @Id
+    @Column(name = "diagram_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -21,8 +22,7 @@ public class Diagram {
     private LocalDateTime localDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "project_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "project_id",nullable = false)
     private ProjectDetail project;
 
     //다이어그램을 만들기 위한 이름
