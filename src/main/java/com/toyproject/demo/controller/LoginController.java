@@ -9,15 +9,15 @@ import com.toyproject.demo.dto.member.MemberFindDto;
 import com.toyproject.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @RestController
@@ -27,49 +27,37 @@ public class LoginController {
 
     private final MemberService memberService;
 
+    // 필요 없음
     @GetMapping("/home")
     public String home(){
         return "home";
     }
 
-    @PostMapping("/home")
-    public ResponseEntity<Message> login(MemberDto memberDto){
-        Long id = memberService.login(memberDto);
-        Message<Long> message = new Message();
+    @PostMapping("/login")
+    public ResponseEntity<Message> login(@RequestBody MemberDto memberDto) throws URISyntaxException {
+        Message message = memberService.login(memberDto);
+        log.info("ID: {}가 로그인 시도",memberDto.getEmail());
 
-        if(id == -1L){
-            message.setMessage("로그인 실패");
-            log.info("login -> 로그인 실패");
-        }
-        else{
-            message.setData(id);
-            message.setMessage("로그인 성공");
-            message.setStatusEum(StatusEnum.OK);
-            log.info("login -> id: {} 로그인",id);
-
+        if(message.getStatusEum() == StatusEnum.OK){
+            URI redirectUri = new URI("http://localhost:8080/personalPage/" + message.getData());
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(redirectUri);
+            return new ResponseEntity<Message>(message,httpHeaders,HttpStatus.FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }
 
+    // 필요 없음
     @GetMapping("/join")
     public String join(){
         return "join";
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Message> save(Member member){
-        System.out.println("member = " + member.toString());
-        memberService.save(member);
-        Long id = member.getId();
-        Message<Long> message = new Message<>();
-
-        if(id > 0){
-            message.setMessage("회원가입 성공");
-            message.setData(id);
-            message.setStatusEum(StatusEnum.OK);
-            log.info("Member join -> id {} name: {}, email: {} ",id, member.getName(), member.getEmail());
-        }
+    public ResponseEntity<Message> save(@RequestBody Member member){
+        Message<Long> message = memberService.save(member);
+        log.info("Member join 실행 정상적으로 이뤄짐.");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
@@ -79,20 +67,9 @@ public class LoginController {
     }
 
     @PostMapping("/find-password")
-    public ResponseEntity<Message> checkAnswerFindPassword(MemberFindDto memberFindDto){
-        String password = memberService.checkAnswerFindPassword(memberFindDto);
-        Message<String> message = new Message<>();
-        if(password == null){
-            message.setMessage("답변이 틀림");
-            log.info("checkAnswerFindPassword -> 실패 ");
-        }
-        else{
-            message.setStatusEum(StatusEnum.OK);
-            message.setMessage("답변이 맞음, 비밀번호를 보여줌");
-            message.setData(password);
-            log.info("checkAnswerFindPassword -> 성공 email : {}",memberFindDto.getEmail());
-        }
-
+    public ResponseEntity<Message> checkAnswerFindPassword(@RequestBody MemberFindDto memberFindDto){
+        Message message = memberService.checkAnswerFindPassword(memberFindDto);
+        log.info("checkAnswerFindPassword execute");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

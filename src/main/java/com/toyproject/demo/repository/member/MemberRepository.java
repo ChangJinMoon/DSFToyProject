@@ -4,13 +4,14 @@ import com.toyproject.demo.domain.member.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository {
 
-    Long save(Member member);
+    Optional<Long> save(Member member);
 
-    Member findMember(Long id);
+    Optional<Member> findMember(Long id);
 
     List<Member> findAll();
 }
