@@ -1,17 +1,16 @@
 package com.toyproject.demo.repository.project;
 
-import com.toyproject.demo.domain.Project;
+import com.toyproject.demo.domain.personalpage.ProjectDetail;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public interface ProjectRepository {
-    boolean save(Project project);
-    //Project findProjectById(int userId);
-    Optional<List<Project>> findAllProject(int userId);
-    void delete(String projectId);
-    void update(Project project);
-    int getProjectSize();
-    Optional<Project> findProject(String projectId);
+    //for preview
+    //origin project
+    boolean save(ProjectDetail project);
+    Optional<ProjectDetail> findProject(Long projectId);
+    Optional<List<ProjectDetail>> findAllProject(Long userId);
+    void update(ProjectDetail project);
+    boolean delete(Long projectId);
 }
