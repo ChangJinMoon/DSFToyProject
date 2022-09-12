@@ -43,13 +43,4 @@ public class DiagramController {
      * 좌측에 프로젝트 숫자에 해당하는 스프린트 반환.
      * @return ResponseEntity(Message) -> All sprint according to the number of projects
      */
-
-    @GetMapping("{id}/{projectNum}/allSprintByProjectNum")
-    public ResponseEntity<Message> allSpringByProjectNum(@PathVariable Long projectNum){
-        Message<List<Sprint>> message = sprintService.getSprintByProject(projectNum);
-
-        return ResponseEntity.status(HttpStatus.OK).body(message);
-    }
-
-
 }

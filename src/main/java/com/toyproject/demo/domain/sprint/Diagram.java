@@ -1,7 +1,6 @@
 package com.toyproject.demo.domain.sprint;
 
-import com.toyproject.demo.domain.Project;
-import lombok.Data;
+import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class Diagram {
     @ManyToOne
     @JoinColumn(name = "project_id")
     @Column(nullable = false)
-    private Project project;
+    private ProjectDetail project;
 
     //다이어그램을 만들기 위한 이름
     @Column(nullable = true)
@@ -32,10 +31,6 @@ public class Diagram {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
     }
 
     public Diagram() {

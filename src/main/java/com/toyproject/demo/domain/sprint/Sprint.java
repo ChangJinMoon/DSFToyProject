@@ -1,21 +1,37 @@
 package com.toyproject.demo.domain.sprint;
 
+import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.Data;
+import lombok.Getter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Data
+@Entity
+@Getter
 public class Sprint {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "sprint_id")
     private Long id;
-    private String name;
-    private String details;
-    private String context; // 설계도에 있어서 구현
-    private List<Long> coworkers;
+
+    private String sprintName;
+
+    private String sprintDetail;
+
     private LocalDateTime localDateTime;
-    private Long projectNum;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private ProjectDetail project;
 
-
+    public Sprint createSprint(String sprintName, String sprintDetail, ProjectDetail projectDetail){
+        Sprint sprint = new Sprint();
+        this.sprintName = sprintName;
+        this.sprintDetail = sprintDetail;
+        this.project = projectDetail;
+        localDateTime = LocalDateTime.now();
+        return sprint;
+    }
 }

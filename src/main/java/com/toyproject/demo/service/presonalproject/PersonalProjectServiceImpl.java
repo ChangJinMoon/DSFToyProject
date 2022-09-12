@@ -52,7 +52,7 @@ public class PersonalProjectServiceImpl implements PersonalProjectService{
         else {
 
             ProjectDetail project = new ProjectDetail().createProject(pageAddRequestDto.getProjectName()
-                    ,pageAddRequestDto.getProjectDetails(), userId,new MemberProject().createMemberProject(memberRepository.findMember(userId)));
+                    ,pageAddRequestDto.getProjectDetails(), userId,new MemberProject().createMemberProject(memberRepository.findMember(userId).get()));
             projectRepository.save(project);
 
             if(projectRepository.findProject(project.getProjectId()).isPresent()) {

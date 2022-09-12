@@ -1,6 +1,7 @@
 package com.toyproject.demo.domain.member;
 
-import com.toyproject.demo.domain.Project;
+import com.toyproject.demo.domain.MemberProject;
+import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,7 +33,7 @@ public class Member {
     // 다대다 관계
     @OneToMany(mappedBy = "member_id")
     @JoinColumn(name = "project_id")
-    private List<Project> projects;
+    private List<MemberProject> projects;
 
 
 }

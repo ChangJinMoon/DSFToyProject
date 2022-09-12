@@ -92,7 +92,7 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         //check invitekey
 
         //then
-        Member member = memberRepository.findMember(userid);
+        Member member = memberRepository.findMember(userid).get();
         project.get().addMember(member);
         projectRepository.update(project.get());
 

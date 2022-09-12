@@ -21,7 +21,6 @@ public class MysqlDiagramRepository implements DiagramRepository{
     @Override
     public Long save(Long projectId, Diagram diagram) {
         diagram.setLocalDateTime(LocalDateTime.now());
-        diagram.setProjectId(projectId);
         em.persist(diagram);
         return diagram.getId();
     }
@@ -53,7 +52,7 @@ public class MysqlDiagramRepository implements DiagramRepository{
         List<Diagram> findByProjectNumDiagram = new ArrayList<>();
 
         for (Diagram diagram : diagramList) {
-            if(projectNum == diagram.getProjectId()){
+            if(projectNum == diagram.getProject().getProjectId()){
                 findByProjectNumDiagram.add(diagram);
             }
 
