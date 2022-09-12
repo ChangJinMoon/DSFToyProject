@@ -2,62 +2,60 @@ package com.toyproject.demo.controller;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
-import com.toyproject.demo.domain.Project;
+import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
-import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.service.presonalproject.PersonalProjectService;
+import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class PersonalPageController {
-    private final PersonalProjectService personalProjectService;
+    private final PersonalProjectServiceImpl personalProjectService;
 
     @GetMapping("/personalPage/{id}")
-    public ResponseEntity<Message> init(@RequestParam int id){
-        Message<List<Project>> init = personalProjectService.init(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
+    public ResponseEntity<Message> init(@RequestParam Long id){
+        Message<List<ProjectDetail>> init = personalProjectService.init(id);
+        HttpHeaders headers = makeJsonHttpHeaders();
+
         //Bad Authorization 구현 하기
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(init);
     }
 
     @PostMapping("/personalPage/{id}")
-    public ResponseEntity<Message> addProject(@RequestParam int id,
+    public ResponseEntity<Message> addProject(HttpServletRequest request, @RequestParam Long id,
                                               @RequestBody PersonalPageAddRequestDto dto){
-        Message<List<Project>> response = personalProjectService.addProject(id,dto.getProject());
+        Message<ProjectDetail> response = personalProjectService.addProject(id,dto);
+
+        HttpHeaders headers = new HttpHeaders();
+
+        //redirect
+        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
+        URI redirect = ServletUriComponentsBuilder.fromContextPath(request)
+                .path("/personalPage/{id}")
+                .buildAndExpand("id",id)
+                .toUri();
+        headers.setLocation(redirect);
+
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
         else
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
     }
 
-
-    @DeleteMapping("/personalPage/{id}/{projectId}")
-    public ResponseEntity<Message> deleteProject(@RequestParam int id, @RequestParam String projectId){
-        Message<List<Project>> response = personalProjectService.deleteProject(projectId);
-        if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @PutMapping("/personalPage/{id}/update/{projectId}")
-    public ResponseEntity<Message> updateProject(@RequestParam int id, @PathVariable String projectId,
-                                                     @RequestBody PersonalPageUpdateRequestDto dto){
-        Message<List<Project>> message = personalProjectService.updateProject(projectId, dto);
+    private HttpHeaders makeJsonHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-
-        if(message.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).headers(headers).body(message);
-
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(message);
+        return headers;
     }
 }
