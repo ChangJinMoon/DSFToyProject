@@ -7,6 +7,7 @@ import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
 import com.toyproject.demo.service.presonalproject.PersonalProjectService;
 import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,20 +21,20 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class PersonalPageController {
     private final PersonalProjectServiceImpl personalProjectService;
 
     @GetMapping("/personalPage/{id}")
-    public ResponseEntity<Message> init(@RequestParam Long id){
+    public ResponseEntity<Message> init(@PathVariable Long id){
         Message<List<ProjectDetail>> init = personalProjectService.init(id);
         HttpHeaders headers = makeJsonHttpHeaders();
-
         //Bad Authorization 구현 하기
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(init);
     }
 
     @PostMapping("/personalPage/{id}")
-    public ResponseEntity<Message> addProject(HttpServletRequest request, @RequestParam Long id,
+    public ResponseEntity<Message> addProject(HttpServletRequest request, @PathVariable Long id,
                                               @RequestBody PersonalPageAddRequestDto dto){
         Message<ProjectDetail> response = personalProjectService.addProject(id,dto);
 

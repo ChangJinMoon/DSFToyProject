@@ -33,7 +33,7 @@ public class PersonalProjectController {
 
     @DeleteMapping("/personalProject/{projectId}")
     public ResponseEntity<Message> deleteProject(HttpServletRequest request
-                                                    , @RequestParam Long projectId){
+                                                    , @PathVariable Long projectId){
         Message<String> response = personalProjectService.deleteProject(projectId);
 
         //redirect
@@ -47,7 +47,7 @@ public class PersonalProjectController {
 
     @PutMapping("/personalProject/update/{projectId}")
     public ResponseEntity<Message> updateProject(HttpServletRequest request
-                                                 ,@RequestParam Long projectId, @RequestBody PersonalPageUpdateRequestDto dto){
+                                                 ,@PathVariable Long projectId, @RequestBody PersonalPageUpdateRequestDto dto){
         Message<ProjectDetail> message = personalProjectService.updateProject(projectId, dto);
         //redirect
         HttpHeaders headers = redirectHome(request,projectId);
@@ -60,7 +60,7 @@ public class PersonalProjectController {
 
     // sprint init
     @GetMapping("/personalProject/{projectId}")
-    public ResponseEntity<Message> sprintInit(@RequestParam Long projectId){
+    public ResponseEntity<Message> sprintInit(@PathVariable Long projectId){
         Message<List<Sprint>> response =  personalProjectService.init(projectId);
         HttpHeaders headers = makeJsonHttpHeaders();
 
@@ -72,8 +72,8 @@ public class PersonalProjectController {
 
     // sprint add
     @PostMapping("/personalProject/addSprint/{projectId}")
-    public ResponseEntity<Message> addSprint(HttpServletRequest request,@RequestParam Long projectId,
-                                             @RequestParam ProjectDetailAddRequestDto addRequestDto){
+    public ResponseEntity<Message> addSprint(HttpServletRequest request,@PathVariable Long projectId,
+                                             @RequestBody ProjectDetailAddRequestDto addRequestDto){
         Message<String> response = personalProjectService.addSprint(projectId,addRequestDto);
         //redirect
         HttpHeaders headers = redirectHome(request,projectId);

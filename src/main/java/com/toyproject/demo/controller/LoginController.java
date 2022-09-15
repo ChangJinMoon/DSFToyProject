@@ -37,7 +37,8 @@ public class LoginController {
     public ResponseEntity<Message> login(@RequestBody MemberDto memberDto) throws URISyntaxException {
         Message message = memberService.login(memberDto);
         log.info("ID: {}가 로그인 시도",memberDto.getEmail());
-
+        log.info("input Id",memberDto.getEmail());
+        log.info("input Id",memberDto.getPassword());
         if(message.getStatusEum() == StatusEnum.OK){
             URI redirectUri = new URI("http://localhost:3000/personalPage/" + message.getData());
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -45,7 +46,6 @@ public class LoginController {
             return new ResponseEntity<Message>(message,httpHeaders,HttpStatus.FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
-
     }
 
     // 필요 없음
@@ -58,6 +58,8 @@ public class LoginController {
     public ResponseEntity<Message> save(@RequestBody Member member){
         Message<Long> message = memberService.save(member);
         log.info("Member join 실행 정상적으로 이뤄짐.");
+        log.info("email",member.getEmail());
+        log.info("password",member.getPassword());
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

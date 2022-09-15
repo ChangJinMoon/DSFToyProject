@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +27,7 @@ public class SprintController {
     private final SprintServiceImpl sprintService;
 
     @GetMapping("/Sprint/{id}")
-    public ResponseEntity<Message> init(@RequestParam Long id){
+    public ResponseEntity<Message> init(@PathVariable Long id){
         Message<Sprint> response = sprintService.init(id);
         HttpHeaders headers = makeJsonHttpHeaders();
 
@@ -41,8 +38,8 @@ public class SprintController {
     }
 
     @DeleteMapping("/Sprint/{id}")
-    public ResponseEntity<Message> deleteSprint(@RequestParam Long id,
-                                                @RequestParam ProjectDetailDeleteRequestDto deleteRequestDto){
+    public ResponseEntity<Message> deleteSprint(@PathVariable Long id,
+                                                @RequestBody ProjectDetailDeleteRequestDto deleteRequestDto){
         Message<String> response = sprintService.deleteSprint(id,deleteRequestDto);
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -54,8 +51,8 @@ public class SprintController {
     }
 
     @PutMapping("/Sprint/update/{id}")
-    public ResponseEntity<Message> updateSprint(@RequestParam Long id,
-                                                @RequestParam ProjectDetailUpdateRequestDto updateRequestDto){
+    public ResponseEntity<Message> updateSprint(@PathVariable Long id,
+                                                @RequestBody ProjectDetailUpdateRequestDto updateRequestDto){
         Message<String> response = sprintService.updateSprint(id,updateRequestDto);
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
