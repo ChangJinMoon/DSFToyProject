@@ -9,7 +9,7 @@ public interface SprintRepository {
     void save(Sprint sprint);
     Optional<Sprint> find(Long sprintId);
     Optional<List<Sprint>> findAll(Long projectId);
-    void update(Sprint sprint);
-    void delete(Sprint sprint);
+    boolean update(Sprint sprint);
+    boolean delete(Sprint sprint);
 
 }

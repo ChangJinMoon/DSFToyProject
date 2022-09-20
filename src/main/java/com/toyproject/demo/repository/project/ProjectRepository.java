@@ -11,6 +11,6 @@ public interface ProjectRepository {
     boolean save(ProjectDetail project);
     Optional<ProjectDetail> findProject(Long projectId);
     Optional<List<ProjectDetail>> findAllProject(Long userId);
-    void update(ProjectDetail project);
+    boolean update(ProjectDetail project);
     boolean delete(Long projectId);
 }

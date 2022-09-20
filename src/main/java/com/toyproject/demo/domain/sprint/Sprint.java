@@ -12,7 +12,7 @@ import java.util.List;
 public class Sprint {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sprint_id")
     private Long id;
 
@@ -26,12 +26,17 @@ public class Sprint {
     @JoinColumn(name = "project_id")
     private ProjectDetail project;
 
-    public Sprint createSprint(String sprintName, String sprintDetail, ProjectDetail projectDetail){
+    public static Sprint createSprint(String sprintName, String sprintDetail, ProjectDetail projectDetail){
         Sprint sprint = new Sprint();
+        sprint.sprintName = sprintName;
+        sprint.sprintDetail = sprintDetail;
+        sprint.project = projectDetail;
+        sprint.localDateTime = LocalDateTime.now();
+        return sprint;
+    }
+
+    public void updateSprint(String sprintName, String sprintDetail){
         this.sprintName = sprintName;
         this.sprintDetail = sprintDetail;
-        this.project = projectDetail;
-        localDateTime = LocalDateTime.now();
-        return sprint;
     }
 }

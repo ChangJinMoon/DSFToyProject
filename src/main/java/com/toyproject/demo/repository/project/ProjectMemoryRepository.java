@@ -25,8 +25,8 @@ public class ProjectMemoryRepository implements ProjectRepository{
     }
 
     @Override
-    public void update(ProjectDetail project) {
-
+    public boolean update(ProjectDetail project) {
+        return false;
     }
 
     @Override

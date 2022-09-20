@@ -11,6 +11,8 @@ public class Message <T>{
 
     public Message(StatusEnum statusEnum) {
         statusEum = statusEnum;
+        this.data = null;
+        this.message = null;
     }
     public Message() {
         this.statusEum = StatusEnum.BAD_REQUEST_AUTHORIZATION;

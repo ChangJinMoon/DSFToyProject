@@ -40,9 +40,12 @@ public class ProjectJpaRepository implements ProjectRepository{
     }
 
     @Override
-    public void update(ProjectDetail project) {
-        if(project.getProjectId() != null)
+    public boolean update(ProjectDetail project) {
+        if(project.getProjectId() != null) {
             em.merge(project);
+            return true;
+        }
+        return false;
     }
 
     @Override

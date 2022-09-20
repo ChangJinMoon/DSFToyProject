@@ -12,12 +12,14 @@ import com.toyproject.demo.repository.project.ProjectJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Slf4j
 public class PersonalProjectServiceImpl implements PersonalProjectService{
     private final ProjectJpaRepository projectRepository;
@@ -45,7 +47,7 @@ public class PersonalProjectServiceImpl implements PersonalProjectService{
         Message<ProjectDetail> message;
         //check userId exist
 
-        if(pageAddRequestDto.getProjectName() == null) {
+        if(pageAddRequestDto.getProjectName() == null || pageAddRequestDto.getProjectDetails() == null) {
             message = new Message<>(StatusEnum.BAD_REQUEST_NOT_ENOUGH);
             message.setMessage("Need ProjectName");
         }

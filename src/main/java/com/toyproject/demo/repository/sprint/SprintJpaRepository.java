@@ -33,18 +33,21 @@ public class SprintJpaRepository implements SprintRepository{
     }
 
     @Override
-    public void update(Sprint sprint) {
-        if(sprint.getId() == null)
-            entityManager.persist(sprint);
-        else
-            entityManager.merge(sprint);
+    public boolean update(Sprint sprint) {
+        if(sprint.getId() == null) {
+            return false;
+        }
+        entityManager.merge(sprint);
+        return false;
     }
 
     @Override
-    public void delete(Sprint sprint) {
-        if(entityManager.find(Sprint.class,sprint.getId()) != null)
+    public boolean delete(Sprint sprint) {
+        if(entityManager.find(Sprint.class,sprint.getId()) != null) {
             entityManager.remove(sprint);
-        //else reception
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -10,15 +10,16 @@ import com.toyproject.demo.repository.sprint.SprintJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SprintServiceImpl implements SprintService{
 
     private final SprintJpaRepository sprintRepository;
-    private final ProjectJpaRepository projectRepository;
 
     @Override
     public Message<Sprint> init(Long sprintId) {
@@ -59,18 +60,20 @@ public class SprintServiceImpl implements SprintService{
 
     @Override
     public Message<String> updateSprint(Long userId, ProjectDetailUpdateRequestDto requestDto) {
-        Optional<Sprint> sprint = sprintRepository.find(requestDto.getSprintId());
+        Optional<Sprint> result = sprintRepository.find(requestDto.getSprintId());
         //check sprintId is exist
-        if(sprint.isEmpty())
+        if(result.isEmpty())
             return makeIdNotExistMessage();
 
+        Sprint sprint = result.get();
         //check Authorization - only Host
-        if(sprint.get().getProject().getProjectLeader() != userId)
+        if(sprint.getProject().getProjectLeader() != userId)
             return makeIdNotAuthorizationMessage();
 
         Message<String> message;
         //patch Sprint in repository
-        sprintRepository.update(sprint.get());
+        sprint.updateSprint(requestDto.getSprintName(),requestDto.getSprintDetail());
+        sprintRepository.update(sprint);
         //make response Message
         message = new Message<>(StatusEnum.OK);
         message.setMessage("Success");

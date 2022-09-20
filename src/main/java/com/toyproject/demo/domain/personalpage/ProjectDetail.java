@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 public class ProjectDetail {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
     private Long projectId;
 
@@ -58,7 +58,12 @@ public class ProjectDetail {
         projectDetail1.projectDetail = projectDetail;
         projectDetail1.projectLeader = projectLeader;
         projectDetail1.members.add(memberProject);
+        projectDetail1.getMembers().get(projectDetail1.members.size()-1).setProject(projectDetail1);
         return projectDetail1;
+    }
+
+    public void setProjectDetail(String update){
+        this.projectDetail = update;
     }
 
 }

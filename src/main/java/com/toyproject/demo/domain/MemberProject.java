@@ -13,7 +13,8 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 public class MemberProject {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_project_id")
     private Long id;
 
@@ -29,6 +30,10 @@ public class MemberProject {
         MemberProject memberProject = new MemberProject();
         memberProject.member = member;
         return memberProject;
+    }
+
+    public void setProject(ProjectDetail projectDetail){
+        this.project = projectDetail;
     }
 
     public boolean findMember(Long memberId){
