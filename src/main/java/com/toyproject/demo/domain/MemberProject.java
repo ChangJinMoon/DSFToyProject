@@ -1,11 +1,14 @@
 package com.toyproject.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.Getter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 
@@ -18,11 +21,13 @@ public class MemberProject {
     @Column(name = "member_project_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "project_id")
     private ProjectDetail project;
 

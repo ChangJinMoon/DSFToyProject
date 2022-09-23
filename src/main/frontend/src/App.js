@@ -1,26 +1,29 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   BrowserRouter,
   Routes,
   Route,
   Link,
+  Navigate,
 }from "react-router-dom";
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
-import FindPage from './components/FindPage/FindPage';
-import Auth from './auth';
+import ProjectPage from './components/ProjectPage/ProjectPage';
+import CheckPage from './CheckPage/CheckPage';
+import SprintPage from './components/SprintPage/SprintPage';
 
-function App() {
+const App=()=> {
+  
   return (
-
         <Routes>
-          <Route path="/" element={<LandingPage/>}/>
-          <Route path="/LoginPage" element={<LoginPage/>}/>
+          <Route path="/" element={<LoginPage/>}/>
+          <Route path="/LandingPage" element={<LandingPage/>}/>
           <Route path="/RegisterPage" element={<RegisterPage/>}/>
-          <Route path="/FindPage" element={<FindPage/>}/>
+          <Route path="/ProjectPage" element={<ProjectPage/>}/>
+          <Route path="/SprintPage" element={<SprintPage/>}/>
+          <Route path="/CheckPage" element={<CheckPage/>}/>
         </Routes>
-
   );
 }
 

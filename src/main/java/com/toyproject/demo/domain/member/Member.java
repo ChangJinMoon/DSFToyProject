@@ -1,5 +1,6 @@
 package com.toyproject.demo.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.*;
@@ -29,8 +30,8 @@ public class Member {
     @Column(nullable = false)
     private String findPasswordAnswer;
 
-
     // 다대다 관계
+    @JsonManagedReference
     @OneToMany(mappedBy = "member")
     //@JoinColumn(name = "project_id")
     private List<MemberProject> projects;

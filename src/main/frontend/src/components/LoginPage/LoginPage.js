@@ -1,34 +1,35 @@
 import React,{useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 
-const server="/home";
+const server="/login";
 function LoginPage() {
   const { register, watch, formState:{errors},handleSubmit}=useForm();
   const [errorFromSubmit, setErrorFromSubmit]=useState("");
   const [loading, setLoading] =useState(false);
-
+  const navigate=useNavigate();
   const onSubmit=async(data)=>{
-    console.log(data.email)
-    //try{
-      setLoading(true)
-      axios
+    const email=data.email;
+    const password=data.password;
+    const body=JSON.stringify({email,password});
+    console.log(body)
+    setLoading(true)
+    axios
       .post(server,{
         email:data.email,
-        password:data.password,
+        password:data.password
       })
-    .then((res)=>{
-      console.log(res);
-    })
-    .catch((error)=>{
-      console.log("error ",error);
-    })
-    //}
-    //catch{
-
-   // }
-    
+      .then((res)=>{
+      console.log("성공여부",res);
+        if(res.data.statusEum==="OK"){
+          //res.data.data
+          navigate("/LandingPage")//projectpage에 data숫자값 넘겨주기
+        }
+      })
+      .catch((error)=>{
+        console.log("error ",error);
+      })   
   }
   return (
     <div className='auth-wrapper'>
@@ -48,7 +49,7 @@ function LoginPage() {
         {errorFromSubmit&&<p>{errorFromSubmit}</p>}    
         <input type="submit" disabled={loading}/>
         <Link style={{color:'gray', textDecoration:'none'}} to="/RegisterPage">회원가입하기</Link>
-        <Link style={{color:'gray', textDecoration:'none', float:'right'}} to="/FindPage">회원정보 찾기</Link>
+        <Link style={{color:'gray', textDecoration:'none', float:'right'}} to="/CheckPage">회원정보 찾기</Link>
       </form>
     </div>
   )

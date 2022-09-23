@@ -1,5 +1,7 @@
 package com.toyproject.demo.domain.personalpage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.sprint.Diagram;
@@ -27,12 +29,15 @@ public class ProjectDetail {
 
     private Long projectLeader;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "project" , cascade = CascadeType.ALL)
     private List<MemberProject> members = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Sprint> sprintList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Diagram> diagrams = new ArrayList<>();
 

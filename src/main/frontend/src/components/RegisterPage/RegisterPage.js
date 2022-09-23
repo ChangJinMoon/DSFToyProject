@@ -1,7 +1,8 @@
 import React, {useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const server="/join";
 
@@ -9,10 +10,12 @@ function RegisterPage() {
   const { register, watch, formState: {errors}, handleSubmit } = useForm();
   const [errorFromSubmit, setErrorFromSubmit]=useState("");
   const [loading, setLoading] =useState(false);
-
+  const [status,setstatus]=useState("");
   const password = useRef();
   password.current = watch("password");
 
+  const navigate=useNavigate();
+  
   const onSubmit=async(data)=>{
     console.log(data.email)
     //try{
@@ -26,7 +29,21 @@ function RegisterPage() {
       })
     .then((res)=>{
       console.log(res);
-    })
+      setstatus(res.data.statusEum);
+      if(res.data.statusEum==="OK"){
+        console.log("dd");
+        //window.location.href="/"; //로그인페이지로 이동을 하지만 새로고침이 된다.
+        navigate("/");//로그인페이지로 이동하지만 새로고침을 하지 않는다.
+      }
+      else if(res.data.message==="중복아이디 존재"){
+        Swal.fire({
+          icon:'error',
+          title:"중복된 아이디가 존재합니다.",
+          text:"다시 입력해주세요"
+        })
+      }
+
+      })
     .catch((error)=>{
       console.log("error ",error);
     })
@@ -65,7 +82,7 @@ function RegisterPage() {
         {errorFromSubmit&&<p>{errorFromSubmit}</p>}
 
         <input type="submit"/>
-        <Link style={{color:'gray', textDecoration:'none'}} to="/LoginPage">로그인하기</Link>
+        <Link style={{color:'gray', textDecoration:'none'}} to="/">로그인하기</Link>
       </form>
     </div>
   )

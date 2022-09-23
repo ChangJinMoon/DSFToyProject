@@ -1,5 +1,7 @@
 package com.toyproject.demo.domain.sprint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.Data;
 import lombok.Getter;
@@ -22,7 +24,8 @@ public class Sprint {
 
     private LocalDateTime localDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     private ProjectDetail project;
 
