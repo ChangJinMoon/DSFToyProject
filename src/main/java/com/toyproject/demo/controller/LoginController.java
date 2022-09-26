@@ -6,6 +6,7 @@ import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
 
+import com.toyproject.demo.dto.member.MemberJoinDto;
 import com.toyproject.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,17 +35,11 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Message> login(@RequestBody MemberDto memberDto) throws URISyntaxException {
+    public ResponseEntity<Message> login(@RequestBody MemberDto memberDto){
         Message message = memberService.login(memberDto);
         log.info("ID: {}가 로그인 시도",memberDto.getEmail());
         log.info("input Id",memberDto.getEmail());
         log.info("input Id",memberDto.getPassword());
-        if(message.getStatusEum() == StatusEnum.OK){
-            URI redirectUri = new URI("http://localhost:3000/personalPage/" + message.getData());
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setLocation(redirectUri);
-            return new ResponseEntity<Message>(message,httpHeaders,HttpStatus.FOUND);
-        }
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
@@ -55,7 +50,9 @@ public class LoginController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Message> save(@RequestBody Member member){
+    public ResponseEntity<Message> save(@RequestBody MemberJoinDto memberJoinDto){
+        Member member = memberJoinDto.DtoToEntity(memberJoinDto);
+
         Message<Long> message = memberService.save(member);
         log.info("Member join 실행 정상적으로 이뤄짐.");
         log.info("email",member.getEmail());
