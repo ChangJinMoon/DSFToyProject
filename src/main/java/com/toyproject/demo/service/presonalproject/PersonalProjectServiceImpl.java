@@ -6,6 +6,7 @@ import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
+import com.toyproject.demo.dto.personalpage.PersonalPageInitDto;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import com.toyproject.demo.repository.project.ProjectJpaRepository;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,16 +26,20 @@ import java.util.Optional;
 public class PersonalProjectServiceImpl implements PersonalProjectService{
     private final ProjectJpaRepository projectRepository;
     private final MemberRepository memberRepository;
+    private final PersonalPageInitDto personalPageInitDto = new PersonalPageInitDto();
 
     @Override
-    public Message<List<ProjectDetail>> init(Long userid) {
-        Message<List<ProjectDetail>> message;
+    public Message<List<PersonalPageInitDto>> init(Long userid) {
+        Message<List<PersonalPageInitDto>> message;
         //Bad Authorization
 
         Optional<List<ProjectDetail>> allProject = projectRepository.findAllProject(userid);
         if(allProject.isPresent()) {
             message = new Message<>(StatusEnum.OK);
-            message.setData(allProject.get());
+            List<PersonalPageInitDto> list = new ArrayList<>();
+            allProject.get().stream()
+                    .forEach(projectDetail -> list.add(personalPageInitDto.transPersonalPageInitDto(projectDetail)));
+            message.setData(list);
         }
         else {
             message = new Message<>(StatusEnum.NOT_FOUND);

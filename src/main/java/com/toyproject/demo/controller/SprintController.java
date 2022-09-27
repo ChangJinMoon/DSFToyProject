@@ -5,6 +5,7 @@ import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
+import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.service.sprint.SprintServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,7 @@ public class SprintController {
 
     @GetMapping("/Sprint/{id}")
     public ResponseEntity<Message> init(@PathVariable Long id){
-        Message<Sprint> response = sprintService.init(id);
+        Message<SprintInitDto> response = sprintService.init(id);
         HttpHeaders headers = makeJsonHttpHeaders();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)

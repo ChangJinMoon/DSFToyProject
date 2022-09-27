@@ -21,12 +21,10 @@ public class MemberProject {
     @Column(name = "member_project_id")
     private Long id;
 
-    @JsonBackReference
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @JsonBackReference
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "project_id")
     private ProjectDetail project;

@@ -29,15 +29,12 @@ public class ProjectDetail {
 
     private Long projectLeader;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "project" , cascade = CascadeType.ALL)
     private List<MemberProject> members = new ArrayList<>();
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Sprint> sprintList = new ArrayList<>();
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Diagram> diagrams = new ArrayList<>();
 

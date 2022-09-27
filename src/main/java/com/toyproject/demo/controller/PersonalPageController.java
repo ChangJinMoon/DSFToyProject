@@ -4,6 +4,7 @@ import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
+import com.toyproject.demo.dto.personalpage.PersonalPageInitDto;
 import com.toyproject.demo.service.presonalproject.PersonalProjectService;
 import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class PersonalPageController {
 
     @GetMapping("/personalPage/{id}")
     public ResponseEntity<Message> init(@PathVariable Long id){
-        Message<List<ProjectDetail>> init = personalProjectService.init(id);
+        Message<List<PersonalPageInitDto>> init = personalProjectService.init(id);
         HttpHeaders headers = makeJsonHttpHeaders();
         //Bad Authorization 구현 하기
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(init);

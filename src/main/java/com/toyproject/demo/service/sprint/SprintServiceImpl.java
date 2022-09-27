@@ -5,6 +5,7 @@ import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
+import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.repository.project.ProjectJpaRepository;
 import com.toyproject.demo.repository.sprint.SprintJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,10 +23,11 @@ import java.util.Optional;
 public class SprintServiceImpl implements SprintService{
 
     private final SprintJpaRepository sprintRepository;
+    private final SprintInitDto sprintInitDto = new SprintInitDto();
 
     @Override
-    public Message<Sprint> init(Long sprintId) {
-        Message<Sprint> message;
+    public Message<SprintInitDto> init(Long sprintId) {
+        Message<SprintInitDto> message;
         Optional<Sprint> sprint = sprintRepository.find(sprintId);
         //check sprintId is exist
         if(sprint.isEmpty()){
@@ -33,7 +37,7 @@ public class SprintServiceImpl implements SprintService{
         else{
             message = new Message<>(StatusEnum.OK);
             message.setMessage("Success");
-            message.setData(sprint.get());
+            message.setData(sprintInitDto.transSprintInitDto(sprint.get()));
         }
         return message;
     }

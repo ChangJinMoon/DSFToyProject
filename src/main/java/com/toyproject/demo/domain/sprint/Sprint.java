@@ -24,7 +24,6 @@ public class Sprint {
 
     private LocalDateTime localDateTime;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     private ProjectDetail project;

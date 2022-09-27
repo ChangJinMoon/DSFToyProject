@@ -8,6 +8,7 @@ import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailInitRequestDto;
+import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.service.presonalproject.PersonalProjectService;
 import com.toyproject.demo.service.projectDetail.ProjectDetailService;
 import com.toyproject.demo.service.projectDetail.ProjectDetailServiceImpl;
@@ -61,7 +62,7 @@ public class PersonalProjectController {
     // sprint init
     @GetMapping("/personalProject/{projectId}")
     public ResponseEntity<Message> sprintInit(@PathVariable Long projectId){
-        Message<List<Sprint>> response =  personalProjectService.init(projectId);
+        Message<List<SprintInitDto>> response =  personalProjectService.init(projectId);
         HttpHeaders headers = makeJsonHttpHeaders();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)

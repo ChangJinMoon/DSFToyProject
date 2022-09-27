@@ -9,11 +9,12 @@ import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailInitRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
+import com.toyproject.demo.dto.sprint.SprintInitDto;
 
 import java.util.List;
 
 public interface ProjectDetailService {
-    Message<List<Sprint>> init(Long projectId);
+    Message<List<SprintInitDto>> init(Long projectId);
 
     Message<ProjectDetail> addMemberToProject(Long userId,Long projectId);
 

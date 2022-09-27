@@ -12,6 +12,7 @@ import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailInitRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
+import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import com.toyproject.demo.repository.project.ProjectJpaRepository;
 import com.toyproject.demo.repository.sprint.SprintJpaRepository;
@@ -34,10 +35,11 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
     private final ProjectJpaRepository projectRepository;
     private final MemberRepository memberRepository;
     private final SprintJpaRepository sprintRepository;
+    private final SprintInitDto sprintInitDto = new SprintInitDto();
 
     @Override
-    public Message<List<Sprint>> init(Long projectId) {
-        Message<List<Sprint>> message;
+    public Message<List<SprintInitDto>> init(Long projectId) {
+        Message<List<SprintInitDto>> message;
         //check Authorization - every Member
         //get SprintsInfo from Repository
         Optional<List<Sprint>> sprintList = sprintRepository.findAll(projectId);
@@ -51,11 +53,12 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
             //or empty
             message = new Message<>(StatusEnum.OK);
             message.setMessage("sprint-empty");
-            message.setData(new ArrayList<Sprint>());
         }
         else{
             message = new Message<>(StatusEnum.OK);
-            message.setData(sprintList.get());
+            List<SprintInitDto> list = new ArrayList<>();
+            sprintList.get().stream().forEach(sprint -> list.add(sprintInitDto.transSprintInitDto(sprint)));
+            message.setData(list);
         }
         return message;
     }

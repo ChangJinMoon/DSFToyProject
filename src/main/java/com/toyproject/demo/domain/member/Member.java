@@ -31,7 +31,6 @@ public class Member {
     private String findPasswordAnswer;
 
     // 다대다 관계
-    @JsonManagedReference
     @OneToMany(mappedBy = "member")
     //@JoinColumn(name = "project_id")
     private List<MemberProject> projects;

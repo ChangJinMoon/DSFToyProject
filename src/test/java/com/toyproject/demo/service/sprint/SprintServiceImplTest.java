@@ -5,6 +5,7 @@ import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
+import com.toyproject.demo.dto.personalpage.PersonalPageInitDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
@@ -85,7 +86,7 @@ class SprintServiceImplTest {
 
         PersonalPageAddRequestDto personalPageAddRequestDto = serviceTestDomain.makePPARD();
         personalProjectService.addProject(member.getId(), personalPageAddRequestDto).getData();
-        List<ProjectDetail> data = personalProjectService.init(member.getId()).getData();
+        List<PersonalPageInitDto> data = personalProjectService.init(member.getId()).getData();
         Long projectId = data.get(0).getProjectId();
         System.out.println(projectId);
 
