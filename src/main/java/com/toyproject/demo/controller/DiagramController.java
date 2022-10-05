@@ -23,7 +23,7 @@ public class DiagramController {
     private final SprintService sprintService;
 
     @PostMapping("/{id}/{projectNum}/{sprintNum}/save")
-    public ResponseEntity<Message> save (@PathVariable Long projectNum, @RequestBody Diagram diagram){
+    public ResponseEntity<Message> save (@PathVariable Long projectNum, @RequestBody Diagram diagram, @PathVariable String sprintNum){
         Message<Long> message = diagramService.save(projectNum, diagram);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
