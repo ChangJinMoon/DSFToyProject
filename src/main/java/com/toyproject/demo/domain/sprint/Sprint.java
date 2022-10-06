@@ -2,6 +2,7 @@ package com.toyproject.demo.domain.sprint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.toyproject.demo.domain.code.Code;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.Data;
 import lombok.Getter;
@@ -27,6 +28,10 @@ public class Sprint {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     private ProjectDetail project;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "code_id")
+    private List<Code> code;
 
     public static Sprint createSprint(String sprintName, String sprintDetail, ProjectDetail projectDetail){
         Sprint sprint = new Sprint();

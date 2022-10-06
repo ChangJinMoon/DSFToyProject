@@ -4,7 +4,10 @@ import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.code.Code;
 import com.toyproject.demo.dto.Code.CodeDto;
+import com.toyproject.demo.dto.Code.CodeFindListDto;
 import com.toyproject.demo.repository.code.CodeRepository;
+import com.toyproject.demo.repository.sprint.SprintRepository;
+import com.toyproject.demo.service.sprint.SprintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +19,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodeServiceImpl implements CodeService{
 
-    CodeRepository codeRepository;
+    private final CodeRepository codeRepository;
+    private final SprintRepository sprintRepository;
 
+
+    @Transactional
     @Override
-    public Message<Long> save(CodeDto codeDto) {
+    public Message<Long> save(CodeDto codeDto, Long sprintId) {
 
-        Long saveId = codeRepository.save(new Code(codeDto));
+        Code code = CodeDto.DtoToEntity(codeDto);
+        code.setSprint(sprintRepository.find(sprintId).get());
+        Long saveId = codeRepository.save(code);
 
         if(saveId != null){
             Message<Long> message = new Message<>(StatusEnum.OK);
@@ -39,7 +47,21 @@ public class CodeServiceImpl implements CodeService{
     }
 
     @Override
-    public Message<List<Code>> getCodeList(Long id) {
-        return null;
+    public Message<List<CodeFindListDto>> getCodeList(Long id) {
+        List<CodeFindListDto> codeFindListDtoList = codeRepository.findBySprintId(id);
+
+        Message<List<CodeFindListDto>> message = new Message<>();
+
+        if(codeFindListDtoList.isEmpty()){
+            message.setMessage("Code가 존재하지 않음");
+            message.setStatusEum(StatusEnum.OK);
+
+            return message;
+        }
+        message.setMessage("Code를 불러옴");
+        message.setStatusEum(StatusEnum.OK);
+        message.setData(codeFindListDtoList);
+
+        return message;
     }
 }

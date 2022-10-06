@@ -18,16 +18,16 @@ public class Code {
     @Column(name = "code_id")
     Long id;
 
-    @Column(nullable = false)
+    @Column
     String title;
 
-    @Column(nullable = false)
+    @Column
     String context;
 
-    @Column(nullable = false)
+    @Column
     Long writerId;
 
-    @Column(nullable = false)
+    @Column
     LocalDateTime writeDate;
 
 
@@ -41,6 +41,9 @@ public class Code {
         writeDate = LocalDateTime.now();
     }
 
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
+    }
 
     protected Code() {
     }
