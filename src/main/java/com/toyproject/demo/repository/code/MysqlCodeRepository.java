@@ -48,13 +48,15 @@ public class MysqlCodeRepository implements CodeRepository {
 
     @Override
     public Long updateCode(Code code) {
-        return null;
+        em.merge(code);
+        return code.getId();
     }
 
     @Override
     public Long deleteCode(Long id) {
         Code code = findById(id);
+        Long deleteId = code.getId();
         em.remove(code);
-        return null;
+        return deleteId;
     }
 }
