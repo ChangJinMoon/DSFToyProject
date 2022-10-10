@@ -33,13 +33,14 @@ public class MysqlCodeRepository implements CodeRepository {
     @Override
     public List<CodeFindListDto> findBySprintId(Long id) {
         List<Code> codeList = em.createQuery("select c from Code c" +
-                " where c.sprint.id = :sprint_id", Code.class).setParameter("sprint_id",id).getResultList();
+                " where c.sprint.id in :sprint_id", Code.class).setParameter("sprint_id",id).getResultList();
         List<CodeFindListDto> codeFindListDtoList = new ArrayList<>();
         for (Code code : codeList) {
             CodeFindListDto codeFindListDto = new CodeFindListDto();
             codeFindListDto.setTitle(code.getTitle());
             codeFindListDto.setContext(code.getContext());
             codeFindListDto.setWriteDate(code.getWriteDate());
+            codeFindListDtoList.add(codeFindListDto);
         }
 
         return codeFindListDtoList;
@@ -47,13 +48,15 @@ public class MysqlCodeRepository implements CodeRepository {
 
     @Override
     public Long updateCode(Code code) {
-        return null;
+        em.merge(code);
+        return code.getId();
     }
 
     @Override
     public Long deleteCode(Long id) {
         Code code = findById(id);
+        Long deleteId = code.getId();
         em.remove(code);
-        return null;
+        return deleteId;
     }
 }

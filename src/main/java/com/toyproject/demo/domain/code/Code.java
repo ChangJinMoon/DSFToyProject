@@ -4,6 +4,7 @@ package com.toyproject.demo.domain.code;
 import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.Code.CodeDto;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 public class Code {
 
     @Id
@@ -18,16 +20,16 @@ public class Code {
     @Column(name = "code_id")
     Long id;
 
-    @Column(nullable = false)
+    @Column
     String title;
 
-    @Column(nullable = false)
+    @Column
     String context;
 
-    @Column(nullable = false)
+    @Column
     Long writerId;
 
-    @Column(nullable = false)
+    @Column
     LocalDateTime writeDate;
 
 
@@ -41,8 +43,11 @@ public class Code {
         writeDate = LocalDateTime.now();
     }
 
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
+    }
 
-    protected Code() {
+    public Code() {
     }
 
 }
