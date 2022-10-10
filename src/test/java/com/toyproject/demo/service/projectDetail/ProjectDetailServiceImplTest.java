@@ -11,6 +11,7 @@ import com.toyproject.demo.repository.project.ProjectJpaRepository;
 import com.toyproject.demo.service.ServiceTestDomain;
 import com.toyproject.demo.service.member.MysqlMemberService;
 import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,23 +55,19 @@ class ProjectDetailServiceImplTest {
         projectDetailService.addSprint(projectDetail.getProjectId(),std.makeProjectDetailAddRequestDto());
 
         //then
-        List<Sprint> data = projectDetailService.init(projectDetail.getProjectId()).getData();
-        assertThat(data.size()).isEqualTo(2);
+        //List<Sprint> data = projectDetailService.init(projectDetail.getProjectId()).getData();
+        //assertThat(data.size()).isEqualTo(2);
     }
 
     @Test
     void deleteProject() {
         //given
-        Member member = std.makeMember();
-        memberService.save(member);
-
-        PersonalPageAddRequestDto pageAddRequestDto = std.makePPARD();
-        personalProjectService.addProject(member.getId(),pageAddRequestDto);
 
         //when
-
+        boolean One = projectJpaRepository.delete(5L);
+        boolean two = projectJpaRepository.delete(5L);
         //then
-
+        assertThat(One).isEqualTo(two);
     }
     //not yet
     @Test

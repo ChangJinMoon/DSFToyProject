@@ -1,16 +1,14 @@
 package com.toyproject.demo.controller;
 
-import com.sun.net.httpserver.Headers;
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
+import com.toyproject.demo.domain.SessionKey;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
-import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
-import com.toyproject.demo.dto.projectDetail.ProjectDetailInitRequestDto;
+import com.toyproject.demo.dto.projectDetail.ProjectIdRequestDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
-import com.toyproject.demo.service.presonalproject.PersonalProjectService;
-import com.toyproject.demo.service.projectDetail.ProjectDetailService;
+import com.toyproject.demo.repository.session.SessionImpl;
 import com.toyproject.demo.service.projectDetail.ProjectDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +29,8 @@ import java.util.List;
 public class PersonalProjectController {
 
     private final ProjectDetailServiceImpl personalProjectService;
+    private final SessionImpl session;
+    SessionKey sessionKey = new SessionKey();
 
     @DeleteMapping("/personalProject/{projectId}")
     public ResponseEntity<Message> deleteProject(HttpServletRequest request
@@ -61,9 +61,11 @@ public class PersonalProjectController {
 
     // sprint init
     @GetMapping("/personalProject/{projectId}")
-    public ResponseEntity<Message> sprintInit(@PathVariable Long projectId){
-        Message<List<SprintInitDto>> response =  personalProjectService.init(projectId);
+    public ResponseEntity<Message> sprintInit(@RequestBody ProjectIdRequestDto projectIdRequestDto){
+        Message<List<SprintInitDto>> response =  personalProjectService.init(projectIdRequestDto.getProjectId());
         HttpHeaders headers = makeJsonHttpHeaders();
+        //save Project Session
+        session.save(sessionKey.makeProjectSessionKey(projectIdRequestDto.getUserId()) , projectIdRequestDto.getProjectId());
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(response);
@@ -80,6 +82,14 @@ public class PersonalProjectController {
         HttpHeaders headers = redirectHome(request,projectId);
 
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
+    }
+
+    @GetMapping("/personlProject/now/{userId}")
+    public ResponseEntity<Message> getOne(@PathVariable Long userId){
+        Message<Long> response = new Message<>();
+        response.setStatusEum(StatusEnum.OK);
+        response.setData(session.getInfo(sessionKey.makeProjectSessionKey(userId)));
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     public HttpHeaders redirectHome(HttpServletRequest request,Long param){
