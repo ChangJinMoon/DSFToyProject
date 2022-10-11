@@ -1,4 +1,4 @@
-package com.toyproject.demo.dto.Code;
+package com.toyproject.demo.dto.code;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,10 +2,9 @@ package com.toyproject.demo.domain.code;
 
 
 import com.toyproject.demo.domain.sprint.Sprint;
-import com.toyproject.demo.dto.Code.CodeDto;
+import com.toyproject.demo.dto.code.CodeDto;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

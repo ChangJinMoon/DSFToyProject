@@ -2,8 +2,8 @@ package com.toyproject.demo.controller;
 
 
 import com.toyproject.demo.Message;
-import com.toyproject.demo.dto.Code.CodeDto;
-import com.toyproject.demo.dto.Code.CodeFindListDto;
+import com.toyproject.demo.dto.code.CodeDto;
+import com.toyproject.demo.dto.code.CodeFindListDto;
 import com.toyproject.demo.service.code.CodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

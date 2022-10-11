@@ -2,12 +2,8 @@ package com.toyproject.demo.repository.code;
 
 
 import com.toyproject.demo.domain.code.Code;
-import com.toyproject.demo.dto.Code.CodeDto;
-import com.toyproject.demo.dto.Code.CodeFindListDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import com.toyproject.demo.dto.code.CodeFindListDto;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface CodeRepository {
