@@ -36,6 +36,7 @@ public class MysqlCodeRepository implements CodeRepository {
         List<CodeFindListDto> codeFindListDtoList = new ArrayList<>();
         for (Code code : codeList) {
             CodeFindListDto codeFindListDto = new CodeFindListDto();
+            codeFindListDto.setId(code.getId());
             codeFindListDto.setTitle(code.getTitle());
             codeFindListDto.setContext(code.getContext());
             codeFindListDto.setWriteDate(code.getWriteDate());
@@ -47,7 +48,8 @@ public class MysqlCodeRepository implements CodeRepository {
 
     @Override
     public Long updateCode(Code code) {
-        em.merge(code);
+        Code merge = em.merge(code);
+        System.out.println(code.toString());
         return code.getId();
     }
 

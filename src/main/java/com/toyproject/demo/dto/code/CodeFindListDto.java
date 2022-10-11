@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class CodeFindListDto {
 
+        Long id;
         String title;
         String context;
         Long writerId;

@@ -5,6 +5,7 @@ import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.code.CodeDto;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Code {
 
     @Id

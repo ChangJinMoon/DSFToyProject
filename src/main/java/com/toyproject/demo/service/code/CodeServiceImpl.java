@@ -5,12 +5,14 @@ import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.code.Code;
 import com.toyproject.demo.dto.code.CodeDto;
 import com.toyproject.demo.dto.code.CodeFindListDto;
+import com.toyproject.demo.dto.code.CodeUpdateDto;
 import com.toyproject.demo.repository.code.CodeRepository;
 import com.toyproject.demo.repository.sprint.SprintRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -61,6 +63,39 @@ public class CodeServiceImpl implements CodeService{
         message.setStatusEum(StatusEnum.OK);
         message.setData(codeFindListDtoList);
 
+        return message;
+    }
+
+    @Transactional
+    @Override
+    public Message<Long> update(CodeUpdateDto codeUpdateDto, Long codeId) {
+        Code findCode = codeRepository.findById(codeId);
+        findCode.setTitle(codeUpdateDto.getTitle());
+        findCode.setContext(codeUpdateDto.getContext());
+        findCode.setWriteDate(LocalDateTime.now());
+
+//
+//        Code updateCode = codeUpdateDto.DtoToEntity();
+//        updateCode.setId(codeId);
+//        Long updateCodeId = codeRepository.updateCode(updateCode);
+//        System.out.println(updateCode.toString());
+
+        Message<Long> message = new Message<>();
+        message.setMessage("업데이트 완료");
+        message.setData(findCode.getId());
+        message.setStatusEum(StatusEnum.OK);
+
+        return message;
+    }
+
+    @Transactional
+    @Override
+    public Message<Boolean> delete(Long codeId) {
+        codeRepository.deleteCode(codeId);
+        Message<Boolean> message = new Message<>();
+        message.setMessage("삭제 완료");
+        message.setData(Boolean.TRUE);
+        message.setStatusEum(StatusEnum.OK);
         return message;
     }
 }

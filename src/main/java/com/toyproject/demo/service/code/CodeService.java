@@ -11,4 +11,5 @@ public interface CodeService {
     Message<Long> save(CodeDto codeDto,Long sprintId);
     Message<List<CodeFindListDto>> getCodeList(Long id);
     Message<Long> update(CodeUpdateDto codeUpdateDto, Long codeId);
+    Message<Boolean> delete(Long codeId);
 }
