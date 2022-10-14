@@ -1,32 +1,34 @@
 import React,{useState, useEffect, useRef} from 'react'
 import axios from 'axios';
-import Appbar from "./Appbar";
-import { Link } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";
 import image1 from "../../images/image1.png";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser, projectlist, deleteProject } from '../../_actions/user_actions';
+import ProjectList from '../ProjectPage/ProjectList';
 
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "red" }}
-      onClick={onClick}
-    />
+      <div
+          className={className}
+          style={{ ...style, display: "block", background: "red" }}
+          onClick={onClick}
+      />
   );
 };
-const server="";
 const SamplePrevArrow = (props) => {
   const { className, style, onClick } = props;
   return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
+      <div
+          className={className}
+          style={{ ...style, display: "block", background: "green" }}
+          onClick={onClick}
+      />
   );
 };
 function LandingPage() {
@@ -35,7 +37,7 @@ function LandingPage() {
   const [search,setSearch]=useState("");
   const [lists,setLists]=useState([]);
   const [loading, setLoading] =useState(false);
-  
+  const {handleSubmit}=useForm();
   let settings={
     dots:true, //컨텐츠로 바로 이동이 가능한 버튼(false시 사라진다.)
     infinite:true, //컨텐츠 끝까지 갔을때 다음 콘텐츠로 가져와 반복
@@ -76,7 +78,7 @@ function LandingPage() {
   const postsPerPage=10;
   const indexOfLastPost=currentPage*postsPerPage;
   const indexOfFirstPost=indexOfLastPost-postsPerPage;
-  
+
   //modal창
   const [modalOpen,setModalOpen]=useState(false);
   const openModal=()=>{
@@ -95,90 +97,81 @@ function LandingPage() {
     if(search===null || search===""){
       axios.get("")
           .then((res)=>{
-            })
+          })
     }else{
 
     }
   }
   const handleClick=()=>setClick(!click);
   const closeMenu=()=>setClick(false);
-  
-  //axios post
-  const postdata=async(data)=>{
-    setLoading(true)
-    axios
-      .post(server,{
-        
-      })
-      .then((res)=>{
-      console.log("성공여부",res);
-      })
-      .catch((error)=>{
-        console.log("error ",error);
-      })   
+
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+  const Id=useSelector(state=>state.user.currentUser);
+  const data=useSelector(state=>state.user.project);
+  //sessionStorge
+  let sessionStorge=window.sessionStorage;
+  const isLoading=useSelector((state)=>state.user.isLoading);
+  const [getlists, setlists]=useState(null);
+  //컴포넌트가 렌더링 될 때마다 특정 작업을 실행할 수 있도록 하는 hook
+  useEffect(()=>{
+    const project=async()=>{
+      dispatch(projectlist(Id))
+          .then((res)=>{
+            console.log(res);
+            setlists(res);
+            console.log(data);
+          })
+    }
+    project();
+  },[])
+  const deletelist=(projectId)=>{
+    dispatch(deleteProject(projectId))
+        .then((res)=>{
+          console.log(res);
+        })
   }
-  //axios get
-  const getdata=async(data)=>{
-    setLoading(true)
-    axios
-      .get(server,{
-        
-      })
-      .then((res)=>{
-      console.log("성공여부",res);
-      })
-      .catch((error)=>{
-        console.log("error ",error);
-      })   
+  const logout=async()=>{
+    sessionStorge.removeItem("id");
+    dispatch(logoutUser())
+    navigate("/")
   }
 
+
   return (
-    <>
-    <div className="header">
-      <img src={image1} title='logo'/>
-      <nav>
-        <ul>
-          <li className="active"><a href="">Home</a></li>
-          <li><a href='/mypage'>MyPage</a></li>
-          <li><a href='#'>Logout</a></li>
-        </ul>
-      </nav>
-    </div>
-    {
-      /*
-      
-    
-    <div className="menu-bar">
-      <div className="menu1">
-        <button onClick={handleClick}>Menu</button>
-      </div>
-      <div className="menu2" onClick={handleClick}>
-        <button>my page</button>
-        <button>setting</button>
-      </div>
-    </div>
-    {click?<Appbar click={click}/>:""}
-      */
-    }
-      <h2>Search</h2>
-    <form onSubmit={e=>onSearch(e)}>
-      <input type="text" value={search} placeholder="검색어를 입력하세요" onChange={onChangeSearch}/>
-      <button type="submit">검색</button>
-    </form>
-    <Link style={{float:'right'}} to="/ProjectPage">ADD Project</Link>
-    
-    {/*ADD Project 모달 */}
+      <>
+        <div className="header">
+          <img src={image1} title='logo'/>
+          <nav>
+            <ul>
+              <li className="active"><a href="">Home</a></li>
+              <li><button onClick={()=>logout()}>Logout</button></li>
+            </ul>
+          </nav>
+        </div>
+        <h2>Search</h2>
+        <form onSubmit={e=>onSearch(e)}>
+          <input type="text" value={search} placeholder="검색어를 입력하세요" onChange={onChangeSearch}/>
+          <button type="submit">검색</button>
+        </form>
+        <Link style={{float:'right'}} to="/ProjectPage">ADD Project</Link>
+
+        {/*ADD Project 모달
     <button onClick={openModal}>Modal</button>
-    <Modal open={modalOpen} close={closeModal} header="Modal heading" postdata={postdata}>
-      <label>projectName</label>
+    <Modal open={modalOpen} close={closeModal} header="Modal heading">
+      <label>삭제하시겠습니까?</label>
       <br/>
-      <input type="text"/>
-      <br/>
-      <label>projectDetails</label>
-      <br/>
-      <input type="text"/>
     </Modal>
-    
+    */}
+
+        <div>
+          {data&&data.map(project=>(
+              <ProjectList key={project.projectId} handleSubmit={handleSubmit} project={project} deletelist={deletelist}/>
+          ))}
+        </div>
+
+
+        {/*
     <Slider {...settings}>
       <div className="card-wrapper">
         <h3>1</h3>
@@ -233,10 +226,10 @@ function LandingPage() {
           <li><a href="#"><i className="fa fa-"></i></a></li>
         </ul>
       </div>
-      
+
     </Slider>
-    
-    </>
+    */}
+      </>
   )
 }
 

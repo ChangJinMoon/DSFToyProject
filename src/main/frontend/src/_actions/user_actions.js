@@ -83,12 +83,7 @@ export function updateProject(projectId,project){
 }
 //sprint list받기, get 메소드
 export function sprintinit(userId,projectId){
-  const request=axios.get("/personalProject/"+projectId,{
-    params:{
-      userId:userId,
-      projectId:projectId
-    }
-  })
+  const request=axios.get("/personalProject/"+projectId)
   return{
     type:Sprintinit,
     payload:request
@@ -107,12 +102,7 @@ export function addsprint(projectId,sprint){
 }
 //sprint 내용 받기, get 메소드
 export function sprint(userId,projectId){
-  const request=axios.get("/Sprint/"+projectId,{
-    params:{
-      userId:userId,
-      projectId:projectId
-    }
-  })
+  const request=axios.get("/Sprint/"+projectId)
   return{
     type:Sprint,
     payload:request

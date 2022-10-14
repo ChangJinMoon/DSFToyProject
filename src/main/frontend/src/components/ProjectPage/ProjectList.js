@@ -1,23 +1,14 @@
-import React from 'react'
-function Project({project,getData}){
-  return(
-    <div>
-      <b>{project.projectname}</b>
-      <b>{project.projectdetail}</b>
-    </div>
-  )
+import React, { useState } from 'react'
+import { Link } from "react-router-dom";
+function ProjectList({project}){
+    console.log(project)
+    return(
+        <div>
+            <li>
+                <Link to={`/PersonalProject/${project.projectId}`}>{project.projectName}</Link>/
+                {project.projectDetail}
+            </li>
+        </div>
+    )
 }
-function ProjectList({projects,getData}) {
-  console.log(projects)
-  console.log(getData)
-  return (
-    <div>
-      {projects.map(project=>(
-        <Project project={project} getData={getData} key={project.id}/>
-      ))}
-      
-    </div>
-  )
-}
-
 export default ProjectList

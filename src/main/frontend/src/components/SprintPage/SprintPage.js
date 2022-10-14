@@ -1,177 +1,66 @@
 import React,{useState, useEffect, useRef} from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import { useParams, Link, useNavigate,  } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"
-const SampleNextArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "red" }}
-      onClick={onClick}
-    />
-  );
-};
+import "slick-carousel/slick/slick-theme.css";
+import { addsprint } from '../../_actions/user_actions';
+import AddSprint from './AddSprint';
 
-const SamplePrevArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-};
+
 function SprintPage() {
-  let settings={
-    dots:true, //컨텐츠로 바로 이동이 가능한 버튼(false시 사라진다.)
-    infinite:true, //컨텐츠 끝까지 갔을때 다음 콘텐츠로 가져와 반복
-    speed:500, //콘텐츠 이동속도
-    slidesToShow:1, //한 화면에 보이는 콘텐츠 개수
-    slidesToScroll:1, //한번에 넘어가는 콘텐츠 수
-    cssEase:"linear",
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+  const { projectId }=useParams();
+  console.log(projectId);
+  const { register, formState:{errors},handleSubmit}=useForm();
+  const [inputs, setInputs]=useState({
+    sprintname:"",
+    sprintdetail:"",
+  });
+  const [getData,setData]=useState([]);
+  const{sprintname,sprintdetail}=inputs;
+  const onChange=e=>{
+    const{name,value}=e.target;
+    setInputs({
+      ...inputs,
+      [name]:value
+    })
   }
-  const slider=useRef(null);
-  const [search,setSearch]=useState("");
-  const [toggleMenu,setToggleMenu]=useState(false)
-  const [toggleBar,setToggleBar]=useState(true)
-  const toggleChange=()=>{
-    setToggleMenu(!toggleMenu)
-    setToggleBar(!toggleBar)
-  }
-  const onMenuClick=()=>{
-    setToggleMenu(!toggleMenu)
-    setToggleBar(!toggleBar)
-  }
-
-  const onChangeSearch=(e)=>{
-    e.preventDefault();
-    setSearch(e.target.value);
-  }
-  const onSearch=(e)=>{
-    e.preventDefault();
-    if(search===null || search===""){
-      axios.get("")
-          .then((res)=>{
-            })
-    }else{
-
+  const [projects,setprojects]=useState([
+    {
+      sprintname:"test1",
+      sprintdetail:"detail1"
+    },
+  ])
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+  const onSubmit=async()=>{
+    const project={
+      sprintname,
+      sprintdetail,
     }
+    setprojects([...projects,project])
+    setInputs({
+      sprintname:"",
+      sprintdetail:""
+    })
+    dispatch(addsprint(projectId,project))
+        .then((res)=>{
+          console.log(res);
+          if(res.payload.data.statusEum=="OK"){
+            navigate("/LandingPage");
+          }
+        })
   }
 
   return (
-    <> 
-    <form onSubmit={e=>onSearch(e)}>
-      <input type="text" value={search} placeholder="검색어를 입력하세요" onChange={onChangeSearch}/>
-      <button type="submit">검색</button>
-    </form>
-    <Link style={{float:'right'}} to="/">ADD Sprint</Link>
-    <Slider {...settings}>
-      <div className="card-wrapper">
-        <h3>Sprint 1</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="social-icons">
-          <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-        <h3>Sprint 2</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="social-icons">
-          <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-      </div>
+      <>
+        <AddSprint handleSubmit={handleSubmit} sprintname={sprintname} sprintdetail={sprintdetail} onChange={onChange} onSubmit={onSubmit}/>
 
-      <div className="card-wrapper">
-        <h3>Sprint 3</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="">
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-        <h3>Sprint 4</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="social-icons">
-          <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-      </div>
 
-      <div className="card-wrapper">
-        <h3>Sprint 5</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="">
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-        <div className="details">
-          <h2></h2>
-        </div>
-        <h3>Sprint 6</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="social-icons">
-          <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-      </div>
+      </>
 
-      <div className="card-wrapper">
-        <h3>Sprint 7</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="">
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-        <h3>Sprint 8</h3>
-        <div className="card-image">
-          <img src=""/>
-        </div>
-        <ul className="social-icons">
-          <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-          <li><a href="#"><i className="fa fa-"></i></a></li>
-        </ul>
-      </div>
-      
-    </Slider>
-    
-    
-    </>
-   
   )
 }
 

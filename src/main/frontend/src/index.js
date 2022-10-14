@@ -9,21 +9,24 @@ import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
 import Reducer from './_reducers';
 import {
-  BrowserRouter
+    BrowserRouter
 } from "react-router-dom";
 const root = createRoot(document.getElementById('root'));
+//const { store,persistor }=configureStore();
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore);
+
 root.render(
-  <React.StrictMode>
-    <Provider store={createStoreWithMiddleware(Reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__&&
-      window.__REDUX_DEVTOOLS_EXTENSION__()
-    )}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+    <React.StrictMode>
+        <Provider store={createStoreWithMiddleware(Reducer,
+            window.__REDUX_DEVTOOLS_EXTENSION__&&
+            window.__REDUX_DEVTOOLS_EXTENSION__()
+        )}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    </React.StrictMode>,
 );
 reportWebVitals();
 
