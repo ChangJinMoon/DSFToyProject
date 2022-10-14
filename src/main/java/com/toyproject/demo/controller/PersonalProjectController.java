@@ -11,6 +11,7 @@ import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.repository.session.SessionImpl;
 import com.toyproject.demo.service.projectDetail.ProjectDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,9 +26,11 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class PersonalProjectController {
-
+    private final String personalPageHome = "/LandPage/{userId}";
+    private final String projectPageHome = "/PersonalProject/{projectId}";
     private final ProjectDetailServiceImpl personalProjectService;
     private final SessionImpl session;
     SessionKey sessionKey = new SessionKey();
@@ -38,12 +41,12 @@ public class PersonalProjectController {
         Message<String> response = personalProjectService.deleteProject(projectId);
 
         //redirect
-        HttpHeaders headers = redirectHome(request,projectId);
+        HttpHeaders headers = redirectHome(request,projectId,1);
 
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
         else
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
+            return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 
     @PutMapping("/personalProject/update/{projectId}")
@@ -51,21 +54,19 @@ public class PersonalProjectController {
                                                  ,@PathVariable Long projectId, @RequestBody PersonalPageUpdateRequestDto dto){
         Message<ProjectDetail> message = personalProjectService.updateProject(projectId, dto);
         //redirect
-        HttpHeaders headers = redirectHome(request,projectId);
+        HttpHeaders headers = redirectHome(request,projectId,2);
 
         if(message.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).headers(headers).body(message);
 
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(message);
+        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(message);
     }
 
     // sprint init
     @GetMapping("/personalProject/{projectId}")
-    public ResponseEntity<Message> sprintInit(@RequestBody ProjectIdRequestDto projectIdRequestDto){
-        Message<List<SprintInitDto>> response =  personalProjectService.init(projectIdRequestDto.getProjectId());
+    public ResponseEntity<Message> sprintInit(@PathVariable Long projectId){
+        Message<List<SprintInitDto>> response =  personalProjectService.init(projectId);
         HttpHeaders headers = makeJsonHttpHeaders();
-        //save Project Session
-        session.save(sessionKey.makeProjectSessionKey(projectIdRequestDto.getUserId()) , projectIdRequestDto.getProjectId());
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(response);
@@ -79,24 +80,16 @@ public class PersonalProjectController {
                                              @RequestBody ProjectDetailAddRequestDto addRequestDto){
         Message<String> response = personalProjectService.addSprint(projectId,addRequestDto);
         //redirect
-        HttpHeaders headers = redirectHome(request,projectId);
+        HttpHeaders headers = redirectHome(request,projectId,2);
 
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
+        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 
-    @GetMapping("/personlProject/now/{userId}")
-    public ResponseEntity<Message> getOne(@PathVariable Long userId){
-        Message<Long> response = new Message<>();
-        response.setStatusEum(StatusEnum.OK);
-        response.setData(session.getInfo(sessionKey.makeProjectSessionKey(userId)));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    public HttpHeaders redirectHome(HttpServletRequest request,Long param){
+    public HttpHeaders redirectHome(HttpServletRequest request,Long param,int located){
         HttpHeaders headers = makeJsonHttpHeaders();
         URI redirect = ServletUriComponentsBuilder.fromContextPath(request)
-                .path("/personalProject/{projectId}")
-                .buildAndExpand("projectId",param)
+                .path((located == 1 ? personalPageHome : projectPageHome))
+                .buildAndExpand(param)
                 .toUri();
         headers.setLocation(redirect);
         return headers;

@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,8 @@ import java.nio.charset.Charset;
 @RequiredArgsConstructor
 
 public class SprintController {
-
+    private final String sprintPageHome = "/Sprint/{sprintId}";
+    private final String projectPageHome = "/PersonalProject/{projectId}";
     private final SprintServiceImpl sprintService;
     private final SessionImpl session;
     SessionKey sessionKey = new SessionKey();
@@ -46,44 +48,40 @@ public class SprintController {
     }
 
     @DeleteMapping("/Sprint/{id}")
-    public ResponseEntity<Message> deleteSprint(@PathVariable Long id,
+    public ResponseEntity<Message> deleteSprint(HttpServletRequest request, @PathVariable Long id,
                                                 @RequestBody ProjectDetailDeleteRequestDto deleteRequestDto){
         Message<String> response = sprintService.deleteSprint(id,deleteRequestDto);
+
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
 
         if(response.getStatusEum() == StatusEnum.BAD_REQUEST_AUTHORIZATION)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        HttpHeaders headers = redirectHome(request,id,1);
+        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 
     @PutMapping("/Sprint/update/{id}")
-    public ResponseEntity<Message> updateSprint(@PathVariable Long id,
+    public ResponseEntity<Message> updateSprint(HttpServletRequest request,@PathVariable Long id,
                                                 @RequestBody ProjectDetailUpdateRequestDto updateRequestDto){
         Message<String> response = sprintService.updateSprint(id,updateRequestDto);
+
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
 
         if(response.getStatusEum() == StatusEnum.BAD_REQUEST_AUTHORIZATION)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        HttpHeaders headers = redirectHome(request,id,2);
+        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 
-    @GetMapping("/Sprint/now/{userId}")
-    public ResponseEntity<Message> getOne(@PathVariable Long userId){
-        Message<Long> response = new Message<>();
-        response.setStatusEum(StatusEnum.OK);
-        response.setData(session.getInfo(sessionKey.makeSprintSessionKey(userId)));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    public HttpHeaders redirectHome(HttpServletRequest request, Long param){
+    public HttpHeaders redirectHome(HttpServletRequest request, Long param, int located){
         HttpHeaders headers = makeJsonHttpHeaders();
         URI redirect = ServletUriComponentsBuilder.fromContextPath(request)
-                .path("/personalProject/{projectId}")
-                .buildAndExpand("projectId",param)
+                .path((located == 1 ? projectPageHome : sprintPageHome))
+                .buildAndExpand(param)
                 .toUri();
         headers.setLocation(redirect);
         return headers;

@@ -115,7 +115,7 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
             message = new Message<>(StatusEnum.NOT_FOUND);
             message.setMessage("ProjectID is Wrong");
         }
-        else if(personalPageUpdateRequestDto.getProjectName() == null ||
+        else if(personalPageUpdateRequestDto.getProjectName() == null &&
                 personalPageUpdateRequestDto.getProjectDetails() == null){
             message = new Message<>(StatusEnum.BAD_REQUEST_NOT_ENOUGH);
             log.error(getClass() + "-updateProject: Cilent error " + StatusEnum.BAD_REQUEST_NOT_ENOUGH);

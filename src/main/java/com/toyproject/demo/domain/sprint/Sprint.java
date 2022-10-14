@@ -10,6 +10,8 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+
 @Entity
 @Getter
 public class Sprint {
@@ -25,7 +27,7 @@ public class Sprint {
 
     private LocalDateTime localDateTime;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private ProjectDetail project;
 
