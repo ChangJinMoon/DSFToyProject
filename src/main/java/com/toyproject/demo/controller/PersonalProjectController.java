@@ -32,8 +32,6 @@ public class PersonalProjectController {
     private final String personalPageHome = "/LandPage/{userId}";
     private final String projectPageHome = "/PersonalProject/{projectId}";
     private final ProjectDetailServiceImpl personalProjectService;
-    private final SessionImpl session;
-    SessionKey sessionKey = new SessionKey();
 
     @DeleteMapping("/personalProject/{projectId}")
     public ResponseEntity<Message> deleteProject(HttpServletRequest request

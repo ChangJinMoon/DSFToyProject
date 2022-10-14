@@ -31,15 +31,11 @@ public class SprintController {
     private final String sprintPageHome = "/Sprint/{sprintId}";
     private final String projectPageHome = "/PersonalProject/{projectId}";
     private final SprintServiceImpl sprintService;
-    private final SessionImpl session;
-    SessionKey sessionKey = new SessionKey();
 
     @GetMapping("/Sprint/{sprintId}")
-    public ResponseEntity<Message> init(@RequestBody SprintIdRequestDto sprintIdRequestDto){
-        Message<SprintInitDto> response = sprintService.init(sprintIdRequestDto.getSprintId());
+    public ResponseEntity<Message> init(@PathVariable Long sprintId){
+        Message<SprintInitDto> response = sprintService.init(sprintId);
         HttpHeaders headers = makeJsonHttpHeaders();
-        // save Sprint session
-        session.save(sessionKey.makeSprintSessionKey(sprintIdRequestDto.getUserId()), sprintIdRequestDto.getSprintId());
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).headers(headers).body(response);
