@@ -55,13 +55,16 @@ public class LoginController {
     @PostMapping("/join")
     public ResponseEntity<Message> save(@RequestBody MemberJoinDto memberJoinDto){
         Member member = memberJoinDto.DtoToEntity(memberJoinDto);
-
         Message<Long> message = memberService.save(member);
 
         log.info("Member join 실행 정상적으로 이뤄짐.");
         log.info("email",member.getEmail());
         log.info("password",member.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("http://localhost:3000"));
+
+        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(message);
     }
 
     @GetMapping("/find-password")
