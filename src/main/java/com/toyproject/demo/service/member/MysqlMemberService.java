@@ -24,19 +24,17 @@ public class MysqlMemberService implements MemberService{
 
     @Override
     public Message<Long> login(MemberDto memberDto) {
-        List<Member> memberList = memberRepository.findAll();
+
+        Optional<Member> findMember = memberRepository.findByEmail(memberDto.getEmail());
         Message<Long> message = new Message<>();
 
-        if(!memberList.isEmpty()){
-            for (Member member : memberList) {
-                if (member.getEmail()!= null && member.getEmail().equals(memberDto.getEmail())){
-                    if(member.getPassword() != null && member.getPassword().equals(memberDto.getPassword())){
-                        message.setMessage("로그인 성공");
-                        message.setData(member.getId());
-                        message.setStatusEum(StatusEnum.OK);
-                        return message;
-                    }
-                }
+        if(findMember.isPresent()){
+            Member member = findMember.get();
+            if(member.getPassword().equals(memberDto.getPassword())){
+                message.setMessage("로그인 성공");
+                message.setData(member.getId());
+                message.setStatusEum(StatusEnum.OK);
+                return message;
             }
         }
         message.setMessage("로그인 실패");
@@ -47,7 +45,7 @@ public class MysqlMemberService implements MemberService{
     @Transactional
     @Override
     public Message<Long> save(Member member){
-        Long memberId = memberRepository.save(member).get();
+        Long memberId = memberRepository.save(member);
         if(memberId == -1L){
             Message<Long> message = new Message<>(StatusEnum.BAD_REQUEST_AUTHORIZATION);
             message.setMessage("중복아이디 존재");
@@ -62,19 +60,16 @@ public class MysqlMemberService implements MemberService{
 
     @Override
     public Message<String> checkAnswerFindPassword(MemberFindDto memberFindDto) {
-        List<Member> memberList = memberRepository.findAll();
+        Optional<Member> findMember = memberRepository.findByEmail(memberFindDto.getEmail());
         Message<String> message = new Message<>();
 
-        if (!memberList.isEmpty()){
-            for (Member member : memberList) {
-                if(member.getEmail().equals(memberFindDto.getEmail())
-                        && member.getFindPasswordAnswer().equals(memberFindDto.getFindPasswordAnswer())){
-                    message.setData(member.getPassword());
-                    message.setStatusEum(StatusEnum.OK);
-                    message.setMessage("비밀번호 찾기 성공");
-
-                    return message;
-                }
+        if(findMember.isPresent()){
+            Member member = findMember.get();
+            if(member.getPassword().equals(memberFindDto.getFindPasswordAnswer())){
+                message.setData(member.getPassword());
+                message.setStatusEum(StatusEnum.OK);
+                message.setMessage("비밀번호 찾기 성공");
+                return message;
             }
         }
 

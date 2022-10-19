@@ -19,19 +19,14 @@ public class MysqlMemberRepository implements MemberRepository{
 
     // Optional을 사용하는게 맞는지 고민
     @Override
-    public Optional<Long> save(Member member) {
-
-        List<Member> memberList = findAll();
-        for (Member m : memberList) {
-            if(m.getEmail().equals(member.getEmail())){
-                return Optional.of(-1L);
-            }
-
+    public Long save(Member member) {
+        Optional<Member> check = findByEmail(member.getEmail());
+        if(check.isPresent()){
+            return -1L;
         }
 
         em.persist(member);
-        Optional<Long> newID = Optional.of(member.getId());
-        return newID;
+        return member.getId();
     }
 
     @Override
@@ -45,5 +40,16 @@ public class MysqlMemberRepository implements MemberRepository{
     public List<Member> findAll() {
         List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
         return members;
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+
+        List<Member> findMember = em.createQuery("select m from Member m where m.email = :email", Member.class).setParameter("email", email)
+                .getResultList();
+        if(findMember.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(findMember.get(0));
     }
 }
