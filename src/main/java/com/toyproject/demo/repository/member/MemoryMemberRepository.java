@@ -14,19 +14,19 @@ public class MemoryMemberRepository implements MemberRepository{
 
 
     @Override
-    public Optional<Long> save(Member member) {
+    public Long save(Member member) {
         List<Member> members = new ArrayList<>(store.values());
 
         for (Member value : store.values()) {
             if(value.getEmail().equals(member.getEmail())){
-                return Optional.of(-1L);
+                return -1L;
             }
         }
 
         member.setId(++seq);
         store.put(seq, member);
         //member 예외 처리 해야됨
-        return Optional.of(seq);
+        return seq;
 
     }
 
@@ -40,6 +40,11 @@ public class MemoryMemberRepository implements MemberRepository{
     public List<Member> findAll() {
         List<Member> members = new ArrayList<>(store.values());
         return members;
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return Optional.empty();
     }
 
     public Member findPassword(String id, String answer) {
