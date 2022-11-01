@@ -6,6 +6,7 @@ import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
 
+import com.toyproject.demo.dto.member.MemberInfoDto;
 import com.toyproject.demo.dto.member.MemberJoinDto;
 import com.toyproject.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,12 @@ public class LoginController {
     public ResponseEntity<Message> checkAnswerFindPassword(@RequestBody MemberFindDto memberFindDto){
         Message message = memberService.checkAnswerFindPassword(memberFindDto);
         log.info("checkAnswerFindPassword execute");
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<Message> memberInfo(@RequestParam Long id){
+        Message<MemberInfoDto> message = memberService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

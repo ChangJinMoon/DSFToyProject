@@ -5,6 +5,7 @@ import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
+import com.toyproject.demo.dto.member.MemberInfoDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,16 +24,21 @@ public class MysqlMemberService implements MemberService{
     private final MemberRepository memberRepository;
 
     @Override
-    public Message<Long> login(MemberDto memberDto) {
+    public Message<MemberInfoDto> login(MemberDto memberDto) {
 
         Optional<Member> findMember = memberRepository.findByEmail(memberDto.getEmail());
-        Message<Long> message = new Message<>();
+        Message<MemberInfoDto> message = new Message<>();
 
         if(findMember.isPresent()){
             Member member = findMember.get();
             if(member.getPassword().equals(memberDto.getPassword())){
+                MemberInfoDto memberInfoDto = new MemberInfoDto();
+                memberInfoDto.setEmail(member.getEmail());
+                memberInfoDto.setName(member.getName());
+                memberInfoDto.setId(member.getId());
+
                 message.setMessage("로그인 성공");
-                message.setData(member.getId());
+                message.setData(memberInfoDto);
                 message.setStatusEum(StatusEnum.OK);
                 return message;
             }
@@ -77,5 +83,28 @@ public class MysqlMemberService implements MemberService{
         message.setMessage("비밀번호 찾기 실패");
         message.setStatusEum(StatusEnum.OK);
         return message;
+    }
+
+    @Override
+    public Message<MemberInfoDto> findById(Long id) {
+        Optional<Member> member = memberRepository.findMember(id);
+        Message<MemberInfoDto> message = new Message<>();
+        if(member.isPresent()){
+            MemberInfoDto memberInfoDto = new MemberInfoDto();
+            memberInfoDto.setEmail(member.get().getEmail());
+            memberInfoDto.setName(member.get().getName());
+            memberInfoDto.setId(member.get().getId());
+            message.setMessage("멤버정보");
+            message.setStatusEum(StatusEnum.OK);
+            message.setData(memberInfoDto);
+            return message;
+        }
+
+        message.setMessage("멤버정보");
+        message.setStatusEum(StatusEnum.NOT_FOUND);
+        message.setData(null);
+        return message;
+
+
     }
 }
