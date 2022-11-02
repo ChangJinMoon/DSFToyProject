@@ -11,5 +11,5 @@ import java.util.List;
 public interface PersonalProjectService {
     Message<List<PersonalPageInitDto>> init(Long userid);
 
-    Message<ProjectDetail> addProject(Long userId, PersonalPageAddRequestDto projectPreview);
+    Message<String> addProject(Long userId, PersonalPageAddRequestDto projectPreview);
 }

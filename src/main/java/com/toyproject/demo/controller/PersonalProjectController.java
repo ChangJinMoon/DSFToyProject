@@ -2,13 +2,14 @@ package com.toyproject.demo.controller;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
-import com.toyproject.demo.domain.SessionKey;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
-import com.toyproject.demo.dto.projectDetail.ProjectIdRequestDto;
+import com.toyproject.demo.dto.projectDetail.request.PersonalProjectDeleteRequestDto;
+import com.toyproject.demo.dto.projectDetail.request.PersonalProjectGetOneRequestDto;
+import com.toyproject.demo.dto.projectDetail.request.PersonalProjectInitRequestDto;
+import com.toyproject.demo.dto.projectDetail.response.PersonalProjectGetOneResponseDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
-import com.toyproject.demo.repository.session.SessionImpl;
 import com.toyproject.demo.service.projectDetail.ProjectDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 @RequiredArgsConstructor
 public class PersonalProjectController {
@@ -33,13 +34,14 @@ public class PersonalProjectController {
     private final String projectPageHome = "/PersonalProject/{projectId}";
     private final ProjectDetailServiceImpl personalProjectService;
 
-    @DeleteMapping("/personalProject/{projectId}")
+    @DeleteMapping("/personalProject")
     public ResponseEntity<Message> deleteProject(HttpServletRequest request
-                                                    , @PathVariable Long projectId){
-        Message<String> response = personalProjectService.deleteProject(projectId);
+                                                    ,@RequestBody PersonalProjectDeleteRequestDto dto){
+        Message<String> response = personalProjectService.deleteProject(dto.getProjectId());
 
         //redirect
-        HttpHeaders headers = redirectHome(request,projectId,1);
+        HttpHeaders headers = makeJsonHttpHeaders();
+        //HttpHeaders headers = redirectHome(request, dto.getProjectId(), 1);
 
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -47,23 +49,24 @@ public class PersonalProjectController {
             return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 
-    @PutMapping("/personalProject/update/{projectId}")
+    @PutMapping("/personalProject/update")
     public ResponseEntity<Message> updateProject(HttpServletRequest request
-                                                 ,@PathVariable Long projectId, @RequestBody PersonalPageUpdateRequestDto dto){
-        Message<ProjectDetail> message = personalProjectService.updateProject(projectId, dto);
+                                                 ,@RequestBody PersonalPageUpdateRequestDto dto){
+        Message<String> message = personalProjectService.updateProject(dto.getProjectId(),dto);
         //redirect
-        HttpHeaders headers = redirectHome(request,projectId,2);
+        HttpHeaders headers = makeJsonHttpHeaders();
+        //HttpHeaders headers = redirectHome(request, dto.getProjectId(), 2);
 
         if(message.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).headers(headers).body(message);
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(message);
 
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(message);
     }
 
     // sprint init
-    @GetMapping("/personalProject/{projectId}")
-    public ResponseEntity<Message> sprintInit(@PathVariable Long projectId){
-        Message<List<SprintInitDto>> response =  personalProjectService.init(projectId);
+    @GetMapping("/personalProject")
+    public ResponseEntity<Message> sprintInit(@RequestBody PersonalProjectInitRequestDto dto){
+        Message<List<SprintInitDto>> response =  personalProjectService.init(dto.getProjectId());
         HttpHeaders headers = makeJsonHttpHeaders();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
@@ -73,14 +76,22 @@ public class PersonalProjectController {
     }
 
     // sprint add
-    @PostMapping("/personalProject/addSprint/{projectId}")
-    public ResponseEntity<Message> addSprint(HttpServletRequest request,@PathVariable Long projectId,
-                                             @RequestBody ProjectDetailAddRequestDto addRequestDto){
-        Message<String> response = personalProjectService.addSprint(projectId,addRequestDto);
+    @PostMapping("/personalProject/addSprint")
+    public ResponseEntity<Message> addSprint(HttpServletRequest request,
+                                             @RequestBody ProjectDetailAddRequestDto dto){
+        Message<String> response = personalProjectService.addSprint(dto.getProjectId(),dto);
         //redirect
-        HttpHeaders headers = redirectHome(request,projectId,2);
+        HttpHeaders headers = makeJsonHttpHeaders();
+        //HttpHeaders headers = redirectHome(request,dto.getUserId(),2);
 
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
+    }
+
+    @GetMapping("/personalProject/getOne")
+    public ResponseEntity<Message> getOne(@RequestBody PersonalProjectGetOneRequestDto dto){
+        Message<PersonalProjectGetOneResponseDto> response = personalProjectService.getOne(dto);
+        HttpHeaders headers = makeJsonHttpHeaders();
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
     }
 
     public HttpHeaders redirectHome(HttpServletRequest request,Long param,int located){

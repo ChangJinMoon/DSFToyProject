@@ -49,8 +49,8 @@ public class PersonalProjectServiceImpl implements PersonalProjectService{
     }
 
     @Override
-    public Message<ProjectDetail> addProject(Long userId, PersonalPageAddRequestDto pageAddRequestDto) {
-        Message<ProjectDetail> message;
+    public Message<String> addProject(Long userId, PersonalPageAddRequestDto pageAddRequestDto) {
+        Message<String> message;
         //check userId exist
 
         if(pageAddRequestDto.getProjectName() == null || pageAddRequestDto.getProjectDetails() == null) {

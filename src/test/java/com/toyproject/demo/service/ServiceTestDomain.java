@@ -33,23 +33,20 @@ public class ServiceTestDomain {
 
     public PersonalPageAddRequestDto makePPARD(){
         PersonalPageAddRequestDto pageAddRequestDto = new PersonalPageAddRequestDto();
-        pageAddRequestDto.setProjectName("test");
-        pageAddRequestDto.setProjectDetails("for test");
 
         return pageAddRequestDto;
     }
 
     public ProjectDetailAddRequestDto makeProjectDetailAddRequestDto(){
         ProjectDetailAddRequestDto projectDetailAddRequestDto = new ProjectDetailAddRequestDto();
-        projectDetailAddRequestDto.setSprintName("sprint Test");
-        projectDetailAddRequestDto.setSprintDetails("for test");
+
         return projectDetailAddRequestDto;
     }
 
     public PersonalPageUpdateRequestDto makePersonalPageUpdateRequestDto(){
         PersonalPageUpdateRequestDto personalPageUpdateRequestDto = new PersonalPageUpdateRequestDto();
-        personalPageUpdateRequestDto.setProjectDetails("changed details");
-        personalPageUpdateRequestDto.setProjectName("changed name");
+
         return personalPageUpdateRequestDto;
     }
+
 }

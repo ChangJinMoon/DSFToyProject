@@ -39,8 +39,6 @@ class PersonalProjectServiceImplTest {
         memberService.save(member);
 
         PersonalPageAddRequestDto ppard = new PersonalPageAddRequestDto();
-        ppard.setProjectName("test");
-        ppard.setProjectDetails("for test");
 
         //when
         personalProjectService.addProject(member.getId(), ppard);
@@ -63,8 +61,6 @@ class PersonalProjectServiceImplTest {
         memberService.save(member);
 
         PersonalPageAddRequestDto personalPageAddRequestDto = new PersonalPageAddRequestDto();
-        personalPageAddRequestDto.setProjectName("test");
-        personalPageAddRequestDto.setProjectDetails("for test");
 
         personalProjectService.addProject(member.getId(),personalPageAddRequestDto);
 

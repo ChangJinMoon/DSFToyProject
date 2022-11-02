@@ -8,6 +8,7 @@ import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
 import com.toyproject.demo.dto.sprint.SprintIdRequestDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
+import com.toyproject.demo.dto.sprint.request.SprintInitRequestDto;
 import com.toyproject.demo.repository.session.SessionImpl;
 import com.toyproject.demo.service.sprint.SprintServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.nio.charset.Charset;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 
 public class SprintController {
@@ -32,9 +33,9 @@ public class SprintController {
     private final String projectPageHome = "/PersonalProject/{projectId}";
     private final SprintServiceImpl sprintService;
 
-    @GetMapping("/Sprint/{sprintId}")
-    public ResponseEntity<Message> init(@PathVariable Long sprintId){
-        Message<SprintInitDto> response = sprintService.init(sprintId);
+    @GetMapping("/Sprint")
+    public ResponseEntity<Message> init(@RequestBody SprintInitRequestDto dto){
+        Message<SprintInitDto> response = sprintService.init(dto.getSprintId());
         HttpHeaders headers = makeJsonHttpHeaders();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
@@ -43,10 +44,10 @@ public class SprintController {
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
     }
 
-    @DeleteMapping("/Sprint/{id}")
-    public ResponseEntity<Message> deleteSprint(HttpServletRequest request, @PathVariable Long id,
+    @DeleteMapping("/Sprint")
+    public ResponseEntity<Message> deleteSprint(HttpServletRequest request,
                                                 @RequestBody ProjectDetailDeleteRequestDto deleteRequestDto){
-        Message<String> response = sprintService.deleteSprint(id,deleteRequestDto);
+        Message<String> response = sprintService.deleteSprint(deleteRequestDto.getUserId(),deleteRequestDto);
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -54,14 +55,14 @@ public class SprintController {
         if(response.getStatusEum() == StatusEnum.BAD_REQUEST_AUTHORIZATION)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
 
-        HttpHeaders headers = redirectHome(request,id,1);
+        HttpHeaders headers = redirectHome(request,deleteRequestDto.getUserId(),1);
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 
-    @PutMapping("/Sprint/update/{id}")
-    public ResponseEntity<Message> updateSprint(HttpServletRequest request,@PathVariable Long id,
-                                                @RequestBody ProjectDetailUpdateRequestDto updateRequestDto){
-        Message<String> response = sprintService.updateSprint(id,updateRequestDto);
+    @PutMapping("/Sprint/update")
+    public ResponseEntity<Message> updateSprint(HttpServletRequest request,
+                                                @RequestBody ProjectDetailUpdateRequestDto dto){
+        Message<String> response = sprintService.updateSprint(dto.getUserId(),dto);
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -69,7 +70,7 @@ public class SprintController {
         if(response.getStatusEum() == StatusEnum.BAD_REQUEST_AUTHORIZATION)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
 
-        HttpHeaders headers = redirectHome(request,id,2);
+        HttpHeaders headers = redirectHome(request,dto.getUserId(),2);
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
 

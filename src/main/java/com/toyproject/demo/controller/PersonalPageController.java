@@ -5,47 +5,46 @@ import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
 import com.toyproject.demo.dto.personalpage.PersonalPageInitDto;
-import com.toyproject.demo.service.presonalproject.PersonalProjectService;
+import com.toyproject.demo.dto.personalpage.request.PersonalPageInitRequestDto;
 import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class PersonalPageController {
     private final PersonalProjectServiceImpl personalProjectService;
 
-    @GetMapping("/personalPage/{id}")
-    public ResponseEntity<Message> init(@PathVariable Long id){
-        Message<List<PersonalPageInitDto>> init = personalProjectService.init(id);
+    @GetMapping("/personalPage")
+    public ResponseEntity<Message> init(@RequestBody PersonalPageInitRequestDto personalPageInitRequestDto){
+        Message<List<PersonalPageInitDto>> init = personalProjectService.init(personalPageInitRequestDto.getUserId());
         HttpHeaders headers = makeJsonHttpHeaders();
+
         //Bad Authorization 구현 하기
+
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(init);
     }
 
-    @PostMapping("/personalPage/{id}")
-    public ResponseEntity<Message> addProject(HttpServletRequest request, @PathVariable Long id,
+    @PostMapping("/personalPage")
+    public ResponseEntity<Message> addProject(HttpServletRequest request,
                                               @RequestBody PersonalPageAddRequestDto dto){
-        Message<ProjectDetail> response = personalProjectService.addProject(id,dto);
-
+        Message<String> response = personalProjectService.addProject(dto.getUserId(),dto);
         HttpHeaders headers = new HttpHeaders();
 
         //redirect
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
         URI redirect = ServletUriComponentsBuilder.fromContextPath(request)
                 .path("/personalPage/{id}")
-                .buildAndExpand("id",id)
+                .buildAndExpand("id",dto.getUserId())
                 .toUri();
         headers.setLocation(redirect);
 

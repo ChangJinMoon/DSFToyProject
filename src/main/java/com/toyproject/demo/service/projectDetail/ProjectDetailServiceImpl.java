@@ -12,6 +12,8 @@ import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailInitRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
+import com.toyproject.demo.dto.projectDetail.request.PersonalProjectGetOneRequestDto;
+import com.toyproject.demo.dto.projectDetail.response.PersonalProjectGetOneResponseDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import com.toyproject.demo.repository.project.ProjectJpaRepository;
@@ -107,9 +109,9 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
     }
 
     @Override
-    public Message<ProjectDetail> updateProject(Long projectId,
+    public Message<String> updateProject(Long projectId,
                                                 PersonalPageUpdateRequestDto personalPageUpdateRequestDto) {
-        Message<ProjectDetail> message;
+        Message<String> message;
         Optional<ProjectDetail> project = projectRepository.findProject(projectId);
         if(!project.isPresent()) {
             message = new Message<>(StatusEnum.NOT_FOUND);
@@ -164,6 +166,19 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         message = new Message<>(StatusEnum.OK);
         message.setMessage("Success");
         return message;
+    }
+
+    public Message<PersonalProjectGetOneResponseDto> getOne(PersonalProjectGetOneRequestDto dto){
+        Optional<ProjectDetail> project = projectRepository.findProject(dto.getProjectId());
+        Message<PersonalProjectGetOneResponseDto> result = new Message<>();
+
+        if(project.isPresent()) {
+            result.setStatusEum(StatusEnum.OK);
+            result.setData(new PersonalProjectGetOneResponseDto().projectToDto(project.get()));
+            return result;
+        }
+        result.setStatusEum(StatusEnum.NOT_FOUND);
+        return result;
     }
 
     @Override

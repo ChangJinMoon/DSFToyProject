@@ -57,7 +57,6 @@ class SprintServiceImplTest {
 
         //when
         ProjectDetailDeleteRequestDto projectDetailDeleteRequestDto = new ProjectDetailDeleteRequestDto();
-        projectDetailDeleteRequestDto.setSprintId(1L);
         sprintService.deleteSprint(1L,projectDetailDeleteRequestDto);
 
         //then
@@ -72,8 +71,6 @@ class SprintServiceImplTest {
 
         //when
         ProjectDetailUpdateRequestDto projectDetailUpdateRequestDto = new ProjectDetailUpdateRequestDto();
-        projectDetailUpdateRequestDto.setSprintId(1L);
-        projectDetailUpdateRequestDto.setSprintName("changed");
         sprintService.updateSprint(1L,projectDetailUpdateRequestDto);
 
         //then

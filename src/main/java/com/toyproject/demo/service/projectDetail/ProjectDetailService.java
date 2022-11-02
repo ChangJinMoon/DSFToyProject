@@ -18,7 +18,7 @@ public interface ProjectDetailService {
 
     Message<ProjectDetail> addMemberToProject(Long userId,Long projectId);
 
-    Message<ProjectDetail> updateProject(Long projectId, PersonalPageUpdateRequestDto personalPageUpdateRequestDto);
+    Message<String> updateProject(Long projectId, PersonalPageUpdateRequestDto personalPageUpdateRequestDto);
 
     Message<String> deleteProject(Long projectId);
 
