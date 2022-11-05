@@ -34,8 +34,9 @@ public class SprintController {
     private final SprintServiceImpl sprintService;
 
     @GetMapping("/Sprint")
-    public ResponseEntity<Message> init(@RequestBody SprintInitRequestDto dto){
-        Message<SprintInitDto> response = sprintService.init(dto.getSprintId());
+    public ResponseEntity<Message> init(HttpServletRequest request){
+        Message<SprintInitDto> response = sprintService
+                .init(Long.parseLong(request.getParameter("sprintId")));
         HttpHeaders headers = makeJsonHttpHeaders();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)

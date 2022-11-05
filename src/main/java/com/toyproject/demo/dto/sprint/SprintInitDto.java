@@ -2,10 +2,12 @@ package com.toyproject.demo.dto.sprint;
 
 import com.toyproject.demo.domain.sprint.Sprint;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class SprintInitDto {
     private Long sprintId;
     private String sprintName;

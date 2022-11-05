@@ -168,8 +168,8 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         return message;
     }
 
-    public Message<PersonalProjectGetOneResponseDto> getOne(PersonalProjectGetOneRequestDto dto){
-        Optional<ProjectDetail> project = projectRepository.findProject(dto.getProjectId());
+    public Message<PersonalProjectGetOneResponseDto> getOne(Long projectId){
+        Optional<ProjectDetail> project = projectRepository.findProject(projectId);
         Message<PersonalProjectGetOneResponseDto> result = new Message<>();
 
         if(project.isPresent()) {

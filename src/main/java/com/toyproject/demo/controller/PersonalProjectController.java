@@ -65,8 +65,9 @@ public class PersonalProjectController {
 
     // sprint init
     @GetMapping("/personalProject")
-    public ResponseEntity<Message> sprintInit(@RequestBody PersonalProjectInitRequestDto dto){
-        Message<List<SprintInitDto>> response =  personalProjectService.init(dto.getProjectId());
+    public ResponseEntity<Message> sprintInit(HttpServletRequest request){
+        Message<List<SprintInitDto>> response =  personalProjectService
+                .init(Long.parseLong(request.getParameter(request.getParameter("projectId"))));
         HttpHeaders headers = makeJsonHttpHeaders();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
@@ -88,8 +89,9 @@ public class PersonalProjectController {
     }
 
     @GetMapping("/personalProject/getOne")
-    public ResponseEntity<Message> getOne(@RequestBody PersonalProjectGetOneRequestDto dto){
-        Message<PersonalProjectGetOneResponseDto> response = personalProjectService.getOne(dto);
+    public ResponseEntity<Message> getOne(HttpServletRequest request){
+        Message<PersonalProjectGetOneResponseDto> response = personalProjectService
+                .getOne(Long.parseLong(request.getParameter("projectId")));
         HttpHeaders headers = makeJsonHttpHeaders();
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
     }

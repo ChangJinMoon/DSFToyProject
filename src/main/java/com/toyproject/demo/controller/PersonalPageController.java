@@ -25,8 +25,10 @@ public class PersonalPageController {
     private final PersonalProjectServiceImpl personalProjectService;
 
     @GetMapping("/personalPage")
-    public ResponseEntity<Message> init(@RequestBody PersonalPageInitRequestDto personalPageInitRequestDto){
-        Message<List<PersonalPageInitDto>> init = personalProjectService.init(personalPageInitRequestDto.getUserId());
+    public ResponseEntity<Message> init(HttpServletRequest request){
+        Message<List<PersonalPageInitDto>> init = personalProjectService
+                .init(Long.parseLong(request.getParameter("id")));
+
         HttpHeaders headers = makeJsonHttpHeaders();
 
         //Bad Authorization 구현 하기

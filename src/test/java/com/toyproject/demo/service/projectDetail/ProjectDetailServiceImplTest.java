@@ -75,7 +75,7 @@ class ProjectDetailServiceImplTest {
 
         //when
         PersonalProjectGetOneRequestDto dto = new PersonalProjectGetOneRequestDto(allProject.get(0).getProjectId());
-        PersonalProjectGetOneResponseDto data = projectDetailService.getOne(dto).getData();
+        PersonalProjectGetOneResponseDto data = projectDetailService.getOne(member.getId()).getData();
 
         //then
         assertThat(allProject.get(0).getProjectName()).isEqualTo(data.getProjectName());
