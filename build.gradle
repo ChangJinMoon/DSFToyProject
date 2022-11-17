@@ -35,3 +35,7 @@ tasks.named('test') {
 test {
 	exclude '**/*'
 }
+
+jar {
+	enabled = false
+}
