@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+
+files:
+  - source:  /
+    destination: /home/ec2-user/app
+    overwrite: yes
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: linux
+    group: linux
+
+hooks:
+  AfterInstall:
+    - location: scripts/stop.sh
+      timeout: 60
+      runas: linux
+  ApplicationStart:
+    - location: scripts/start.sh
+      timeout: 60
+      runas: linux
