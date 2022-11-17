@@ -65,24 +65,7 @@ class ProjectJpaRepositoryTest {
     @Test
     void findAllProject() {
         //given
-        Member member = repositoryTestDomain.makeMember();
-        memberService.save(member);
 
-        ProjectDetail projectDetail = repositoryTestDomain.makProjectDetail(member);
-        projectJpaRepository.save(projectDetail);
-
-        ProjectDetail projectDetail2 = repositoryTestDomain.makProjectDetail(member);
-        projectJpaRepository.save(projectDetail2);
-
-        //when
-        List<ProjectDetail> projectDetails = projectJpaRepository.findAllProject(member.getId()).get();
-
-        //then
-        assertThat(projectDetails.size()).isEqualTo(2);
-        assertThat(projectDetails.get(0).getProjectId()).isEqualTo(1L);
-        assertThat(projectDetails.get(1).getProjectId()).isEqualTo(2L);
-        assertThat(projectDetails.get(0).getProjectLeader()).isEqualTo(1L);
-        assertThat(projectDetails.get(0).getMembers().get(0).getMember().getId()).isEqualTo(1L);
     }
 
     @Test

@@ -33,12 +33,12 @@ public class PersonalProjectServiceImpl implements PersonalProjectService{
         Message<List<PersonalPageInitDto>> message;
         //Bad Authorization
 
-        Optional<List<ProjectDetail>> allProject = projectRepository.findAllProject(userid);
+        Optional<List<MemberProject>> allProject = projectRepository.findAllProject(userid);
         if(allProject.isPresent()) {
             message = new Message<>(StatusEnum.OK);
             List<PersonalPageInitDto> list = new ArrayList<>();
             allProject.get().stream()
-                    .forEach(projectDetail -> list.add(personalPageInitDto.transPersonalPageInitDto(projectDetail)));
+                    .forEach(projectDetail -> list.add(personalPageInitDto.transPersonalPageInitDto(projectDetail.getProject())));
             message.setData(list);
         }
         else {

@@ -48,7 +48,6 @@ public class Code {
         this.sprint = sprint;
     }
 
-    public Code() {
-    }
+    public Code() {}
 
 }

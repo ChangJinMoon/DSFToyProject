@@ -65,20 +65,7 @@ class ProjectDetailServiceImplTest {
     @Test
     @Rollback(value = true)
     void findOne(){
-        //given
-        Member member = std.makeMember();
-        memberService.save(member);
 
-        PersonalPageAddRequestDto addRequestDto = new PersonalPageAddRequestDto(member.getId(), "test", "for test");
-        personalProjectService.addProject(member.getId(), addRequestDto);
-        List<ProjectDetail> allProject = projectJpaRepository.findAllProject(member.getId()).get();
-
-        //when
-        PersonalProjectGetOneRequestDto dto = new PersonalProjectGetOneRequestDto(allProject.get(0).getProjectId());
-        PersonalProjectGetOneResponseDto data = projectDetailService.getOne(member.getId()).getData();
-
-        //then
-        assertThat(allProject.get(0).getProjectName()).isEqualTo(data.getProjectName());
     }
 
     @Test

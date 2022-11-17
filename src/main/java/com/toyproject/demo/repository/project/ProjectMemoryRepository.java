@@ -1,5 +1,6 @@
 package com.toyproject.demo.repository.project;
 
+import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,7 @@ public class ProjectMemoryRepository implements ProjectRepository{
     }
 
     @Override
-    public Optional<List<ProjectDetail>> findAllProject(Long userId) {
+    public Optional<List<MemberProject>> findAllProject(Long userId) {
         return Optional.empty();
     }
 

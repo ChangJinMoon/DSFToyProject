@@ -25,18 +25,17 @@ public class ProjectJpaRepository implements ProjectRepository{
 
     @Override
     public Optional<ProjectDetail> findProject(Long projectId) {
+
         return Optional.ofNullable(em.find(ProjectDetail.class, projectId));
     }
 
     @Override
-    public Optional<List<ProjectDetail>> findAllProject(Long userId) {
-        List<MemberProject> memberProjectList = em.createQuery("select mp from MemberProject mp where mp.member.id = :userId", MemberProject.class)
+    public Optional<List<MemberProject>> findAllProject(Long userId) {
+        List<MemberProject> list = em.createQuery("select mp from MemberProject mp where mp.member.id = :userId", MemberProject.class)
                 .setParameter("userId", userId)
                 .getResultList();
 
-        List<ProjectDetail> list = new ArrayList<>();
-        memberProjectList.stream().forEach(memberProject -> list.add(memberProject.getProject()));
-        return Optional.ofNullable(list);
+        return Optional.ofNullable(list.size() == 0 ? null : list);
     }
 
     @Override
