@@ -1,22 +1,22 @@
 name: Deploy to Amazon EC2
-
- on:
-   push:
-     branches:
-       - main
+ 
+on:
+ push:
+    branches:
+      - main
 
  # 본인이 설정한 값을 여기서 채워넣습니다.
  # 리전, 버킷 이름, CodeDeploy 앱 이름, CodeDeploy 배포 그룹 이름
- env:
+env:
    AWS_REGION: ap-northeast-2
    S3_BUCKET_NAME: my-di-github-actions-s3-bucket
    CODE_DEPLOY_APPLICATION_NAME: my-codedeploy-app
    CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: my-codedeploy-deployment-group
 
- permissions:
+permissions:
    contents: read
 
- jobs:
+jobs:
    deploy:
      name: Deploy
      runs-on: ubuntu-latest
