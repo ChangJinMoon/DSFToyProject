@@ -8,6 +8,7 @@ import com.toyproject.demo.dto.member.MemberFindDto;
 import com.toyproject.demo.dto.member.MemberInfoDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-
+@Slf4j
 public class MysqlMemberService implements MemberService{
 
     private final MemberRepository memberRepository;
@@ -75,6 +76,7 @@ public class MysqlMemberService implements MemberService{
                 message.setData(member.getPassword());
                 message.setStatusEum(StatusEnum.OK);
                 message.setMessage("비밀번호 찾기 성공");
+                log.info("비밀번호 찾기 성공");
                 return message;
             }
         }
@@ -82,6 +84,7 @@ public class MysqlMemberService implements MemberService{
         message.setData("비밀번호 찾기 실패");
         message.setMessage("비밀번호 찾기 실패");
         message.setStatusEum(StatusEnum.OK);
+        log.info("비밀번호 찾기 실패");
         return message;
     }
 
