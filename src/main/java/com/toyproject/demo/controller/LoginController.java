@@ -83,7 +83,5 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @GetMapping("/for-test-code")
-    public void test(){
-    }
+
 }
