@@ -83,7 +83,7 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    // 자동 빌드 테스트를 위한 TEST
+    // 자동 빌드 테스트를 위한 TEST2
 
 
 }
