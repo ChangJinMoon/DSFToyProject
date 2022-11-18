@@ -21,7 +21,7 @@ public class CorsFilter implements Filter {
     public void destroy() {
         Filter.super.destroy();
     }
-    // set cros localhost:3000
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
