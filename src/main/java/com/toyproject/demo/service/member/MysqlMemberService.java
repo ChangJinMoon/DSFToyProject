@@ -72,7 +72,7 @@ public class MysqlMemberService implements MemberService{
 
         if(findMember.isPresent()){
             Member member = findMember.get();
-            if(member.getPassword().equals(memberFindDto.getFindPasswordAnswer())){
+            if(member.getFindPasswordAnswer().equals(memberFindDto.getFindPasswordAnswer())){
                 message.setData(member.getPassword());
                 message.setStatusEum(StatusEnum.OK);
                 message.setMessage("비밀번호 찾기 성공");
