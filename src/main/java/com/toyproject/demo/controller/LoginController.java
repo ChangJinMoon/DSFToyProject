@@ -82,4 +82,6 @@ public class LoginController {
         Message<MemberInfoDto> message = memberService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
+
 }
