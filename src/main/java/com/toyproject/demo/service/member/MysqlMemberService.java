@@ -118,7 +118,7 @@ public class MysqlMemberService implements MemberService{
         Long modificationMemberId = memberRepository.modificationMemberName(memberModificationDto);
         Message<Long> message = new Message<>(StatusEnum.OK);
         message.setData(modificationMemberId);
-        message.setMessage("회원 이름 수정 완료하였습니다.");
+        message.setMessage("회원 이름 수정 완료.");
         return message;
     }
 }
