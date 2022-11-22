@@ -80,7 +80,7 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @PatchMapping("/member")
+    @PostMapping("/member")
     public ResponseEntity<Message> memberModification(@RequestBody MemberModificationDto memberModificationDto){
         Message<Long> message = memberService.modificationMember(memberModificationDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
