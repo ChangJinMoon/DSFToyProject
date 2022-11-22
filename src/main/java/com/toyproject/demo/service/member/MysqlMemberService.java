@@ -6,6 +6,7 @@ import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
 import com.toyproject.demo.dto.member.MemberInfoDto;
+import com.toyproject.demo.dto.member.MemberModificationDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -109,5 +110,15 @@ public class MysqlMemberService implements MemberService{
         return message;
 
 
+    }
+
+    @Transactional
+    @Override
+    public Message<Long> modificationMember(MemberModificationDto memberModificationDto) {
+        Long modificationMemberId = memberRepository.modificationMemberName(memberModificationDto);
+        Message<Long> message = new Message<>(StatusEnum.OK);
+        message.setData(modificationMemberId);
+        message.setMessage("회원 이름 수정 완료");
+        return message;
     }
 }

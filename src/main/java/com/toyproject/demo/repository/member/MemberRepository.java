@@ -1,6 +1,7 @@
 package com.toyproject.demo.repository.member;
 
 import com.toyproject.demo.domain.member.Member;
+import com.toyproject.demo.dto.member.MemberModificationDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface MemberRepository {
     List<Member> findAll();
 
     Optional<Member> findByEmail(String email);
+
+    Long modificationMemberName(MemberModificationDto memberModificationDto);
 }

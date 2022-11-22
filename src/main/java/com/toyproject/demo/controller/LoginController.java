@@ -3,11 +3,8 @@ package com.toyproject.demo.controller;
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.member.Member;
-import com.toyproject.demo.dto.member.MemberDto;
-import com.toyproject.demo.dto.member.MemberFindDto;
+import com.toyproject.demo.dto.member.*;
 
-import com.toyproject.demo.dto.member.MemberInfoDto;
-import com.toyproject.demo.dto.member.MemberJoinDto;
 import com.toyproject.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @RestController
@@ -85,7 +80,9 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    // 자동 빌드 테스트를 위한 TEST2
-
-
+    @PatchMapping("/member")
+    public ResponseEntity<Message> memberModification(@RequestBody MemberModificationDto memberModificationDto){
+        Message<Long> message = memberService.modificationMember(memberModificationDto);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 }
