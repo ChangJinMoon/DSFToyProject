@@ -3,11 +3,8 @@ package com.toyproject.demo.controller;
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.member.Member;
-import com.toyproject.demo.dto.member.MemberDto;
-import com.toyproject.demo.dto.member.MemberFindDto;
+import com.toyproject.demo.dto.member.*;
 
-import com.toyproject.demo.dto.member.MemberInfoDto;
-import com.toyproject.demo.dto.member.MemberJoinDto;
 import com.toyproject.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +77,12 @@ public class LoginController {
     @PostMapping("/member")
     public ResponseEntity<Message> memberInfo(@RequestParam Long id){
         Message<MemberInfoDto> message = memberService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @PatchMapping("/member")
+    public ResponseEntity<Message> memberModification(@RequestBody MemberModificationDto memberModificationDto){
+        Message<Long> message = memberService.modificationMember(memberModificationDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

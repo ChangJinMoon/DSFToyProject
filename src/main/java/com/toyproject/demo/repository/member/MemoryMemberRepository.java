@@ -1,6 +1,7 @@
 package com.toyproject.demo.repository.member;
 
 import com.toyproject.demo.domain.member.Member;
+import com.toyproject.demo.dto.member.MemberModificationDto;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.Option;
@@ -45,6 +46,11 @@ public class MemoryMemberRepository implements MemberRepository{
     @Override
     public Optional<Member> findByEmail(String email) {
         return Optional.empty();
+    }
+
+    @Override
+    public Long modificationMemberName(MemberModificationDto memberModificationDto) {
+        return null;
     }
 
     public Member findPassword(String id, String answer) {

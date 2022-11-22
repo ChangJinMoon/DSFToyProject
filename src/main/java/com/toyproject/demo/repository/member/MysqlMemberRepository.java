@@ -1,7 +1,9 @@
 package com.toyproject.demo.repository.member;
 
 import com.toyproject.demo.domain.member.Member;
+import com.toyproject.demo.dto.member.MemberModificationDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MysqlMemberRepository implements MemberRepository{
@@ -51,5 +54,14 @@ public class MysqlMemberRepository implements MemberRepository{
             return Optional.empty();
         }
         return Optional.of(findMember.get(0));
+    }
+
+    @Override
+    public Long modificationMemberName(MemberModificationDto memberModificationDto) {
+        Member findMember = em.find(Member.class, memberModificationDto.getId());
+        log.info("modificationMemberName -> before Member Name : {}" , findMember.getName());
+        findMember.setName(memberModificationDto.getName());
+        log.info("modificationMemberName -> after Member Name : {}" , findMember.getName());
+        return memberModificationDto.getId();
     }
 }
