@@ -3,6 +3,8 @@ package com.toyproject.demo.service.projectDetail;
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.MemberProject;
+import com.toyproject.demo.domain.code.Code;
+import com.toyproject.demo.domain.job.JobList;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
@@ -156,8 +158,7 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         //get Sprint from requestDto
         Optional<ProjectDetail> project = projectRepository.findProject(projectId);
 
-
-        Sprint sprint = Sprint
+        Sprint sprint = makeSprintDependOnType(requestDto.getType())
                 .createSprint(requestDto.getSprintName(), requestDto.getSprintDetails(), project.get());
 
         //save Sprint in repository
@@ -188,5 +189,14 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         //save repository
         //make responseMessage
         return null;
+    }
+
+    private Sprint makeSprintDependOnType(int type){
+        switch (type){
+            case 1:
+                return new JobList();
+            default:
+                return new Code();
+        }
     }
 }

@@ -18,9 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class MysqlCodeRepositoryTest {
 
-    @Autowired
-    CodeRepository codeRepository;
-
     @PersistenceContext
     EntityManager em;
 
@@ -31,21 +28,6 @@ class MysqlCodeRepositoryTest {
         // given
 
         Code code = new Code();
-        code.setTitle("TestTitle");
-        code.setContext("TestCode");
-        code.setWriterId(1L);
-        Sprint sprint = new Sprint();
-
-        code.setSprint(sprint);
-
-        //when
-        Long saveId = codeRepository.save(code);
-
-        //then
-
-        Code findCode = em.find(Code.class, saveId);
-
-        Assertions.assertThat(code).isEqualTo(findCode);
 
 
     }
@@ -56,20 +38,6 @@ class MysqlCodeRepositoryTest {
         // given
 
         Code code = new Code();
-        code.setTitle("TestTitle");
-        code.setContext("TestCode");
-        code.setWriterId(1L);
-
-        Sprint sprint = new Sprint();
-        code.setSprint(sprint);
-        Long saveId = codeRepository.save(code);
-
-        //when
-        Code findCode = codeRepository.findById(code.getId());
-
-        //then
-        Assertions.assertThat(code).isEqualTo(findCode);
-
     }
 
     @Test

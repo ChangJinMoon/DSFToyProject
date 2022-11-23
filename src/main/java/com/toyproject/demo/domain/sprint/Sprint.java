@@ -3,6 +3,7 @@ package com.toyproject.demo.domain.sprint;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.toyproject.demo.domain.code.Code;
+import com.toyproject.demo.domain.job.JobList;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.Data;
 import lombok.Getter;
@@ -13,39 +14,27 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn
 @Getter
-public class Sprint {
+public abstract class Sprint {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "sprint_id")
     private Long id;
 
-    private String sprintName;
+    protected String sprintName;
 
-    private String sprintDetail;
+    protected String sprintDetail;
 
-    private LocalDateTime localDateTime;
+    protected LocalDateTime localDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
-    private ProjectDetail project;
+    protected ProjectDetail project;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "code_id")
-    private List<Code> code;
+    public abstract Sprint createSprint(String sprintName, String sprintDetail, ProjectDetail projectDetail);
 
-    public static Sprint createSprint(String sprintName, String sprintDetail, ProjectDetail projectDetail){
-        Sprint sprint = new Sprint();
-        sprint.sprintName = sprintName;
-        sprint.sprintDetail = sprintDetail;
-        sprint.project = projectDetail;
-        sprint.localDateTime = LocalDateTime.now();
-        return sprint;
-    }
-
-    public void updateSprint(String sprintName, String sprintDetail){
-        this.sprintName = sprintName;
-        this.sprintDetail = sprintDetail;
-    }
+    public abstract void updateSprint(String sprintName, String sprintDetail);
 }

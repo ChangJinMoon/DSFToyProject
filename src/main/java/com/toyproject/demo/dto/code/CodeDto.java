@@ -15,9 +15,4 @@ public class CodeDto {
     Long writerId;
 
 
-    public static Code DtoToEntity(CodeDto codeDto){
-        Code code = new Code(codeDto);
-        return code;
-    }
-
 }

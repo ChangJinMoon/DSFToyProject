@@ -26,7 +26,7 @@ public class SprintJpaRepository implements SprintRepository{
 
     @Override
     public Optional<List<Sprint>> findAll(Long projectId) {
-        List<Sprint> list = entityManager.createQuery("select s from Sprint s where s.project.projectId = :projectId", Sprint.class)
+        List<Sprint> list = entityManager.createQuery("select s from Sprint s where s.project.projectId = :projectId")
                 .setParameter("projectId", projectId)
                 .getResultList();
         return Optional.ofNullable(list.size() == 0 ? null : list);
