@@ -21,13 +21,14 @@ public class Diagram {
     @Column(nullable = false)
     private LocalDateTime localDateTime;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id",nullable = false)
-    private ProjectDetail project;
-
     //다이어그램을 만들기 위한 이름
     @Column(nullable = true)
     private String superClassName;
+
+    //Temp
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="project_id")
+    private ProjectDetail project;
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;

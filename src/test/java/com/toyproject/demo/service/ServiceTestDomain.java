@@ -1,6 +1,8 @@
 package com.toyproject.demo.service;
 
 import com.toyproject.demo.domain.MemberProject;
+import com.toyproject.demo.domain.code.Code;
+import com.toyproject.demo.domain.job.JobList;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
@@ -27,8 +29,14 @@ public class ServiceTestDomain {
                 member.getId(),memberProject.createMemberProject(member));
     }
 
-    public Sprint makeSprint(ProjectDetail projectDetail){
-        return Sprint.createSprint("sprinttest","fortest",projectDetail);
+    public Sprint makeSprint(ProjectDetail projectDetail,int sprintType){
+        Sprint temp;
+        if(sprintType == 1)
+            temp = new Code();
+        else
+            temp = new JobList();
+
+        return temp.createSprint("sprinttest","fortest",projectDetail);
     }
 
     public PersonalPageAddRequestDto makePPARD(){
@@ -43,7 +51,8 @@ public class ServiceTestDomain {
         return projectDetailAddRequestDto;
     }
 
-    public PersonalPageUpdateRequestDto makePersonalPageUpdateRequestDto(){
+    public PersonalPageUpdateRequestDto makePersonalPageUpdateRequestDto
+            (){
         PersonalPageUpdateRequestDto personalPageUpdateRequestDto = new PersonalPageUpdateRequestDto();
 
         return personalPageUpdateRequestDto;

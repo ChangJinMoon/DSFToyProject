@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequiredArgsConstructor
 public class CodeController {
-
+    /**
     private final CodeService codeService;
 
 
@@ -43,4 +41,5 @@ public class CodeController {
         Message<Boolean> delete = codeService.delete(codeId);
         return delete;
     }
+    */
 }
