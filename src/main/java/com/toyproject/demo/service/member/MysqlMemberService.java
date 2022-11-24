@@ -17,10 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@Slf4j
+
 public class MysqlMemberService implements MemberService{
 
     private final MemberRepository memberRepository;
@@ -73,11 +74,10 @@ public class MysqlMemberService implements MemberService{
 
         if(findMember.isPresent()){
             Member member = findMember.get();
-            if(member.getFindPasswordAnswer().equals(memberFindDto.getFindPasswordAnswer())){
+            if(member.getPassword().equals(memberFindDto.getFindPasswordAnswer())){
                 message.setData(member.getPassword());
                 message.setStatusEum(StatusEnum.OK);
                 message.setMessage("비밀번호 찾기 성공");
-                log.info("비밀번호 찾기 성공");
                 return message;
             }
         }
@@ -85,7 +85,6 @@ public class MysqlMemberService implements MemberService{
         message.setData("비밀번호 찾기 실패");
         message.setMessage("비밀번호 찾기 실패");
         message.setStatusEum(StatusEnum.OK);
-        log.info("비밀번호 찾기 실패");
         return message;
     }
 
@@ -118,7 +117,9 @@ public class MysqlMemberService implements MemberService{
         Long modificationMemberId = memberRepository.modificationMemberName(memberModificationDto);
         Message<Long> message = new Message<>(StatusEnum.OK);
         message.setData(modificationMemberId);
-        message.setMessage("회원 이름 수정 완료.");
+        message.setMessage("회원 이름 수정 완료");
+
+        log.info("회원이름 수정 : {}",modificationMemberId);
         return message;
     }
 }
