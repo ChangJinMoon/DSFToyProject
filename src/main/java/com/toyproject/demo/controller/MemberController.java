@@ -25,7 +25,7 @@ import java.nio.charset.Charset;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class LoginController {
+public class MemberController {
 
     private final MemberService memberService;
 
