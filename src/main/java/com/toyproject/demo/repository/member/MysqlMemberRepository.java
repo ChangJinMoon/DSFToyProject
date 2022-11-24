@@ -23,13 +23,13 @@ public class MysqlMemberRepository implements MemberRepository{
     // Optional을 사용하는게 맞는지 고민
     @Override
     public Long save(Member member) {
-        Optional<Member> check = findByEmail(member.getEmail());
-        if(check.isPresent()){
-            return -1L;
-        }
+        Member findMember = findByEmail(member.getEmail()).orElse(null);
 
-        em.persist(member);
-        return member.getId();
+        if(findMember == null){
+            em.persist(member);
+            return member.getId();
+        }
+        return -1L;
     }
 
     @Override
