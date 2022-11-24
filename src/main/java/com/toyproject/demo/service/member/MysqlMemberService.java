@@ -9,6 +9,7 @@ import com.toyproject.demo.dto.member.MemberInfoDto;
 import com.toyproject.demo.dto.member.MemberModificationDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -116,6 +118,8 @@ public class MysqlMemberService implements MemberService{
         Message<Long> message = new Message<>(StatusEnum.OK);
         message.setData(modificationMemberId);
         message.setMessage("회원 이름 수정 완료");
+
+        log.info("회원이름 수정 : {}",modificationMemberId);
         return message;
     }
 }
