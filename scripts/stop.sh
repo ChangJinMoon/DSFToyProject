@@ -18,4 +18,4 @@ else
   kill -15 $CURRENT_PID
 fi
 
-sleep 10s
+sleep 30s
