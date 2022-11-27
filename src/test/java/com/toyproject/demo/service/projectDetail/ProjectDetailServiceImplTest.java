@@ -134,9 +134,11 @@ class ProjectDetailServiceImplTest {
         //when
         Optional<List<Sprint>> resultList = sprintRepository.findAll(projectDetail.getProjectId());
         //then
-        System.out.println(resultList.get().get(0).getClass());
-        System.out.println(resultList.get().get(1).getClass());
+        Optional<Sprint> sprint1 = sprintRepository.find(resultList.get().get(0).getId());
+        Optional<Sprint> sprint2 = sprintRepository.find(resultList.get().get(1).getId());
 
+        System.out.println(sprint1.get().getClass());
+        System.out.println(sprint2.get().getClass());
     }
     //not yet
     @Test

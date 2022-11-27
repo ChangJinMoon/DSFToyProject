@@ -1,6 +1,7 @@
 package com.toyproject.demo.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.toyproject.demo.domain.MemberJob;
 import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.*;
@@ -34,6 +35,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     //@JoinColumn(name = "project_id")
     private List<MemberProject> projects;
+
+    @OneToMany(mappedBy = "worker")
+    private List<MemberJob> memberJobs;
 
 
 }

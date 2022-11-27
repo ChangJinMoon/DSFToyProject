@@ -2,23 +2,16 @@ package com.toyproject.demo.controller;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
-import com.toyproject.demo.domain.SessionKey;
-import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
-import com.toyproject.demo.dto.sprint.SprintIdRequestDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
-import com.toyproject.demo.dto.sprint.request.SprintInitRequestDto;
-import com.toyproject.demo.repository.session.SessionImpl;
 import com.toyproject.demo.service.sprint.SprintServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;

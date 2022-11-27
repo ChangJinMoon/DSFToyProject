@@ -1,4 +1,4 @@
-package com.toyproject.demo.domain;
+package com.toyproject.demo.domain.common;
 
 
 public class SessionKey {

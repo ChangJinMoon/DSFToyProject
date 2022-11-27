@@ -3,11 +3,7 @@ package com.toyproject.demo.domain.code;
 
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
-import com.toyproject.demo.dto.code.CodeDto;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.collection.internal.PersistentList;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +15,6 @@ import java.util.List;
 @Getter
 @Table(name = "code_list")
 public class Code extends Sprint{
-    private Long writerId;
 
     @OneToMany(mappedBy = "codeGroup" , cascade = CascadeType.ALL)
     private List<CodeBlock> codeBlockList = new ArrayList<>();
@@ -36,6 +31,16 @@ public class Code extends Sprint{
 
     @Override
     public void updateSprint(String sprintName, String sprintDetail) {
+        this.sprintName = sprintName;
+        this.sprintDetail = sprintDetail;
+    }
 
+    public void addCodeBlockOnlyOne(CodeBlock codeBlock){
+        codeBlockList.add(codeBlock);
+    }
+
+    public void addCodeBlockByGroup(List<CodeBlock> updateCodeBlockList){
+        updateCodeBlockList.stream()
+                .forEach(codeBlock-> codeBlockList.add(codeBlock));
     }
 }
