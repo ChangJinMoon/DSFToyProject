@@ -31,6 +31,10 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * 테스트 주석 입니다.
+     * @return
+     */
     // 필요 없음
     @GetMapping("/home")
     public String home(){
@@ -87,4 +91,7 @@ public class MemberController {
         Message<Long> message = memberService.modificationMember(memberModificationDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
+
+
 }
