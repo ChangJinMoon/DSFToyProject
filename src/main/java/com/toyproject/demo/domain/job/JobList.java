@@ -1,5 +1,6 @@
 package com.toyproject.demo.domain.job;
 
+import com.toyproject.demo.domain.code.CodeBlock;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
 import lombok.Getter;
@@ -30,8 +31,16 @@ public class JobList extends Sprint {
 
     @Override
     public void updateSprint(String sprintName, String sprintDetail){
-        super.sprintName = sprintName;
-        super.sprintDetail = sprintDetail;
+        this.sprintName = sprintName;
+        this.sprintDetail = sprintDetail;
+    }
+
+    public void addJobOnlyOne(Job job){
+        this.jobList.add(job);
+    }
+
+    public void addJobByGroup(List<Job> jobs) {
+        jobs.stream().forEach(job -> this.jobList.add(job));
     }
 
 
