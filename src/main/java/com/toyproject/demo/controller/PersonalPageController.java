@@ -6,6 +6,7 @@ import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
 import com.toyproject.demo.dto.personalpage.PersonalPageInitDto;
 import com.toyproject.demo.dto.personalpage.request.PersonalPageInitRequestDto;
+import com.toyproject.demo.header.RestApiHeader;
 import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class PersonalPageController {
         Message<List<PersonalPageInitDto>> init = personalProjectService
                 .init(Long.parseLong(request.getParameter("id")));
 
-        HttpHeaders headers = makeJsonHttpHeaders();
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         //Bad Authorization 구현 하기
 
@@ -54,11 +55,5 @@ public class PersonalPageController {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
         else
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
-    }
-
-    private HttpHeaders makeJsonHttpHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        return headers;
     }
 }
