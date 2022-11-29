@@ -62,4 +62,13 @@ public class Job {
     public void addJobWorkByGroup(List<Member> workers){
         workers.stream().forEach(worker-> this.jobWorkers.add(MemberJob.createMemberJob(worker,this)));
     }
+
+    public void deleteJobWork(Long memberId){
+        for(int i = 0; i < jobWorkers.size(); i++){
+            if(jobWorkers.get(i).getWorker().getId() == memberId){
+                jobWorkers.remove(i);
+                return;
+            }
+        }
+    }
 }
