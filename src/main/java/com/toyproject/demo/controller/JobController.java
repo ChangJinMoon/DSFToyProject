@@ -10,9 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.nio.charset.Charset;
 
 @RestController
@@ -32,7 +34,7 @@ public class JobController {
     }
 
     @PostMapping("/project/sprint/job")
-    public ResponseEntity<Message> saveJob(SaveJobRequestDto dto){
+    public ResponseEntity<Message> saveJob(@RequestBody @Valid SaveJobRequestDto dto){
         Message<SaveJobResponseDto> result = jobService.saveJob(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -41,7 +43,7 @@ public class JobController {
     }
 
     @DeleteMapping("project/sprint/job")
-    public ResponseEntity<Message> deleteJob(DeleteJobRequestDto dto){
+    public ResponseEntity<Message> deleteJob(@RequestBody @Valid DeleteJobRequestDto dto){
         Message<DeleteJobResponseDto> result = jobService.deleteJob(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -50,7 +52,7 @@ public class JobController {
     }
 
     @PostMapping("project/sprint/job/worker")
-    public ResponseEntity<Message> addWorker(AddJobWorkerRequestDto dto){
+    public ResponseEntity<Message> addWorker(@RequestBody @Valid AddJobWorkerRequestDto dto){
         Message<AddJobWorkerResponseDto> result = jobService.addWorker(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -59,7 +61,7 @@ public class JobController {
     }
 
     @PostMapping("project/sprint/job/workers")
-    public ResponseEntity<Message> addWorkers(AddJobWorkersRequestDto dto){
+    public ResponseEntity<Message> addWorkers(@RequestBody @Valid AddJobWorkersRequestDto dto){
         Message<AddJobWorkerResponseDto> result = jobService.addWorkers(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -68,7 +70,7 @@ public class JobController {
     }
 
     @DeleteMapping("project/sprint/job/worker")
-    public ResponseEntity<Message> deleteWorker(DeleteJobWorkerRequestDto dto) {
+    public ResponseEntity<Message> deleteWorker(@RequestBody @Valid DeleteJobWorkerRequestDto dto) {
         Message<DeleteJobWorkerResponseDto> result = jobService.deleteWorker(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -77,7 +79,7 @@ public class JobController {
     }
 
     @PutMapping("project/sprint/job/detail")
-    public ResponseEntity<Message> updateJobDetail(UpdateJobDetailRequestDto dto){
+    public ResponseEntity<Message> updateJobDetail(@RequestBody @Valid UpdateJobDetailRequestDto dto){
         Message<UpdateJobDetailResponseDto> result = jobService.updateJobDetail(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -86,7 +88,7 @@ public class JobController {
     }
 
     @PutMapping("project/sprint/job/date")
-    public ResponseEntity<Message> updateJobDate(UpdateJobDateRequestDto dto) {
+    public ResponseEntity<Message> updateJobDate(@RequestBody @Valid UpdateJobDateRequestDto dto) {
         Message<UpdateJobDateResponseDto> result = jobService.updateJobDate(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();

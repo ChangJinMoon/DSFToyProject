@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.nio.charset.Charset;
 
 @RestController
@@ -40,7 +41,7 @@ public class CodeController {
     }
 
     @PostMapping("project/sprint/code")
-    public ResponseEntity<Message> saveCodeBlock(@RequestBody SaveCodeBlockRequestDto dto){
+    public ResponseEntity<Message> saveCodeBlock(@RequestBody @Valid SaveCodeBlockRequestDto dto){
         Message<SaveCodeBlockResponseDto> result = codeService.saveCodeBlock(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -49,7 +50,7 @@ public class CodeController {
     }
 
     @PutMapping("project/sprint/code")
-    public ResponseEntity<Message> updateCodeBlock(@RequestBody UpdateCodeBlockRequestDto dto){
+    public ResponseEntity<Message> updateCodeBlock(@RequestBody @Valid UpdateCodeBlockRequestDto dto){
         Message<UpdateCodeBlockResponseDto> result = codeService.updateCodeBlock(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
@@ -58,7 +59,7 @@ public class CodeController {
     }
 
     @DeleteMapping("project/sprint/code")
-    public ResponseEntity<Message> deleteCodeBlock(@RequestBody DeleteCodeBlockRequestDto dto){
+    public ResponseEntity<Message> deleteCodeBlock(@RequestBody @Valid DeleteCodeBlockRequestDto dto){
         Message<DeleteCodeBlockResponseDto> result = codeService.deleteCodeBlock(dto);
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();

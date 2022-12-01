@@ -16,8 +16,10 @@ public class CodeBlock {
 
     private Long writerId;
 
+    @Column(columnDefinition = "TEXT")
     private String code;
 
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     private LocalDateTime createDate;
