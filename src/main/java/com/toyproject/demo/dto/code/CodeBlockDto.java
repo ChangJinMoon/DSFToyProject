@@ -1,9 +1,11 @@
 package com.toyproject.demo.dto.code;
 
 import com.toyproject.demo.domain.code.CodeBlock;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class CodeBlockDto {
 
     private Long codeId;

@@ -11,9 +11,9 @@ import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 
 public class ServiceTestDomain {
-    public Member makeMember(){
+    public Member makeMember(String email){
         Member member = new Member();
-        member.setEmail("jin1004boy@naver.com");
+        member.setEmail(email);
         member.setName("test");
         member.setPassword("1234");
         member.setFindPasswordAnswer("none");

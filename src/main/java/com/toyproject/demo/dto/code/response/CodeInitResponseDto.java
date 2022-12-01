@@ -3,6 +3,7 @@ package com.toyproject.demo.dto.code.response;
 import com.toyproject.demo.domain.code.Code;
 import com.toyproject.demo.domain.code.CodeBlock;
 import com.toyproject.demo.dto.code.CodeBlockDto;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
+@Getter
 public class CodeInitResponseDto {
 
     private String sprintName;

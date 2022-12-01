@@ -53,7 +53,7 @@ class ProjectDetailServiceImplTest {
     @Rollback(value = false)
     void init() {
         //given
-        Member member = std.makeMember();
+        Member member = std.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto personalPageAddRequestDto = std.makePPARD();
@@ -95,7 +95,7 @@ class ProjectDetailServiceImplTest {
     @Rollback(value = false)
     void updateProject() {
         //given
-        Member member = std.makeMember();
+        Member member = std.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto pageAddRequestDto = std.makePPARD();
@@ -116,7 +116,7 @@ class ProjectDetailServiceImplTest {
     @Rollback(value = false)
     void addSprint() {
         //given
-        Member member = std.makeMember();
+        Member member = std.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         ProjectDetail projectDetail = std.makProjectDetail(member);

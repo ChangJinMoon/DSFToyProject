@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: 2022/11/19 create making Job Object method
+//sql error -> 42001 - 212 : 필드에 예약어와 같은 이름이 사용되었을 때
 
 @Entity
 @Table(name = "job")
@@ -25,8 +25,10 @@ public class Job {
 
     private String detail;
 
+    @Column(name = "job_start")
     private LocalDateTime start;
 
+    @Column(name = "job_end")
     private LocalDateTime end;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,13 +39,14 @@ public class Job {
     private List<MemberJob> jobWorkers = new ArrayList<>();
 
     public static Job createJob(String toDo, String detail, List<Member> workers
-            , LocalDateTime start, LocalDateTime end){
+            , LocalDateTime start, LocalDateTime end, JobList jobList){
         Job temp = new Job();
         temp.toDo = toDo;
         temp.detail = detail;
         workers.stream().forEach(worker-> temp.jobWorkers.add(MemberJob.createMemberJob(worker,temp)));
         temp.start = start;
         temp.end = end;
+        temp.jobList = jobList;
         return temp;
     }
 

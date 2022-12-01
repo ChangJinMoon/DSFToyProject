@@ -56,7 +56,7 @@ public class CodeServiceImpl implements CodeService{
         }
         //update
         CodeBlock codeBlock = CodeBlock
-                .createCodeBlock(dto.getWriterId(), dto.getCode(), dto.getText());
+                .createCodeBlock(dto.getWriterId(), dto.getCode(), dto.getText(),result.get());
         result.get()
                 .addCodeBlockOnlyOne(codeBlock);
         boolean updateResult = repository.updateCode(result.get());

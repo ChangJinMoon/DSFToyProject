@@ -43,5 +43,7 @@ public class JobList extends Sprint {
         jobs.stream().forEach(job -> this.jobList.add(job));
     }
 
-
+    public Job recentUpdateJob(){
+        return this.jobList.get(jobList.size()-1);
+    }
 }
