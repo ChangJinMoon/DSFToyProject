@@ -6,15 +6,11 @@ import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
-import com.toyproject.demo.repository.project.ProjectJpaRepository;
 import com.toyproject.demo.repository.sprint.SprintJpaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,7 +33,7 @@ public class SprintServiceImpl implements SprintService{
         else{
             message = new Message<>(StatusEnum.OK);
             message.setMessage("Success");
-            message.setData(sprintInitDto.transSprintInitDto(sprint.get()));
+            message.setData(sprintInitDto.transSprintInitDtoWithType(sprint.get()));
         }
         return message;
     }

@@ -35,7 +35,7 @@ class PersonalProjectServiceImplTest {
     //@Rollback(value = false)
     void init() {
         //given
-        Member member = serviceTestDomain.makeMember();
+        Member member = serviceTestDomain.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto ppard = new PersonalPageAddRequestDto();
@@ -57,7 +57,7 @@ class PersonalProjectServiceImplTest {
     @Rollback
     void addProject(){
         //given
-        Member member = serviceTestDomain.makeMember();
+        Member member = serviceTestDomain.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto personalPageAddRequestDto = new PersonalPageAddRequestDto();

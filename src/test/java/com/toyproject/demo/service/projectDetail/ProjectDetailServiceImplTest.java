@@ -2,14 +2,18 @@ package com.toyproject.demo.service.projectDetail;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
+import com.toyproject.demo.domain.code.Code;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.personalpage.PersonalPageAddRequestDto;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
+import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
 import com.toyproject.demo.dto.projectDetail.request.PersonalProjectGetOneRequestDto;
 import com.toyproject.demo.dto.projectDetail.response.PersonalProjectGetOneResponseDto;
+import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.repository.project.ProjectJpaRepository;
+import com.toyproject.demo.repository.sprint.SprintRepository;
 import com.toyproject.demo.service.ServiceTestDomain;
 import com.toyproject.demo.service.member.MysqlMemberService;
 import com.toyproject.demo.service.presonalproject.PersonalProjectServiceImpl;
@@ -40,13 +44,16 @@ class ProjectDetailServiceImplTest {
     @Autowired
     ProjectJpaRepository projectJpaRepository;
 
+    @Autowired
+    SprintRepository sprintRepository;
+
     ServiceTestDomain std = new ServiceTestDomain();
 
     @Test
     @Rollback(value = false)
     void init() {
         //given
-        Member member = std.makeMember();
+        Member member = std.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto personalPageAddRequestDto = std.makePPARD();
@@ -88,7 +95,7 @@ class ProjectDetailServiceImplTest {
     @Rollback(value = false)
     void updateProject() {
         //given
-        Member member = std.makeMember();
+        Member member = std.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto pageAddRequestDto = std.makePPARD();
@@ -106,9 +113,32 @@ class ProjectDetailServiceImplTest {
     }
 
     @Test
+    @Rollback(value = false)
     void addSprint() {
-        Member member = std.makeMember();
+        //given
+        Member member = std.makeMember("jin1004boy@naver.com");
         memberService.save(member);
+
+        ProjectDetail projectDetail = std.makProjectDetail(member);
+        projectJpaRepository.save(projectDetail);
+
+        //add Code
+        Sprint sprint = std.makeSprint(projectDetail, 1);
+        projectDetailService.addSprint(projectDetail.getProjectId(),
+                new ProjectDetailAddRequestDto(projectDetail.getProjectId(), sprint.getSprintName(), sprint.getSprintDetail(), 2));
+
+        //add jpbList
+        projectDetailService.addSprint(projectDetail.getProjectId(),
+                new ProjectDetailAddRequestDto(projectDetail.getProjectId(), sprint.getSprintName(), sprint.getSprintDetail(), 1));
+
+        //when
+        Optional<List<Sprint>> resultList = sprintRepository.findAll(projectDetail.getProjectId());
+        //then
+        Optional<Sprint> sprint1 = sprintRepository.find(resultList.get().get(0).getId());
+        Optional<Sprint> sprint2 = sprintRepository.find(resultList.get().get(1).getId());
+
+        System.out.println(sprint1.get().getClass());
+        System.out.println(sprint2.get().getClass());
     }
     //not yet
     @Test

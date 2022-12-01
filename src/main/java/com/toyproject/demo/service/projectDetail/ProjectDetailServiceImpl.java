@@ -3,22 +3,19 @@ package com.toyproject.demo.service.projectDetail;
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
 import com.toyproject.demo.domain.MemberProject;
+import com.toyproject.demo.domain.code.Code;
+import com.toyproject.demo.domain.job.JobList;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.domain.sprint.Sprint;
 import com.toyproject.demo.dto.invite.InviteRequestDto;
 import com.toyproject.demo.dto.personalpage.PersonalPageUpdateRequestDto;
 import com.toyproject.demo.dto.projectDetail.ProjectDetailAddRequestDto;
-import com.toyproject.demo.dto.projectDetail.ProjectDetailDeleteRequestDto;
-import com.toyproject.demo.dto.projectDetail.ProjectDetailInitRequestDto;
-import com.toyproject.demo.dto.projectDetail.ProjectDetailUpdateRequestDto;
-import com.toyproject.demo.dto.projectDetail.request.PersonalProjectGetOneRequestDto;
 import com.toyproject.demo.dto.projectDetail.response.PersonalProjectGetOneResponseDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import com.toyproject.demo.repository.project.ProjectJpaRepository;
 import com.toyproject.demo.repository.sprint.SprintJpaRepository;
-import com.toyproject.demo.repository.sprint.SprintRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -156,8 +153,7 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         //get Sprint from requestDto
         Optional<ProjectDetail> project = projectRepository.findProject(projectId);
 
-
-        Sprint sprint = Sprint
+        Sprint sprint = makeSprintDependOnType(requestDto.getType())
                 .createSprint(requestDto.getSprintName(), requestDto.getSprintDetails(), project.get());
 
         //save Sprint in repository
@@ -188,5 +184,14 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         //save repository
         //make responseMessage
         return null;
+    }
+
+    private Sprint makeSprintDependOnType(int type){
+        switch (type){
+            case 1:
+                return new JobList();
+            default:
+                return new Code();
+        }
     }
 }

@@ -1,15 +1,20 @@
 package com.toyproject.demo.service.code;
 
 import com.toyproject.demo.Message;
-import com.toyproject.demo.dto.code.CodeDto;
-import com.toyproject.demo.dto.code.CodeFindListDto;
-import com.toyproject.demo.dto.code.CodeUpdateDto;
-
-import java.util.List;
+import com.toyproject.demo.dto.code.request.DeleteCodeBlockRequestDto;
+import com.toyproject.demo.dto.code.request.SaveCodeBlockRequestDto;
+import com.toyproject.demo.dto.code.request.UpdateCodeBlockRequestDto;
+import com.toyproject.demo.dto.code.response.CodeInitResponseDto;
+import com.toyproject.demo.dto.code.response.DeleteCodeBlockResponseDto;
+import com.toyproject.demo.dto.code.response.SaveCodeBlockResponseDto;
+import com.toyproject.demo.dto.code.response.UpdateCodeBlockResponseDto;
 
 public interface CodeService {
-    Message<Long> save(CodeDto codeDto,Long sprintId);
-    Message<List<CodeFindListDto>> getCodeList(Long id);
-    Message<Long> update(CodeUpdateDto codeUpdateDto, Long codeId);
-    Message<Boolean> delete(Long codeId);
+    Message<CodeInitResponseDto> init(Long sprintId);
+
+    Message<SaveCodeBlockResponseDto> saveCodeBlock(SaveCodeBlockRequestDto dto);
+
+    Message<UpdateCodeBlockResponseDto> updateCodeBlock(UpdateCodeBlockRequestDto dto);
+
+    Message<DeleteCodeBlockResponseDto> deleteCodeBlock(DeleteCodeBlockRequestDto dto);
 }

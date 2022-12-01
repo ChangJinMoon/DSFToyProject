@@ -52,8 +52,7 @@ public class PersonalProjectServiceImpl implements PersonalProjectService{
     public Message<String> addProject(Long userId, PersonalPageAddRequestDto pageAddRequestDto) {
         Message<String> message;
         //check userId exist
-
-        if(pageAddRequestDto.getProjectName() == null || pageAddRequestDto.getProjectDetails() == null) {
+        if(pageAddRequestDto.getUserId() == null ||pageAddRequestDto.getProjectName() == null || pageAddRequestDto.getProjectDetails() == null) {
             message = new Message<>(StatusEnum.BAD_REQUEST_NOT_ENOUGH);
             message.setMessage("Need ProjectName");
         }

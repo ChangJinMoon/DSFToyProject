@@ -10,6 +10,7 @@ import com.toyproject.demo.dto.projectDetail.request.PersonalProjectGetOneReques
 import com.toyproject.demo.dto.projectDetail.request.PersonalProjectInitRequestDto;
 import com.toyproject.demo.dto.projectDetail.response.PersonalProjectGetOneResponseDto;
 import com.toyproject.demo.dto.sprint.SprintInitDto;
+import com.toyproject.demo.header.RestApiHeader;
 import com.toyproject.demo.service.projectDetail.ProjectDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class PersonalProjectController {
-    private final String personalPageHome = "/LandPage/{userId}";
-    private final String projectPageHome = "/PersonalProject/{projectId}";
+
     private final ProjectDetailServiceImpl personalProjectService;
 
     @DeleteMapping("/personalProject")
@@ -40,8 +40,7 @@ public class PersonalProjectController {
         Message<String> response = personalProjectService.deleteProject(dto.getProjectId());
 
         //redirect
-        HttpHeaders headers = makeJsonHttpHeaders();
-        //HttpHeaders headers = redirectHome(request, dto.getProjectId(), 1);
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
@@ -54,8 +53,7 @@ public class PersonalProjectController {
                                                  ,@RequestBody PersonalPageUpdateRequestDto dto){
         Message<String> message = personalProjectService.updateProject(dto.getProjectId(),dto);
         //redirect
-        HttpHeaders headers = makeJsonHttpHeaders();
-        //HttpHeaders headers = redirectHome(request, dto.getProjectId(), 2);
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         if(message.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(message);
@@ -68,7 +66,8 @@ public class PersonalProjectController {
     public ResponseEntity<Message> sprintInit(HttpServletRequest request){
         Message<List<SprintInitDto>> response =  personalProjectService
                 .init(Long.parseLong(request.getParameter(request.getParameter("projectId"))));
-        HttpHeaders headers = makeJsonHttpHeaders();
+
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         if(response.getStatusEum() == StatusEnum.NOT_FOUND)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(response);
@@ -78,12 +77,10 @@ public class PersonalProjectController {
 
     // sprint add
     @PostMapping("/personalProject/addSprint")
-    public ResponseEntity<Message> addSprint(HttpServletRequest request,
-                                             @RequestBody ProjectDetailAddRequestDto dto){
+    public ResponseEntity<Message> addSprint(@RequestBody ProjectDetailAddRequestDto dto){
         Message<String> response = personalProjectService.addSprint(dto.getProjectId(),dto);
         //redirect
-        HttpHeaders headers = makeJsonHttpHeaders();
-        //HttpHeaders headers = redirectHome(request,dto.getUserId(),2);
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
     }
@@ -92,23 +89,9 @@ public class PersonalProjectController {
     public ResponseEntity<Message> getOne(HttpServletRequest request){
         Message<PersonalProjectGetOneResponseDto> response = personalProjectService
                 .getOne(Long.parseLong(request.getParameter("projectId")));
-        HttpHeaders headers = makeJsonHttpHeaders();
+
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
+
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(response);
-    }
-
-    public HttpHeaders redirectHome(HttpServletRequest request,Long param,int located){
-        HttpHeaders headers = makeJsonHttpHeaders();
-        URI redirect = ServletUriComponentsBuilder.fromContextPath(request)
-                .path((located == 1 ? personalPageHome : projectPageHome))
-                .buildAndExpand(param)
-                .toUri();
-        headers.setLocation(redirect);
-        return headers;
-    }
-
-    private HttpHeaders makeJsonHttpHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        return headers;
     }
 }

@@ -78,7 +78,7 @@ class SprintServiceImplTest {
     }
 
     Sprint makeSprint(){
-        Member member = serviceTestDomain.makeMember();
+        Member member = serviceTestDomain.makeMember("jin1004boy@naver.com");
         memberService.save(member);
 
         PersonalPageAddRequestDto personalPageAddRequestDto = serviceTestDomain.makePPARD();
