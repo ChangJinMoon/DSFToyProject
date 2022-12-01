@@ -9,6 +9,7 @@ import com.toyproject.demo.dto.member.MemberInfoDto;
 import com.toyproject.demo.dto.member.MemberModificationDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -72,7 +74,7 @@ public class MysqlMemberService implements MemberService{
 
         if(findMember.isPresent()){
             Member member = findMember.get();
-            if(member.getPassword().equals(memberFindDto.getFindPasswordAnswer())){
+            if(member.getFindPasswordAnswer().equals(memberFindDto.getFindPasswordAnswer())){
                 message.setData(member.getPassword());
                 message.setStatusEum(StatusEnum.OK);
                 message.setMessage("비밀번호 찾기 성공");
@@ -116,6 +118,8 @@ public class MysqlMemberService implements MemberService{
         Message<Long> message = new Message<>(StatusEnum.OK);
         message.setData(modificationMemberId);
         message.setMessage("회원 이름 수정 완료");
+
+        log.info("회원이름 수정 : {}",modificationMemberId);
         return message;
     }
 }

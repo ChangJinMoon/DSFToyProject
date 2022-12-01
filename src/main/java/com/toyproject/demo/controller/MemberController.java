@@ -20,15 +20,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class LoginController {
+public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * 테스트 주석 입니다.
+     * @return
+     */
     // 필요 없음
     @GetMapping("/home")
     public String home(){
@@ -80,9 +86,12 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @PatchMapping("/member")
+    @PostMapping("/member-modification")
     public ResponseEntity<Message> memberModification(@RequestBody MemberModificationDto memberModificationDto){
         Message<Long> message = memberService.modificationMember(memberModificationDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
+
+
 }
