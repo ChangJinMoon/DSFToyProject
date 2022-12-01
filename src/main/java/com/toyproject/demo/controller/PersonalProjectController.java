@@ -77,8 +77,7 @@ public class PersonalProjectController {
 
     // sprint add
     @PostMapping("/personalProject/addSprint")
-    public ResponseEntity<Message> addSprint(HttpServletRequest request,
-                                             @RequestBody ProjectDetailAddRequestDto dto){
+    public ResponseEntity<Message> addSprint(@RequestBody ProjectDetailAddRequestDto dto){
         Message<String> response = personalProjectService.addSprint(dto.getProjectId(),dto);
         //redirect
         HttpHeaders headers = RestApiHeader.makeJsonHeader();

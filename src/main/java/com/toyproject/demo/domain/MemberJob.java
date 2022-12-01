@@ -7,10 +7,12 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "member_job")
 @Getter
 public class MemberJob {
 
-    @Id @Column(name = "member_job_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_job_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -18,7 +20,7 @@ public class MemberJob {
     private Member worker;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "job_id")
+    @JoinColumn(name = "job_detail_id")
     private Job jobToDo;
 
     public static MemberJob createMemberJob(Member member){

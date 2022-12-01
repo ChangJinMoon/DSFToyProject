@@ -61,14 +61,15 @@ public class JobServiceImpl implements JobService {
 
         //add Job
         Job newJob = Job.createJob(dto.getToDo(),dto.getDetail(),workers
-                ,dto.getStart(),dto.getEnd());
+                ,dto.getStart(),dto.getEnd(),result.get());
         result.get().addJobOnlyOne(newJob);
 
         //update db
         jobListRepository.update(result.get());
 
         response.setStatusEum(StatusEnum.OK);
-        response.setData(new SaveJobResponseDto(JobDto.jobToJobDto(newJob)));
+        response.setData(new SaveJobResponseDto(
+                JobDto.jobToJobDto(result.get().recentUpdateJob())));
         return response;
     }
 
