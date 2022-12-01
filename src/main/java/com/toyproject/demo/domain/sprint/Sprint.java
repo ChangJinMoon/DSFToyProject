@@ -26,6 +26,7 @@ public abstract class Sprint {
 
     protected String sprintName;
 
+    @Column(columnDefinition = "TEXT")
     protected String sprintDetail;
 
     protected LocalDateTime localDateTime;

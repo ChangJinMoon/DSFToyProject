@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -17,9 +18,9 @@ public class JobDto {
 
     private String detail;
 
-    private LocalDateTime start;
+    private Date start;
 
-    private LocalDateTime end;
+    private Date end;
 
     private List<MemberNameWithEmail> jobWorkers = new ArrayList<>();
 

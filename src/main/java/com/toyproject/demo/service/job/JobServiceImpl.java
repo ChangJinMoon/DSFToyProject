@@ -2,6 +2,7 @@ package com.toyproject.demo.service.job;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
+import com.toyproject.demo.domain.MemberJob;
 import com.toyproject.demo.domain.job.Job;
 import com.toyproject.demo.domain.job.JobList;
 import com.toyproject.demo.domain.member.Member;
@@ -11,6 +12,7 @@ import com.toyproject.demo.dto.job.response.*;
 import com.toyproject.demo.repository.job.JobListRepository;
 import com.toyproject.demo.repository.job.JobRepository;
 import com.toyproject.demo.repository.member.MemberRepository;
+import com.toyproject.demo.repository.memberJob.MemberJobRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,7 @@ public class JobServiceImpl implements JobService {
     private final JobListRepository jobListRepository;
     private final JobRepository jobRepository;
     private final MemberRepository memberRepository;
+    private final MemberJobRepository memberJobRepository;
 
     @Override
     public Message<JobInitResponseDto> init(Long sprintId) {
@@ -152,9 +155,15 @@ public class JobServiceImpl implements JobService {
         }
 
         //delete worker
-        result.get().deleteJobWork(dto.getWorkerId());
-        jobRepository.update(result.get());
+        int idx = result.get().findWorkByMemberId(dto.getWorkerId());
+        if(idx == -1) {
+            response.setStatusEum(StatusEnum.NOT_FOUND);
+            response.setMessage("the worker was not assign this job");
+            return response;
+        }
 
+        MemberJob removed = result.get().deleteJobWork(idx);
+        memberJobRepository.deleteMemberJob(removed);
         response.setStatusEum(StatusEnum.OK);
         response.setData(new DeleteJobWorkerResponseDto(JobDto.jobToJobDto(result.get())));
         return response;

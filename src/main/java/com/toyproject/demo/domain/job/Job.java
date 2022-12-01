@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 //sql error -> 42001 - 212 : 필드에 예약어와 같은 이름이 사용되었을 때
@@ -23,13 +24,16 @@ public class Job {
 
     private String toDo;
 
+    @Column(columnDefinition = "TEXT")
     private String detail;
 
     @Column(name = "job_start")
-    private LocalDateTime start;
+    @Temporal(TemporalType.DATE)
+    private Date start;
 
     @Column(name = "job_end")
-    private LocalDateTime end;
+    @Temporal(TemporalType.DATE)
+    private Date end;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sprint_id")
@@ -39,7 +43,7 @@ public class Job {
     private List<MemberJob> jobWorkers = new ArrayList<>();
 
     public static Job createJob(String toDo, String detail, List<Member> workers
-            , LocalDateTime start, LocalDateTime end, JobList jobList){
+            , Date start, Date end, JobList jobList){
         Job temp = new Job();
         temp.toDo = toDo;
         temp.detail = detail;
@@ -51,7 +55,7 @@ public class Job {
     }
 
     public void updateJob(@Nullable String toDo,@Nullable String detail
-            ,@Nullable LocalDateTime start,@Nullable LocalDateTime end){
+            ,@Nullable Date start,@Nullable Date end){
         this.toDo = (toDo == null ? this.toDo : toDo);
         this.detail = (detail == null ? this.detail : detail);
         this.start = (start == null ? this.start : start);
@@ -60,18 +64,36 @@ public class Job {
 
     public void addJobWork(Member member) {
         this.jobWorkers.add(MemberJob.createMemberJob(member,this));
+        this.jobWorkers.size();
     }
 
     public void addJobWorkByGroup(List<Member> workers){
         workers.stream().forEach(worker-> this.jobWorkers.add(MemberJob.createMemberJob(worker,this)));
     }
 
-    public void deleteJobWork(Long memberId){
+    public MemberJob deleteJobWork(int idx){
+        return jobWorkers.remove(idx);
+    }
+
+    public int findWorkByMemberId(Long memberId){
         for(int i = 0; i < jobWorkers.size(); i++){
             if(jobWorkers.get(i).getWorker().getId() == memberId){
-                jobWorkers.remove(i);
-                return;
+                return i;
             }
         }
+        return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", toDo='" + toDo + '\'' +
+                ", detail='" + detail + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", jobList=" + jobList +
+                ", jobWorkers=" + jobWorkers.size() +
+                '}';
     }
 }

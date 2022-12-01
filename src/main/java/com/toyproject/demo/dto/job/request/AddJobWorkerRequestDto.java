@@ -4,12 +4,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @NoArgsConstructor
 public class AddJobWorkerRequestDto {
 
+    @NotNull
     private Long jobId;
 
+    @NotNull
     private Long workerId;
 
     public AddJobWorkerRequestDto(@NonNull Long jobId,@NonNull Long workerId) {

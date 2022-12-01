@@ -25,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +90,9 @@ class JobServiceImplTest {
         List<Long> workerList = new ArrayList<>();
         workerList.add(testMember.getId());
         SaveJobRequestDto dto = new SaveJobRequestDto(testSprint.getId(), "do test", "test jobService code",
-                LocalDateTime.now(), LocalDateTime.now(), workerList);
+                Date.valueOf("2022-12-01"), Date.valueOf("2022-12-01"), workerList);
         SaveJobRequestDto dto2 = new SaveJobRequestDto(testSprint.getId(), "do test", "test jobService code",
-                LocalDateTime.now(), LocalDateTime.now(), workerList);
+                Date.valueOf("2022-12-01"), Date.valueOf("2022-12-01"), workerList);
         //when
         SaveJobResponseDto data = jobService.saveJob(dto).getData();
         SaveJobResponseDto data2 = jobService.saveJob(dto2).getData();
