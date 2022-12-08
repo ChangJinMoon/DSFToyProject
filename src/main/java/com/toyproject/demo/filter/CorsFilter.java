@@ -11,6 +11,12 @@ import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
+/**
+ * #TODO
+ * Project Get one -> memberList Member —> userId name email - done
+ * projectDetail -> 최근 업데이트 된 sprint 및 생성된 sprint 표시
+ * Cors filter method allowed
+ */
 public class CorsFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

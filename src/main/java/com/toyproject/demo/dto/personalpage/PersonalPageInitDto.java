@@ -4,6 +4,7 @@ import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import com.toyproject.demo.dto.member.MemberNameWithEmail;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class PersonalPageInitDto {
     private String projectDetail;
     private Long projectLeader;
     private List<MemberNameWithEmail> memberList;
+    private LocalDateTime makingDay;
 
     public PersonalPageInitDto transPersonalPageInitDto(ProjectDetail projectDetail){
         PersonalPageInitDto personalPageInitDto = new PersonalPageInitDto();
