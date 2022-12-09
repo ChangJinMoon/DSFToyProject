@@ -1,6 +1,7 @@
 package com.toyproject.demo.dto.projectDetail.response;
 
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
+import com.toyproject.demo.dto.member.MemberNameWithEmail;
 import com.toyproject.demo.dto.projectDetail.request.PersonalProjectGetOneRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class PersonalProjectGetOneResponseDto {
     private String projectName;
     private String projectDetail;
     private Long projectLeader;
-    private List<Long> memberList;
+    private List<MemberNameWithEmail> memberList;
     private Integer sprintSize;
 
     public PersonalProjectGetOneResponseDto projectToDto(ProjectDetail projectDetail){
@@ -23,7 +24,7 @@ public class PersonalProjectGetOneResponseDto {
         dto.projectDetail = projectDetail.getProjectDetail();
         dto.projectLeader = projectDetail.getProjectLeader();
         dto.memberList = new ArrayList<>();
-        projectDetail.getMembers().stream().forEach(memberProject -> dto.memberList.add(memberProject.getMember().getId()));
+        projectDetail.getMembers().stream().forEach(memberProject -> dto.memberList.add(new MemberNameWithEmail(memberProject)));
         dto.sprintSize = projectDetail.getSprintList().size();
         return dto;
     }

@@ -91,7 +91,4 @@ public class MemberController {
         Message<Long> message = memberService.modificationMember(memberModificationDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
-
-
-
 }

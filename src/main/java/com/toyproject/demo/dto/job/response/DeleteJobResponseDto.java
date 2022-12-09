@@ -12,3 +12,4 @@ public class DeleteJobResponseDto {
         this.deletedJob = deletedJob;
     }
 }
+
