@@ -13,8 +13,6 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 /**
  * #TODO
- * Project Get one -> memberList Member —> userId name email - done
- * projectDetail -> 최근 업데이트 된 sprint 및 생성된 sprint 표시
  * Cors filter method allowed
  */
 public class CorsFilter implements Filter {
@@ -36,7 +34,7 @@ public class CorsFilter implements Filter {
         // response cors
         res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         res.setHeader("Access-Control-Allow-Credentials", "true");
-        res.setHeader("Access-Control-Allow-Methods","**");
+        res.setHeader("Access-Control-Allow-Methods","POST,GET,DELETE,PUT");
         res.setHeader("Access-Control-Max-Age", "3600");
         res.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");

@@ -15,7 +15,6 @@ public class PersonalPageInitDto {
     private String projectDetail;
     private Long projectLeader;
     private List<MemberNameWithEmail> memberList;
-    private LocalDateTime makingDay;
 
     public PersonalPageInitDto transPersonalPageInitDto(ProjectDetail projectDetail){
         PersonalPageInitDto personalPageInitDto = new PersonalPageInitDto();
