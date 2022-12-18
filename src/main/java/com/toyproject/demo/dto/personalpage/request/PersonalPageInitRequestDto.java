@@ -9,6 +9,8 @@ import lombok.NonNull;
 @NoArgsConstructor
 
 public class PersonalPageInitRequestDto {
+
+
     private Long userId;
 
     @Builder

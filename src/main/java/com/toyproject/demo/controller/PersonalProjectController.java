@@ -65,7 +65,7 @@ public class PersonalProjectController {
     @GetMapping("/personalProject")
     public ResponseEntity<Message> sprintInit(HttpServletRequest request){
         Message<List<SprintInitDto>> response =  personalProjectService
-                .init(Long.parseLong(request.getParameter(request.getParameter("projectId"))));
+                .init(Long.parseLong(request.getParameter("projectId")));
 
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
