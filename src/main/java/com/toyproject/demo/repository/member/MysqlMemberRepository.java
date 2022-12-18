@@ -1,16 +1,21 @@
 package com.toyproject.demo.repository.member;
 
+import com.toyproject.demo.ServerUrl;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberModificationDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Repository
@@ -64,4 +69,37 @@ public class MysqlMemberRepository implements MemberRepository{
         log.info("modificationMemberName -> after Member Name : {}" , findMember.getName());
         return memberModificationDto.getId();
     }
+
+    @Override
+    public Long memberProfileUpdate(MultipartFile multipartFile, Long id) throws Exception {
+
+//        String originalFilename = multipartFile.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString() + ".png";
+        String url = ServerUrl.imageUrl;
+        Path path = Paths.get(url + uuid);
+
+        try{
+
+            Files.write(path,multipartFile.getBytes());
+            Member findMember = em.find(Member.class, id);
+            findMember.setImageUuid(uuid);
+        }
+        catch (Exception e){
+            System.out.println("Error");
+        }
+        return id;
+    }
+
+    @Override
+    public String memberProfileGetUuid(Long id) {
+        Member member = em.find(Member.class, id);
+        String memberImageUuid = member.getImageUuid();
+
+        if(memberImageUuid == null){
+            return "";
+        }
+        return memberImageUuid;
+    }
+
+
 }

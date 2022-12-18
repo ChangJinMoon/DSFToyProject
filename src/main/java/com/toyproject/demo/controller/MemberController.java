@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,5 +91,17 @@ public class MemberController {
     public ResponseEntity<Message> memberModification(@RequestBody MemberModificationDto memberModificationDto){
         Message<Long> message = memberService.modificationMember(memberModificationDto);
         return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @PostMapping("/member-image-update")
+    public ResponseEntity<Message> memberImageUpdate(MultipartFile multipartFile,Long id) throws Exception {
+        Message<Long> message = memberService.memberProfileUpdate(multipartFile, id);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+
+    }
+
+    @GetMapping("/member-image-get")
+    public ResponseEntity memberImageGet(Long id) throws Exception {
+        return memberService.memberProfileGet(id);
     }
 }

@@ -5,6 +5,7 @@ import com.toyproject.demo.domain.MemberJob;
 import com.toyproject.demo.domain.MemberProject;
 import com.toyproject.demo.domain.personalpage.ProjectDetail;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
+
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,9 @@ public class Member {
 
     @Column(nullable = false)
     private String findPasswordAnswer;
+
+    @Column(nullable = true)
+    private String imageUuid;
 
     // 다대다 관계
     @OneToMany(mappedBy = "member")

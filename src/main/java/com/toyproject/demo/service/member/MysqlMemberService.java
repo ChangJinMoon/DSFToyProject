@@ -2,6 +2,7 @@ package com.toyproject.demo.service.member;
 
 import com.toyproject.demo.Message;
 import com.toyproject.demo.StatusEnum;
+import com.toyproject.demo.ServerUrl;
 import com.toyproject.demo.domain.member.Member;
 import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
@@ -10,11 +11,19 @@ import com.toyproject.demo.dto.member.MemberModificationDto;
 import com.toyproject.demo.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Slf4j
@@ -121,5 +130,46 @@ public class MysqlMemberService implements MemberService{
 
         log.info("회원이름 수정 : {}",modificationMemberId);
         return message;
+    }
+
+    @Transactional
+    @Override
+    public Message<Long> memberProfileUpdate(MultipartFile multipartFile, Long id) throws Exception {
+        Long updateId = memberRepository.memberProfileUpdate(multipartFile, id);
+        Message<Long> message = new Message<>(StatusEnum.OK);
+        message.setMessage("이미지 저장");
+        message.setData(updateId);
+        return message;
+    }
+
+    @Override
+    public ResponseEntity<Resource> memberProfileGet(Long id) throws Exception {
+        String uuid  = memberRepository.memberProfileGetUuid(id);
+        Message<FileSystemResource> message = new Message<>();
+        if(uuid == null){
+            message.setMessage("사진이 존재하지 않습니다.");
+            message.setStatusEum(StatusEnum.OK);
+        }
+
+        try {
+//            String memberProfileUrl = "/Users/yangbyoungseok/IdeaProjects/DSFToyProject/src/main/resources/image/" + uuid;
+            String memberProfileUrl = ServerUrl.imageUrl + uuid;
+            FileSystemResource resource = new FileSystemResource(memberProfileUrl);
+            if (!resource.exists()) {
+                throw new Exception();
+            }
+            HttpHeaders header = new HttpHeaders();
+            Path filePath = null;
+            filePath = Paths.get(memberProfileUrl);
+            header.add("Content-Type", Files.probeContentType(filePath));
+            message.setMessage("사진 가져오기");
+            message.setData(resource);
+            message.setStatusEum(StatusEnum.OK);
+            return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+
+        } catch (Exception e) {
+            throw new Exception();
+        }
+
     }
 }

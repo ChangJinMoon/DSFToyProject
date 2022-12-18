@@ -6,7 +6,11 @@ import com.toyproject.demo.dto.member.MemberDto;
 import com.toyproject.demo.dto.member.MemberFindDto;
 import com.toyproject.demo.dto.member.MemberInfoDto;
 import com.toyproject.demo.dto.member.MemberModificationDto;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface MemberService {
@@ -16,4 +20,6 @@ public interface MemberService {
     Message<MemberInfoDto> findById(Long id);
 
     Message<Long> modificationMember(MemberModificationDto memberModificationDto);
+    Message<Long> memberProfileUpdate(MultipartFile multipartFile,Long id) throws Exception;
+    ResponseEntity<Resource> memberProfileGet(Long id) throws Exception;
 }
