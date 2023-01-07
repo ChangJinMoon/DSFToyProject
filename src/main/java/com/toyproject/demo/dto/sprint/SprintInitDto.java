@@ -31,7 +31,7 @@ public class SprintInitDto {
         sprintInitDto.sprintName = sprint.getSprintName();
         sprintInitDto.sprintDetail = sprint.getSprintDetail();
         sprintInitDto.localDateTime = sprint.getLocalDateTime();
-        type = (sprint.getClass().isInstance(Code.class) ? 2 : 1);
+        sprintInitDto.type = (sprint instanceof Code ? 2 : 1);
         return sprintInitDto;
     }
 }

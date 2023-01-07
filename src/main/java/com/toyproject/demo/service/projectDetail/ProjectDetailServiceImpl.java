@@ -56,7 +56,7 @@ public class ProjectDetailServiceImpl implements ProjectDetailService{
         else{
             message = new Message<>(StatusEnum.OK);
             List<SprintInitDto> list = new ArrayList<>();
-            sprintList.get().stream().forEach(sprint -> list.add(sprintInitDto.transSprintInitDto(sprint)));
+            sprintList.get().stream().forEach(sprint -> list.add(sprintInitDto.transSprintInitDtoWithType(sprint)));
             message.setData(list);
         }
         return message;

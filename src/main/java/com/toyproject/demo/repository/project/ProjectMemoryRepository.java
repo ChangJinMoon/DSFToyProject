@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public class ProjectMemoryRepository implements ProjectRepository{
     @Override
     public boolean save(ProjectDetail project) {
