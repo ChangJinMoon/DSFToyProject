@@ -41,15 +41,8 @@ public class PersonalPageController {
     public ResponseEntity<Message> addProject(HttpServletRequest request,
                                               @RequestBody PersonalPageAddRequestDto dto){
         Message<String> response = personalProjectService.addProject(dto.getUserId(),dto);
-        HttpHeaders headers = new HttpHeaders();
 
-        //redirect
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        URI redirect = ServletUriComponentsBuilder.fromContextPath(request)
-                .path("/personalPage/{id}")
-                .buildAndExpand("id",dto.getUserId())
-                .toUri();
-        headers.setLocation(redirect);
+        HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         if(response.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);

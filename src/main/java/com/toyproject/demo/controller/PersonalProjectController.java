@@ -52,7 +52,7 @@ public class PersonalProjectController {
     public ResponseEntity<Message> updateProject(HttpServletRequest request
                                                  ,@RequestBody PersonalPageUpdateRequestDto dto){
         Message<String> message = personalProjectService.updateProject(dto.getProjectId(),dto);
-        //redirect
+
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         if(message.getStatusEum() == StatusEnum.INTERNAL_SERVER_ERROR)
@@ -79,7 +79,7 @@ public class PersonalProjectController {
     @PostMapping("/personalProject/addSprint")
     public ResponseEntity<Message> addSprint(@RequestBody ProjectDetailAddRequestDto dto){
         Message<String> response = personalProjectService.addSprint(dto.getProjectId(),dto);
-        //redirect
+
         HttpHeaders headers = RestApiHeader.makeJsonHeader();
 
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).body(response);
